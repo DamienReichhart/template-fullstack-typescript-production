@@ -13,6 +13,7 @@ import { useResendVerification } from '../../hooks/use-resend-verification';
 /** Reminds signed-in users with an unverified email, with a resend button. */
 export function EmailVerificationBanner() {
   const t = useTranslations('auth.verificationBanner');
+  const tCommon = useTranslations('common.actions');
   const { user } = useCurrentUser();
   const resend = useResendVerification();
   const dismissed = useUiStore((state) => state.verificationBannerDismissed);
@@ -40,7 +41,7 @@ export function EmailVerificationBanner() {
         <Button
           size="icon"
           variant="ghost"
-          aria-label="Dismiss"
+          aria-label={tCommon('dismiss')}
           className="ml-auto"
           onClick={dismiss}
         >

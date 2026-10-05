@@ -3,7 +3,8 @@
   "actions": {
     "backToHome": "Retour à l'accueil",
     "retry": "Réessayer",
-    "goToDashboard": "Aller au tableau de bord"
+    "goToDashboard": "Aller au tableau de bord",
+    "dismiss": "Fermer"
   },
   "navigation": {
     "home": "Accueil",

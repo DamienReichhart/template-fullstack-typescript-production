@@ -3,7 +3,8 @@
   "actions": {
     "backToHome": "Back to home",
     "retry": "Try again",
-    "goToDashboard": "Go to dashboard"
+    "goToDashboard": "Go to dashboard",
+    "dismiss": "Dismiss"
   },
   "navigation": {
     "home": "Home",
