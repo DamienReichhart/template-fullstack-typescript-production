@@ -20,6 +20,12 @@
     },
     {
       "path": "./packages/platform/database"
+    },
+    {
+      "path": "./packages/platform/queue"
+    },
+    {
+      "path": "./packages/platform/redis"
     }
   ]
 }
