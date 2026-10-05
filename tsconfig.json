@@ -32,6 +32,9 @@
     },
     {
       "path": "./packages/platform/http"
+    },
+    {
+      "path": "./packages/platform/health"
     }
   ]
 }
