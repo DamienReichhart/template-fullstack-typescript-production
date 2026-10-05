@@ -6,11 +6,12 @@ import {
   type ModuleMetadata,
   type Provider,
 } from '@nestjs/common';
-import { APP_FILTER, DiscoveryModule } from '@nestjs/core';
+import { APP_FILTER, APP_INTERCEPTOR, DiscoveryModule } from '@nestjs/core';
 import { Test } from '@nestjs/testing';
 import { ProblemDetailsFilter } from '@template/http';
 import cookieParser from 'cookie-parser';
-import { ZodValidationPipe } from 'nestjs-zod';
+import { API_PREFIX, API_VERSION } from '@template/contracts/common';
+import { ZodSerializerInterceptor, ZodValidationPipe } from 'nestjs-zod';
 
 export interface TestAppOptions extends Pick<
   ModuleMetadata,
@@ -21,13 +22,14 @@ export interface TestAppOptions extends Pick<
 }
 
 /**
- * An in-process HTTP app wired like production (problem details, Zod validation,
- * cookies, URI versioning) without Redis or Postgres. For controller-level tests.
+ * An in-process HTTP app wired like production (`/api/v1` routes, problem details, Zod
+ * validation and serialisation, cookies) without Redis or Postgres. For controller tests.
  */
 export async function createTestApp(options: TestAppOptions): Promise<INestApplication> {
   const providers: Provider[] = [
     ...(options.providers ?? []),
     { provide: APP_FILTER, useClass: ProblemDetailsFilter },
+    { provide: APP_INTERCEPTOR, useClass: ZodSerializerInterceptor },
   ];
   let builder = Test.createTestingModule({
     imports: [DiscoveryModule, ...(options.imports ?? [])],
@@ -42,7 +44,8 @@ export async function createTestApp(options: TestAppOptions): Promise<INestAppli
   const app = moduleRef.createNestApplication({ logger: false });
   app.use(cookieParser());
   app.useGlobalPipes(new ZodValidationPipe());
-  app.enableVersioning({ type: VersioningType.URI, defaultVersion: '1' });
+  app.setGlobalPrefix(API_PREFIX);
+  app.enableVersioning({ type: VersioningType.URI, defaultVersion: API_VERSION });
   await app.init();
   return app;
 }
