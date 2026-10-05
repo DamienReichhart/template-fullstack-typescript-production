@@ -59,6 +59,9 @@
     },
     {
       "path": "./packages/contexts/notifications/infrastructure"
+    },
+    {
+      "path": "./packages/contexts/notifications/jobs"
     }
   ]
 }

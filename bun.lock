@@ -145,6 +145,21 @@
         "reflect-metadata": "0.2.2",
       },
     },
+    "packages/contexts/notifications/jobs": {
+      "name": "@template/notifications-jobs",
+      "version": "0.0.1",
+      "dependencies": {
+        "@nestjs/common": "12.1.2",
+        "@nestjs/cqrs": "12.1.0",
+        "@template/messaging": "workspace:*",
+        "@template/notifications-application": "workspace:*",
+        "@template/queue": "workspace:*",
+      },
+      "devDependencies": {
+        "bullmq": "6.3.11",
+        "reflect-metadata": "0.2.2",
+      },
+    },
     "packages/platform/config": {
       "name": "@template/config",
       "version": "0.0.1",
@@ -852,6 +867,8 @@
     "@template/notifications-application": ["@template/notifications-application@workspace:packages/contexts/notifications/application"],
 
     "@template/notifications-infrastructure": ["@template/notifications-infrastructure@workspace:packages/contexts/notifications/infrastructure"],
+
+    "@template/notifications-jobs": ["@template/notifications-jobs@workspace:packages/contexts/notifications/jobs"],
 
     "@template/queue": ["@template/queue@workspace:packages/platform/queue"],
 
