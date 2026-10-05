@@ -1,0 +1,15 @@
+@import 'tailwindcss';
+@import '@template/ui/styles/theme.css';
+
+/* Tailwind only scans the app by default: let it see the design system's class names. */
+@source '../../../../packages/frontend/ui/src';
+
+html {
+  font-family:
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    Roboto,
+    sans-serif;
+}
