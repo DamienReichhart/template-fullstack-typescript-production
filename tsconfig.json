@@ -71,6 +71,9 @@
     },
     {
       "path": "./apps/scheduler"
+    },
+    {
+      "path": "./packages/frontend/api-client"
     }
   ]
 }

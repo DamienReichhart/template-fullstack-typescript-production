@@ -234,6 +234,14 @@
         "reflect-metadata": "0.2.2",
       },
     },
+    "packages/frontend/api-client": {
+      "name": "@template/api-client",
+      "version": "0.0.1",
+      "dependencies": {
+        "@template/contracts": "workspace:*",
+        "zod": "4.6.5",
+      },
+    },
     "packages/platform/config": {
       "name": "@template/config",
       "version": "0.0.1",
@@ -911,6 +919,8 @@
     "@standard-schema/spec": ["@standard-schema/spec@1.1.0", "", {}, "sha512-l2aFy5jALhniG5HgqrD6jXLi/rUWrKvqN/qJx6yoJsgKhblVd+iqqU4RCXavm/jPityDo5TCvKMnpjKnOriy0w=="],
 
     "@template/api": ["@template/api@workspace:apps/api"],
+
+    "@template/api-client": ["@template/api-client@workspace:packages/frontend/api-client"],
 
     "@template/config": ["@template/config@workspace:packages/platform/config"],
 

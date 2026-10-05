@@ -1,0 +1,32 @@
+{
+  "name": "@template/api-client",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "@template/source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "test": "bun --conditions=@template/source test --pass-with-no-tests"
+  },
+  "nx": {
+    "name": "api-client",
+    "tags": [
+      "scope:frontend",
+      "type:client"
+    ]
+  },
+  "dependencies": {
+    "@template/contracts": "workspace:*",
+    "zod": "4.6.5"
+  }
+}
