@@ -79,7 +79,7 @@ export default [
         {
           enforceBuildableLibDependency: true,
           banTransitiveDependencies: true,
-          allow: ['^.*/eslint(\\.base)?\\.config\\.[cm]?[jt]s$'],
+          allow: ['^.*/eslint(\\.base)?\\.config\\.[cm]?[jt]s$', '^bun:.*$'],
           depConstraints,
         },
       ],

@@ -1,0 +1,45 @@
+{
+  "name": "@template/contracts",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "@template/source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./common": {
+      "@template/source": "./src/common/index.ts",
+      "types": "./dist/common/index.d.ts",
+      "default": "./dist/common/index.js"
+    },
+    "./identity": {
+      "@template/source": "./src/identity/index.ts",
+      "types": "./dist/identity/index.d.ts",
+      "default": "./dist/identity/index.js"
+    },
+    "./system": {
+      "@template/source": "./src/system/index.ts",
+      "types": "./dist/system/index.d.ts",
+      "default": "./dist/system/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "test": "bun test"
+  },
+  "nx": {
+    "name": "contracts",
+    "tags": [
+      "scope:shared",
+      "type:contracts"
+    ]
+  },
+  "dependencies": {
+    "zod": "4.6.5"
+  }
+}
