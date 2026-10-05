@@ -1,0 +1,10 @@
+export type { IdentityConfig } from './config/identity.config.js';
+export { identityConfig } from './config/identity-env.schema.js';
+export { IdentityInfrastructureModule } from './identity-infrastructure.module.js';
+export { BullMqIdentityNotifier } from './messaging/bullmq-identity-notifier.js';
+export { PrismaOneTimeTokenRepository } from './persistence/repositories/prisma-one-time-token.repository.js';
+export { PrismaSessionRepository } from './persistence/repositories/prisma-session.repository.js';
+export { PrismaUserRepository } from './persistence/repositories/prisma-user.repository.js';
+export { Argon2PasswordHasher } from './security/hashing/argon2-password-hasher.js';
+export { CryptoSecureTokenGenerator } from './security/tokens/crypto-secure-token-generator.js';
+export { JwtAccessTokenIssuer } from './security/tokens/jwt-access-token-issuer.js';
