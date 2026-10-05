@@ -1,5 +1,5 @@
 /**
- * The web app is presentation only (docs/adr: "the frontend holds no business logic").
+ * The web app is presentation only (docs/adr/0006-the-web-app-is-presentation-only.md).
  *
  * ESLint already bans Server Actions, but a rule can be disabled inline; this check cannot.
  * It fails on:
