@@ -1,0 +1,30 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "composite": false,
+    "declaration": false,
+    "declarationMap": false,
+    "noEmit": true,
+    "allowImportingTsExtensions": true,
+    "rewriteRelativeImportExtensions": false,
+    "incremental": true,
+    "tsBuildInfoFile": "out-tsc/tsconfig.tsbuildinfo",
+    "types": ["node"]
+  },
+  "include": ["src/**/*.ts", "playwright.config.ts"],
+  "exclude": ["out-tsc", "test-results", "playwright-report"],
+  "references": [
+    {
+      "path": "../../packages/contexts/notifications/infrastructure"
+    },
+    {
+      "path": "../../packages/shared/i18n"
+    },
+    {
+      "path": "../../packages/platform/http"
+    },
+    {
+      "path": "../../packages/shared/contracts"
+    }
+  ]
+}

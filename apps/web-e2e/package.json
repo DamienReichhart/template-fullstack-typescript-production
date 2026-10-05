@@ -1,0 +1,30 @@
+{
+  "name": "@template/web-e2e",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "nx": {
+    "name": "web-e2e",
+    "tags": [
+      "type:e2e"
+    ],
+    "implicitDependencies": [
+      "web",
+      "api",
+      "worker"
+    ]
+  },
+  "dependencies": {
+    "@template/contracts": "workspace:*",
+    "@template/http": "workspace:*",
+    "@template/i18n": "workspace:*",
+    "@template/notifications-infrastructure": "workspace:*",
+    "ioredis": "6.0.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.63.0"
+  }
+}
