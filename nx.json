@@ -98,7 +98,7 @@
     "typecheck": {
       "cache": true,
       "inputs": ["default", "^production"],
-      "dependsOn": ["^build"]
+      "dependsOn": ["^typecheck"]
     }
   },
   "sync": {
