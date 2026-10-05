@@ -1,0 +1,27 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "composite": false,
+    "declaration": false,
+    "declarationMap": false,
+    "noEmit": true,
+    "allowImportingTsExtensions": true,
+    "rewriteRelativeImportExtensions": false,
+    "incremental": true,
+    "tsBuildInfoFile": "out-tsc/tsconfig.tsbuildinfo",
+    "types": ["bun"]
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["out-tsc"],
+  "references": [
+    {
+      "path": "../../packages/contexts/notifications/infrastructure"
+    },
+    {
+      "path": "../../packages/platform/http"
+    },
+    {
+      "path": "../../packages/shared/contracts"
+    }
+  ]
+}

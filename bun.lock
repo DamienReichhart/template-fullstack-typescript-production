@@ -60,6 +60,16 @@
         "supertest": "7.3.1",
       },
     },
+    "apps/api-e2e": {
+      "name": "@template/api-e2e",
+      "version": "0.0.0",
+      "dependencies": {
+        "@template/contracts": "workspace:*",
+        "@template/http": "workspace:*",
+        "@template/notifications-infrastructure": "workspace:*",
+        "ioredis": "6.0.0",
+      },
+    },
     "apps/scheduler": {
       "name": "@template/scheduler",
       "version": "0.1.0",
@@ -1282,6 +1292,8 @@
     "@template/api": ["@template/api@workspace:apps/api"],
 
     "@template/api-client": ["@template/api-client@workspace:packages/frontend/api-client"],
+
+    "@template/api-e2e": ["@template/api-e2e@workspace:apps/api-e2e"],
 
     "@template/config": ["@template/config@workspace:packages/platform/config"],
 
