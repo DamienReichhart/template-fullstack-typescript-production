@@ -109,6 +109,18 @@
         "reflect-metadata": "0.2.2",
       },
     },
+    "packages/contexts/notifications/application": {
+      "name": "@template/notifications-application",
+      "version": "0.0.1",
+      "dependencies": {
+        "@nestjs/common": "12.1.2",
+        "@nestjs/cqrs": "12.1.0",
+        "@template/ddd": "workspace:*",
+      },
+      "devDependencies": {
+        "reflect-metadata": "0.2.2",
+      },
+    },
     "packages/platform/config": {
       "name": "@template/config",
       "version": "0.0.1",
@@ -758,6 +770,8 @@
     "@template/logger": ["@template/logger@workspace:packages/platform/logger"],
 
     "@template/messaging": ["@template/messaging@workspace:packages/platform/messaging"],
+
+    "@template/notifications-application": ["@template/notifications-application@workspace:packages/contexts/notifications/application"],
 
     "@template/queue": ["@template/queue@workspace:packages/platform/queue"],
 

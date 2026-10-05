@@ -53,6 +53,9 @@
     },
     {
       "path": "./packages/contexts/identity/jobs"
+    },
+    {
+      "path": "./packages/contexts/notifications/application"
     }
   ]
 }
