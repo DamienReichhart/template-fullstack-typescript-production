@@ -59,6 +59,11 @@ _Avoid_: Renewal, refresh (as a noun)
 Presenting a Refresh token that was already rotated away. Treated as theft: the Session is revoked.
 _Avoid_: Replay (alone), double refresh
 
+**Concurrent refresh**:
+Two requests of the same Session rotating its Refresh token within seconds of each other
+(several open tabs). Tolerated: the late request is refused but the Session survives.
+_Avoid_: Race, refresh conflict (in conversation)
+
 **Revocation**:
 Ending a Session before it expires (sign-out, password reset, Token reuse).
 _Avoid_: Logout (as a noun for the state), invalidation

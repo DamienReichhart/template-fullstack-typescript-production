@@ -1,11 +1,15 @@
 import { AggregateRoot } from '@template/ddd';
 
 import type { UserId } from '../user/value-objects/user-id.value-object.js';
+import { RefreshTokenAlreadyRotatedError } from './errors/refresh-token-already-rotated.error.js';
 import { RefreshTokenReuseDetectedError } from './errors/refresh-token-reuse-detected.error.js';
 import { SessionExpiredError } from './errors/session-expired.error.js';
 import { SessionRevokedError } from './errors/session-revoked.error.js';
 import type { RefreshTokenHash } from './value-objects/refresh-token-hash.value-object.js';
 import { SessionId } from './value-objects/session-id.value-object.js';
+
+/** How long a just-rotated refresh token is tolerated as a concurrent refresh, not theft. */
+export const ROTATION_GRACE_PERIOD_MS = 10_000;
 
 export interface SessionProps {
   userId: UserId;
@@ -106,12 +110,17 @@ export class Session extends AggregateRoot<SessionId, SessionProps> {
   }
 
   /**
-   * Swaps the refresh token for `next`. Throws (and revokes on reuse) when the session can
-   * no longer be refreshed; callers must persist the session even when this throws.
+   * Swaps the refresh token for `next`. Throws when the session can no longer be refreshed.
+   * Replaying the previous token revokes the session, unless it happens within the grace
+   * period of a rotation (two tabs refreshing at once). Callers must persist the session
+   * even when this throws.
    */
   rotate({ presented, next, expiresAt, now }: RotateInput): void {
     if (this.props.revokedAt) throw new SessionRevokedError();
     if (this.props.previousRefreshTokenHash?.equals(presented)) {
+      if (now.getTime() - this.props.lastUsedAt.getTime() < ROTATION_GRACE_PERIOD_MS) {
+        throw new RefreshTokenAlreadyRotatedError();
+      }
       this.revoke(now);
       throw new RefreshTokenReuseDetectedError();
     }

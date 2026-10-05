@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'bun:test';
 
 import { UserId } from '../user/value-objects/user-id.value-object.js';
+import { RefreshTokenAlreadyRotatedError } from './errors/refresh-token-already-rotated.error.js';
 import { RefreshTokenReuseDetectedError } from './errors/refresh-token-reuse-detected.error.js';
 import { SessionExpiredError } from './errors/session-expired.error.js';
 import { SessionRevokedError } from './errors/session-revoked.error.js';
@@ -9,6 +10,8 @@ import { RefreshTokenHash } from './value-objects/refresh-token-hash.value-objec
 
 const t0 = new Date('2026-01-01T00:00:00.000Z');
 const t1 = new Date('2026-01-01T01:00:00.000Z');
+const t1PlusFiveSeconds = new Date('2026-01-01T01:00:05.000Z');
+const t2 = new Date('2026-01-01T02:00:00.000Z');
 const inThirtyDays = new Date('2026-01-31T00:00:00.000Z');
 const hash = (value: string) => RefreshTokenHash.fromHash(value);
 
@@ -30,17 +33,33 @@ describe('Session', () => {
     expect(session.lastUsedAt).toEqual(t1);
   });
 
-  it('revokes itself when a rotated token is replayed', () => {
+  it('revokes itself when a rotated token is replayed after the grace period', () => {
     const session = open();
     session.rotate({ presented: hash('a'), next: hash('b'), expiresAt: inThirtyDays, now: t1 });
 
     expect(() =>
-      session.rotate({ presented: hash('a'), next: hash('c'), expiresAt: inThirtyDays, now: t1 }),
+      session.rotate({ presented: hash('a'), next: hash('c'), expiresAt: inThirtyDays, now: t2 }),
     ).toThrow(RefreshTokenReuseDetectedError);
-    expect(session.isActive(t1)).toBe(false);
+    expect(session.isActive(t2)).toBe(false);
     expect(() =>
-      session.rotate({ presented: hash('b'), next: hash('d'), expiresAt: inThirtyDays, now: t1 }),
+      session.rotate({ presented: hash('b'), next: hash('d'), expiresAt: inThirtyDays, now: t2 }),
     ).toThrow(SessionRevokedError);
+  });
+
+  it('tolerates a concurrent refresh within the grace period without revoking', () => {
+    const session = open();
+    session.rotate({ presented: hash('a'), next: hash('b'), expiresAt: inThirtyDays, now: t1 });
+
+    expect(() =>
+      session.rotate({
+        presented: hash('a'),
+        next: hash('c'),
+        expiresAt: inThirtyDays,
+        now: t1PlusFiveSeconds,
+      }),
+    ).toThrow(RefreshTokenAlreadyRotatedError);
+    expect(session.isActive(t1PlusFiveSeconds)).toBe(true);
+    expect(session.refreshTokenHash.value).toBe('b');
   });
 
   it('refuses to rotate once expired', () => {

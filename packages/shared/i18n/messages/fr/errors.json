@@ -12,6 +12,7 @@
   "EMAIL_NOT_VERIFIED": "Veuillez d'abord vérifier votre adresse e-mail.",
   "SESSION_EXPIRED": "Votre session a expiré. Veuillez vous reconnecter.",
   "SESSION_REVOKED": "Votre session a été fermée. Veuillez vous reconnecter.",
+  "SESSION_REFRESH_CONFLICT": "Votre session a été rafraîchie dans un autre onglet. Veuillez réessayer.",
   "INVALID_OR_EXPIRED_TOKEN": "Ce lien est invalide ou a expiré.",
   "NETWORK_ERROR": "Impossible de joindre le serveur. Vérifiez votre connexion.",
   "UNKNOWN": "Une erreur inattendue s'est produite."
