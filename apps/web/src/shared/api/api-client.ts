@@ -16,4 +16,6 @@ const http = createHttpClient({
 export const api = {
   identity: identityEndpoints(http),
   system: systemEndpoints(http),
+  /** False when nobody can be signed in: no need to ask the api. */
+  hasSessionHint: () => http.hasSessionHint(),
 };
