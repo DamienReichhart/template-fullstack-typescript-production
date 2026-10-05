@@ -47,6 +47,9 @@
     },
     {
       "path": "./packages/contexts/identity/infrastructure"
+    },
+    {
+      "path": "./packages/contexts/identity/http"
     }
   ]
 }

@@ -27,6 +27,8 @@ export {
   SecureTokenGenerator,
   type GeneratedToken,
 } from './ports/security/secure-token-generator.port.js';
+export { SessionIssuer } from './services/session-issuer.service.js';
+export { VerificationEmailSender } from './services/verification-email.sender.js';
 export { GetCurrentUserQuery } from './queries/get-current-user/get-current-user.query.js';
 export type { AuthSessionView } from './views/auth-session.view.js';
 export type { ClientInfo } from './views/client-info.js';
