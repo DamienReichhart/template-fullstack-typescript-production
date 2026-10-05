@@ -1,0 +1,57 @@
+{
+  "name": "@template/http",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "@template/source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "test": "bun --conditions=@template/source test --pass-with-no-tests"
+  },
+  "nx": {
+    "name": "http",
+    "tags": [
+      "scope:platform",
+      "type:infra"
+    ],
+    "targets": {
+      "test:int": {
+        "command": "bun --conditions=@template/source --env-file=../../../.env test --pass-with-no-tests $(find ./src -name '*.int-spec.ts')",
+        "options": {
+          "cwd": "{projectRoot}"
+        }
+      }
+    }
+  },
+  "dependencies": {
+    "@nestjs/common": "12.1.2",
+    "@nestjs/core": "12.1.2",
+    "@nestjs/platform-express": "12.1.2",
+    "@nestjs/swagger": "12.0.2",
+    "@template/config": "workspace:*",
+    "@template/contracts": "workspace:*",
+    "@template/redis": "workspace:*",
+    "cookie-parser": "1.4.7",
+    "express": "5.2.1",
+    "helmet": "8.3.0",
+    "nestjs-zod": "5.5.0",
+    "zod": "4.6.5"
+  },
+  "devDependencies": {
+    "@nestjs/testing": "12.1.2",
+    "@types/cookie-parser": "1.4.10",
+    "@types/express": "5.0.6",
+    "@types/supertest": "7.2.1",
+    "reflect-metadata": "0.2.2",
+    "supertest": "7.3.1"
+  }
+}
