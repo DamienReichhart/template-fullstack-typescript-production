@@ -17,20 +17,21 @@ ENV NX_DAEMON=false \
     NX_SKIP_NX_CACHE=true \
     NEXT_TELEMETRY_DISABLED=1
 
-# ── Build: Next compiles the workspace packages from source ─────────────────────
+# ── Build: Next bundles the workspace packages from source ──────────────────────
 FROM base AS build
 ARG NEXT_PUBLIC_API_URL
 ARG NEXT_PUBLIC_SITE_URL
 ENV NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL} \
-    NEXT_PUBLIC_SITE_URL=${NEXT_PUBLIC_SITE_URL} \
-    NODE_ENV=production
+    NEXT_PUBLIC_SITE_URL=${NEXT_PUBLIC_SITE_URL}
 COPY . .
 # Optional `ca` secret: extra CA bundle for TLS-intercepting corporate proxies.
 #   docker build --secret id=ca,src=/path/to/ca.crt ...
 RUN --mount=type=secret,id=ca,required=false \
     if [ -f /run/secrets/ca ]; then export NODE_EXTRA_CA_CERTS=/run/secrets/ca; fi; \
     bun install --frozen-lockfile
-RUN cd apps/web && bun --bun next build
+# Through Nx: the workspace packages' declarations are built first, which Next's type check
+# reads through project references. The build script pins NODE_ENV=production.
+RUN bunx nx run web:build --output-style=static
 
 # ── Runtime: the standalone server traces only the files it needs ───────────────
 FROM oven/bun:${BUN_VERSION}-slim AS runtime
