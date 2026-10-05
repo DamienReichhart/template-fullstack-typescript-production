@@ -8,6 +8,12 @@
     },
     {
       "path": "./packages/shared/i18n"
+    },
+    {
+      "path": "./packages/platform/config"
+    },
+    {
+      "path": "./packages/platform/ddd"
     }
   ]
 }
