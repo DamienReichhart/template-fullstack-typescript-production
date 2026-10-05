@@ -1,27 +1,30 @@
+import { createBullBoard } from '@bull-board/api';
 import { BullMQAdapter } from '@bull-board/api/bullMQAdapter';
 import { ExpressAdapter } from '@bull-board/express';
-import { BullBoardModule } from '@bull-board/nestjs';
-import type { DynamicModule } from '@nestjs/common';
-import type { QueueDefinition } from '@template/queue';
+import type { Queue } from 'bullmq';
+import type { Router } from 'express';
 
-export interface BullBoardOptions {
-  /** Mount path, e.g. `/admin/queues`. */
-  route: string;
-  queues: readonly QueueDefinition[];
-  /** Express middleware guarding the board. The board is never mounted without one. */
-  middleware: (request: unknown, response: unknown, next: (error?: unknown) => void) => void;
+export interface BullBoardRouterOptions {
+  /** Absolute mount path, e.g. `/admin/queues`. */
+  basePath: string;
+  queues: readonly Queue[];
+  readOnly?: boolean;
 }
 
-/** Bull Board UI for the given queues, behind the caller's authentication middleware. */
-export function createBullBoardModules({
-  route,
+/**
+ * The Bull Board UI as a plain Express router. The caller mounts it behind its own
+ * authentication middleware; nothing here is exposed by default.
+ */
+export function createBullBoardRouter({
+  basePath,
   queues,
-  middleware,
-}: BullBoardOptions): DynamicModule[] {
-  return [
-    BullBoardModule.forRoot({ route, adapter: ExpressAdapter, middleware }),
-    ...queues.map((queue) =>
-      BullBoardModule.forFeature({ name: queue.name, adapter: BullMQAdapter }),
-    ),
-  ];
+  readOnly = false,
+}: BullBoardRouterOptions): Router {
+  const serverAdapter = new ExpressAdapter();
+  serverAdapter.setBasePath(basePath);
+  createBullBoard({
+    queues: queues.map((queue) => new BullMQAdapter(queue, { readOnlyMode: readOnly })),
+    serverAdapter,
+  });
+  return serverAdapter.getRouter() as Router;
 }
