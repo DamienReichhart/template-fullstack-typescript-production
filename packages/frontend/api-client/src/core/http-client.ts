@@ -94,7 +94,7 @@ export class HttpClient {
       error.status === 401 &&
       options.refreshOnUnauthorized !== false &&
       !retried.session &&
-      this.hasSession()
+      this.hasSessionHint()
     ) {
       if (await this.refreshes.refresh())
         return this.request(path, options, { ...retried, session: true });
@@ -136,8 +136,11 @@ export class HttpClient {
     return schema ? schema.parse(json) : (json as T);
   }
 
-  /** True when a refresh can possibly succeed (the readable session hint cookie exists). */
-  private hasSession(): boolean {
+  /**
+   * True when a session may exist: the api sets a readable hint cookie next to its httpOnly
+   * ones. Without it a refresh cannot succeed, and asking who is signed in is pointless.
+   */
+  hasSessionHint(): boolean {
     return readCookie(this.cookies(), AuthCookies.sessionHint) !== undefined;
   }
 

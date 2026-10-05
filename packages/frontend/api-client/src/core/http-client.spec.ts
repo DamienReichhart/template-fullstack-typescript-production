@@ -96,6 +96,11 @@ describe('HttpClient', () => {
     expect(calls).toHaveLength(1);
   });
 
+  it('reports whether a session may exist from the hint cookie', () => {
+    expect(setup(() => json({})).client.hasSessionHint()).toBe(true);
+    expect(setup(() => json({}), 'tpl_csrf=csrf-1').client.hasSessionHint()).toBe(false);
+  });
+
   it('does not refresh when the endpoint opts out', async () => {
     const { client, calls } = setup(() => problem(401, 'INVALID_CREDENTIALS'));
     await expect(
