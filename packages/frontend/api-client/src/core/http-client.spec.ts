@@ -2,7 +2,7 @@ import { describe, expect, it, mock } from 'bun:test';
 import { z } from 'zod';
 
 import { ApiError } from './api-error.ts';
-import { HttpClient } from './http-client.ts';
+import { HttpClient, type FetchLike } from './http-client.ts';
 
 type Handler = (url: string, init: RequestInit) => Response | Promise<Response>;
 
@@ -20,7 +20,7 @@ function setup(handler: Handler, cookies = 'tpl_csrf=csrf-1; tpl_session=1') {
   const onSessionExpired = mock(() => undefined);
   const client = new HttpClient({
     baseUrl: 'http://api.test/',
-    fetch: fetch as unknown as typeof globalThis.fetch,
+    fetch: fetch as unknown as FetchLike,
     cookies: () => cookies,
     onSessionExpired,
   });

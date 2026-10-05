@@ -9,10 +9,13 @@ import { RefreshCoordinator } from './refresh-coordinator.ts';
 
 export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
+/** The part of `fetch` the client uses: any implementation (browser, Node, Bun, test double) fits. */
+export type FetchLike = (input: string, init?: RequestInit) => Promise<Response>;
+
 export interface HttpClientOptions {
   /** API origin, e.g. `http://localhost:4000`. */
   baseUrl: string;
-  fetch?: typeof fetch;
+  fetch?: FetchLike;
   /** Cookie source; defaults to `document.cookie` (empty on the server). */
   cookies?: () => string;
   /** Called when a 401 could not be recovered by refreshing the session. */
@@ -38,13 +41,13 @@ const CONCURRENT_REFRESH_SETTLE_MS = 250;
  * failure into an `ApiError`.
  */
 export class HttpClient {
-  private readonly fetchImpl: typeof fetch;
+  private readonly fetchImpl: FetchLike;
   private readonly cookies: () => string;
   private readonly csrf: CsrfTokenProvider;
   private readonly refreshes: RefreshCoordinator;
 
   constructor(private readonly options: HttpClientOptions) {
-    this.fetchImpl = options.fetch ?? ((...args) => fetch(...args));
+    this.fetchImpl = options.fetch ?? ((input, init) => fetch(input, init));
     this.cookies = options.cookies ?? browserCookies;
     this.csrf = new CsrfTokenProvider(this.cookies, async () => {
       await this.fetchImpl(

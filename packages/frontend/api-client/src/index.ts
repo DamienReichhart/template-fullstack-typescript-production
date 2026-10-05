@@ -3,6 +3,7 @@ export { readCookie } from './core/cookies.ts';
 export {
   createHttpClient,
   HttpClient,
+  type FetchLike,
   type HttpClientOptions,
   type HttpMethod,
   type RequestOptions,
