@@ -6,11 +6,12 @@ import { httpConfig, type ConfigType } from '@template/config';
 import { configureHttpApp } from '@template/http';
 import { Logger } from '@template/logger';
 
-import { AppModule } from './app.module.js';
 import { BULL_BOARD_PATH } from './modules/admin/admin.module.js';
 import { APP_VERSION } from './modules/system/app-version.js';
 
 async function bootstrap(): Promise<void> {
+  // Imported here so an invalid environment is reported by the catch below, not as a stack trace.
+  const { AppModule } = await import('./app.module.js');
   const app = await NestFactory.create<NestExpressApplication>(AppModule, { bufferLogs: true });
   app.useLogger(app.get(Logger));
 
