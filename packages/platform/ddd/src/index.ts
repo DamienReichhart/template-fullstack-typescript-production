@@ -8,3 +8,4 @@ export { DomainEvent } from './events/domain-event.js';
 export { Clock } from './time/clock.js';
 export { FixedClock } from './time/fixed-clock.js';
 export { SystemClock } from './time/system-clock.js';
+export { addDays, addHours, addMinutes, addSeconds } from './time/durations.js';
