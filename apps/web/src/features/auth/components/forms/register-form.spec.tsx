@@ -26,7 +26,7 @@ async function fill(password: string, confirmation: string) {
 
 describe('RegisterForm', () => {
   it('enforces the password policy of the contract, in the user language', async () => {
-    await renderWithProviders(<RegisterForm />, 'fr');
+    await renderWithProviders(<RegisterForm />, { locale: 'fr' });
 
     await userEvent.type(screen.getByLabelText('Mot de passe'), 'short');
     await userEvent.click(screen.getByRole('button', { name: 'Créer le compte' }));
