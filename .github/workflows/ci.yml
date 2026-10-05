@@ -76,3 +76,32 @@ jobs:
             apps/web-e2e/playwright-report
             apps/web-e2e/test-results
           retention-days: 7
+
+  images:
+    name: Image ${{ matrix.image }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { image: api, dockerfile: apps/api/Dockerfile, target: runtime }
+          - { image: migrator, dockerfile: apps/api/Dockerfile, target: migrator }
+          - { image: worker, dockerfile: apps/worker/Dockerfile, target: runtime }
+          - { image: scheduler, dockerfile: apps/scheduler/Dockerfile, target: runtime }
+          - { image: web, dockerfile: apps/web/Dockerfile, target: runtime }
+    # Builds only: a Dockerfile that breaks is caught here, not at release time.
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069 # v4.4.1
+      - uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
+        with:
+          context: .
+          file: ${{ matrix.dockerfile }}
+          target: ${{ matrix.target }}
+          push: false
+          build-args: |
+            NEXT_PUBLIC_API_URL=https://api.example.com
+            NEXT_PUBLIC_SITE_URL=https://www.example.com
+          cache-from: type=gha,scope=${{ matrix.image }}
+          cache-to: type=gha,mode=max,scope=${{ matrix.image }}
