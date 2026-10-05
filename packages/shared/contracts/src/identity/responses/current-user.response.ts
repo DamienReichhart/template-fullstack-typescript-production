@@ -8,6 +8,7 @@ export const currentUserResponseSchema = z.object({
   name: z.string(),
   role: userRoleSchema,
   emailVerified: z.boolean(),
+  locale: z.string(),
   createdAt: z.iso.datetime(),
 });
 

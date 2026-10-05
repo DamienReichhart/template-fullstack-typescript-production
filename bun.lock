@@ -172,6 +172,7 @@
       "name": "@template/contracts",
       "version": "0.0.1",
       "dependencies": {
+        "@template/i18n": "workspace:*",
         "zod": "4.6.5",
       },
     },

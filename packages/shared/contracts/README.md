@@ -19,4 +19,4 @@ Folder names mirror `packages/contexts/*` and `apps/api/src/modules/*` (checked 
 
 - Validation messages are **translation keys** (`validation.password.tooShort`), never prose.
 - Import from a subpath (`@template/contracts/identity`) to keep bundles small.
-- Allowed dependencies: `zod` only. Tagged `scope:shared`.
+- Allowed dependencies: `zod` and `@template/i18n` (supported locales). Tagged `scope:shared`.
