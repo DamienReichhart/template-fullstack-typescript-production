@@ -2,9 +2,10 @@ import { getTranslations } from 'next-intl/server';
 import { ImageResponse } from 'next/og';
 
 import { localeFromParams } from '@/i18n/page-locale';
+import { OG_IMAGE_SIZE } from '@/shared/seo/og-image';
 
 export const alt = 'Template';
-export const size = { width: 1200, height: 630 };
+export const size = OG_IMAGE_SIZE;
 export const contentType = 'image/png';
 
 /** Social preview card, generated per locale at build time. */

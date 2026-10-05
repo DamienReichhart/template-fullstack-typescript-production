@@ -20,6 +20,13 @@ describe('buildMetadata', () => {
     expect(metadata.robots).toEqual({ index: true, follow: true });
   });
 
+  it('references the locale social card in Open Graph and Twitter', () => {
+    const metadata = buildMetadata({ locale: 'fr', path: '/login', title: 'T', description: 'D' });
+    const image = { url: '/fr/opengraph-image', width: 1200, height: 630, alt: 'T' };
+    expect(metadata.openGraph?.images).toEqual([image]);
+    expect(metadata.twitter?.images).toEqual([image]);
+  });
+
   it('maps the home page to the bare locale URL', () => {
     expect(
       buildMetadata({ locale: 'en', path: '/', title: 't', description: 'd' }).alternates
