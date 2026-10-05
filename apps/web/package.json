@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "bun --bun next dev --port 3000",
-    "build": "bun --bun next build",
-    "start": "bun --bun next start --port 3000",
+    "build": "NODE_ENV=production bun --bun next build",
+    "start": "NODE_ENV=production bun --bun next start --port 3000",
     "test": "bun --conditions=@template/source test --pass-with-no-tests",
     "typecheck": "tsc --noEmit -p tsconfig.json"
   },
