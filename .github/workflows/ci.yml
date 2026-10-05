@@ -11,6 +11,8 @@ concurrency:
 
 permissions:
   contents: read
+  # nx-set-shas reads the last successful run on main to set the affected base on push.
+  actions: read
 
 env:
   NX_NO_CLOUD: true
