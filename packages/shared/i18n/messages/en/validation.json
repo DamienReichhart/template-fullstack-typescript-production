@@ -1,0 +1,23 @@
+{
+  "email": {
+    "required": "Email is required.",
+    "invalid": "Enter a valid email address.",
+    "tooLong": "Use at most {maximum} characters."
+  },
+  "password": {
+    "required": "Password is required.",
+    "tooShort": "Use at least {minimum} characters.",
+    "tooLong": "Use at most {maximum} characters.",
+    "mismatch": "Passwords do not match."
+  },
+  "name": {
+    "required": "Name is required.",
+    "tooLong": "Use at most {maximum} characters."
+  },
+  "token": {
+    "required": "Token is required."
+  },
+  "generic": {
+    "invalid": "This value is invalid."
+  }
+}

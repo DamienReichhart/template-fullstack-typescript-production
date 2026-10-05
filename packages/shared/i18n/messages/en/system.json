@@ -1,0 +1,25 @@
+{
+  "connectionTest": {
+    "title": "API connection",
+    "description": "Check that the web app can reach the API and its dependencies.",
+    "ping": "Test connection",
+    "authenticatedPing": "Test authenticated connection",
+    "requiresVerifiedEmail": "The authenticated test requires a verified email.",
+    "idle": "No test run yet.",
+    "version": "Version {version}",
+    "environment": "Environment: {environment}",
+    "uptime": "Uptime: {seconds, number} s",
+    "latency": "{ms, number} ms",
+    "authenticatedAs": "Authenticated as {email} ({role})",
+    "status": {
+      "ok": "Operational",
+      "degraded": "Degraded",
+      "up": "Up",
+      "down": "Down"
+    },
+    "services": {
+      "database": "Database",
+      "redis": "Redis"
+    }
+  }
+}

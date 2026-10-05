@@ -1,0 +1,17 @@
+{
+  "VALIDATION_FAILED": "Some fields are invalid.",
+  "UNAUTHENTICATED": "Please sign in to continue.",
+  "FORBIDDEN": "You are not allowed to do this.",
+  "NOT_FOUND": "The requested resource was not found.",
+  "RATE_LIMITED": "Too many attempts. Please wait a moment and try again.",
+  "CSRF_TOKEN_INVALID": "Your session is out of date. Please refresh the page.",
+  "INTERNAL_ERROR": "Something went wrong on our side. Please try again.",
+  "EMAIL_ALREADY_TAKEN": "An account already exists with this email.",
+  "INVALID_CREDENTIALS": "Email or password is incorrect.",
+  "EMAIL_NOT_VERIFIED": "Please verify your email address first.",
+  "SESSION_EXPIRED": "Your session has expired. Please sign in again.",
+  "SESSION_REVOKED": "Your session was ended. Please sign in again.",
+  "INVALID_OR_EXPIRED_TOKEN": "This link is invalid or has expired.",
+  "NETWORK_ERROR": "Cannot reach the server. Check your connection.",
+  "UNKNOWN": "An unexpected error occurred."
+}

@@ -1,0 +1,30 @@
+{
+  "hero": {
+    "eyebrow": "Production-ready template",
+    "title": "Build on a foundation that scales.",
+    "subtitle": "A NestJS API, a BullMQ worker and scheduler, and a Next.js frontend in one Nx monorepo with enforced boundaries.",
+    "primaryCta": "Get started",
+    "secondaryCta": "Sign in"
+  },
+  "features": {
+    "title": "What is inside",
+    "items": {
+      "architecture": {
+        "title": "Bounded contexts",
+        "description": "Domain-driven design and CQRS, with layer boundaries enforced by the linter."
+      },
+      "jobs": {
+        "title": "Background jobs",
+        "description": "BullMQ queues with typed payloads, a dedicated worker and an idempotent scheduler."
+      },
+      "security": {
+        "title": "Secure by default",
+        "description": "httpOnly cookies, rotating refresh tokens, CSRF protection and rate limiting."
+      },
+      "i18n": {
+        "title": "Internationalised",
+        "description": "English and French out of the box, from the web app to the emails."
+      }
+    }
+  }
+}

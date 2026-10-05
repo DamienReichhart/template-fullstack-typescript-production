@@ -1,0 +1,30 @@
+{
+  "hero": {
+    "eyebrow": "Template prêt pour la production",
+    "title": "Construisez sur des fondations qui passent à l'échelle.",
+    "subtitle": "Une API NestJS, un worker et un scheduler BullMQ, et un frontend Next.js dans un monorepo Nx aux frontières contrôlées.",
+    "primaryCta": "Commencer",
+    "secondaryCta": "Se connecter"
+  },
+  "features": {
+    "title": "Ce qu'il contient",
+    "items": {
+      "architecture": {
+        "title": "Contextes délimités",
+        "description": "Domain-driven design et CQRS, avec des frontières de couches vérifiées par le linter."
+      },
+      "jobs": {
+        "title": "Tâches en arrière-plan",
+        "description": "Files BullMQ aux payloads typés, un worker dédié et un scheduler idempotent."
+      },
+      "security": {
+        "title": "Sécurisé par défaut",
+        "description": "Cookies httpOnly, refresh tokens à rotation, protection CSRF et limitation de débit."
+      },
+      "i18n": {
+        "title": "Internationalisé",
+        "description": "Anglais et français prêts à l'emploi, de l'application web jusqu'aux e-mails."
+      }
+    }
+  }
+}

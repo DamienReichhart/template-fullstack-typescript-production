@@ -1,0 +1,36 @@
+{
+  "appName": "Template",
+  "actions": {
+    "backToHome": "Back to home",
+    "retry": "Try again",
+    "goToDashboard": "Go to dashboard"
+  },
+  "navigation": {
+    "home": "Home",
+    "dashboard": "Dashboard",
+    "login": "Sign in",
+    "register": "Create account",
+    "mainLabel": "Main navigation"
+  },
+  "localeSwitcher": {
+    "label": "Language",
+    "locales": {
+      "en": "English",
+      "fr": "Français"
+    }
+  },
+  "states": {
+    "loading": "Loading…",
+    "error": {
+      "title": "Something went wrong",
+      "description": "An unexpected error occurred. Please try again."
+    },
+    "notFound": {
+      "title": "Page not found",
+      "description": "The page you are looking for does not exist or has been moved."
+    }
+  },
+  "footer": {
+    "copyright": "© {year} Template. All rights reserved."
+  }
+}

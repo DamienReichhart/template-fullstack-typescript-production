@@ -1,0 +1,37 @@
+{
+  "default": {
+    "title": "Template",
+    "titleTemplate": "%s · Template",
+    "description": "Production-ready Nx monorepo with NestJS, BullMQ and Next.js."
+  },
+  "pages": {
+    "landing": {
+      "title": "Build on a foundation that scales",
+      "description": "A production-ready template: NestJS API, BullMQ worker and scheduler, Next.js frontend."
+    },
+    "login": {
+      "title": "Sign in",
+      "description": "Sign in to your account."
+    },
+    "register": {
+      "title": "Create your account",
+      "description": "Create an account in less than a minute."
+    },
+    "verifyEmail": {
+      "title": "Email verification",
+      "description": "Verify your email address."
+    },
+    "forgotPassword": {
+      "title": "Forgot your password",
+      "description": "Request a password reset link."
+    },
+    "resetPassword": {
+      "title": "Choose a new password",
+      "description": "Set a new password for your account."
+    },
+    "dashboard": {
+      "title": "Dashboard",
+      "description": "Your dashboard."
+    }
+  }
+}

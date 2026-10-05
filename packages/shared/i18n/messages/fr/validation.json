@@ -1,0 +1,23 @@
+{
+  "email": {
+    "required": "L'e-mail est requis.",
+    "invalid": "Saisissez une adresse e-mail valide.",
+    "tooLong": "Utilisez au plus {maximum} caractères."
+  },
+  "password": {
+    "required": "Le mot de passe est requis.",
+    "tooShort": "Utilisez au moins {minimum} caractères.",
+    "tooLong": "Utilisez au plus {maximum} caractères.",
+    "mismatch": "Les mots de passe ne correspondent pas."
+  },
+  "name": {
+    "required": "Le nom est requis.",
+    "tooLong": "Utilisez au plus {maximum} caractères."
+  },
+  "token": {
+    "required": "Le jeton est requis."
+  },
+  "generic": {
+    "invalid": "Cette valeur est invalide."
+  }
+}

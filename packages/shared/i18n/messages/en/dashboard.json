@@ -1,0 +1,5 @@
+{
+  "title": "Dashboard",
+  "welcome": "Welcome, {name}",
+  "subtitle": "You are signed in as {email}."
+}
