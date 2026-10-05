@@ -1,0 +1,78 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
+permissions:
+  contents: read
+
+env:
+  NX_NO_CLOUD: true
+  NX_DAEMON: false
+  # Emails land in the Redis capture outbox, where the e2e suites read them.
+  MAIL_TRANSPORT: capture
+  JWT_ACCESS_SECRET: ci-only-secret-that-is-long-enough-for-hs256-signing
+
+# Actions are pinned to commit SHAs (tags can be moved); Dependabot keeps them current.
+jobs:
+  checks:
+    name: Lint, typecheck, unit tests, build
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+      - uses: ./.github/actions/setup
+      - uses: nrwl/nx-set-shas@afb73a62d26e41464e9254689e1fd6122ee683c1 # v5.0.1
+
+      - run: bun run format:check
+      - run: bun run check:structure
+      - run: bun run check:server-logic
+      - run: bunx nx sync:check
+      - run: bunx nx affected -t lint typecheck test build
+
+  integration:
+    name: Integration tests (Postgres, Redis)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+      - uses: ./.github/actions/setup
+      - uses: nrwl/nx-set-shas@afb73a62d26e41464e9254689e1fd6122ee683c1 # v5.0.1
+      - run: docker compose up -d --wait
+      # Suites share one test database: serial, as locally.
+      - run: bunx nx affected -t test:int --parallel=1
+
+  e2e:
+    name: End-to-end (api, worker, web)
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+      - uses: ./.github/actions/setup
+      - uses: nrwl/nx-set-shas@afb73a62d26e41464e9254689e1fd6122ee683c1 # v5.0.1
+      - run: docker compose up -d --wait
+      - name: Install Chromium
+        working-directory: apps/web-e2e
+        run: bunx playwright install --with-deps chromium
+      # Both suites start the stack on the same ports: one at a time.
+      - run: bunx nx affected -t e2e --parallel=1
+      - if: failure()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: playwright-report
+          path: |
+            apps/web-e2e/playwright-report
+            apps/web-e2e/test-results
+          retention-days: 7
