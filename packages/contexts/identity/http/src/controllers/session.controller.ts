@@ -3,7 +3,7 @@ import { CommandBus } from '@nestjs/cqrs';
 import { ApiTags } from '@nestjs/swagger';
 import { AuthCookies, CommonErrorCode } from '@template/contracts/common';
 import { IdentityRoutes, type CurrentUserResponse } from '@template/contracts/identity';
-import { ApiProblemException, RateLimit, ZodResponse } from '@template/http';
+import { ApiProblemException, Public, RateLimit, ZodResponse } from '@template/http';
 import {
   LoginCommand,
   LogoutCommand,
@@ -19,7 +19,6 @@ import type { Request, Response } from 'express';
 
 import { AuthCookiesService } from '../cookies/auth-cookies.service.js';
 import { Client } from '../decorators/client-info.decorator.js';
-import { Public } from '../decorators/public.decorator.js';
 import { LoginDto } from '../dto/requests/login.dto.js';
 import { CurrentUserDto, toCurrentUserDto } from '../dto/responses/current-user.dto.js';
 

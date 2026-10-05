@@ -6,7 +6,6 @@ export {
   type AuthenticatedRequest,
   type AuthenticatedUser,
 } from './decorators/current-user.decorator.js';
-export { Public } from './decorators/public.decorator.js';
 export { RequireVerifiedEmail } from './decorators/require-verified-email.decorator.js';
 export { Roles } from './decorators/roles.decorator.js';
 export { IdentityErrorMapper } from './errors/identity-error.mapper.js';

@@ -2,7 +2,7 @@ import { Body, Controller, HttpCode, HttpStatus, Post, Res } from '@nestjs/commo
 import { CommandBus } from '@nestjs/cqrs';
 import { ApiTags } from '@nestjs/swagger';
 import { IdentityRoutes, type CurrentUserResponse } from '@template/contracts/identity';
-import { RateLimit, ZodResponse } from '@template/http';
+import { Public, RateLimit, ZodResponse } from '@template/http';
 import {
   RegisterUserCommand,
   ResendEmailVerificationCommand,
@@ -13,7 +13,6 @@ import type { Response } from 'express';
 
 import { AuthCookiesService } from '../cookies/auth-cookies.service.js';
 import { Client } from '../decorators/client-info.decorator.js';
-import { Public } from '../decorators/public.decorator.js';
 import { RegisterDto } from '../dto/requests/register.dto.js';
 import { ResendVerificationDto } from '../dto/requests/resend-verification.dto.js';
 import { VerifyEmailDto } from '../dto/requests/verify-email.dto.js';

@@ -35,4 +35,4 @@ guards. Controllers only translate HTTP ⇄ commands/queries; no business rule l
 - Access token (15 min) and refresh token (30 days, rotated) in **httpOnly** cookies; the
   refresh cookie is only sent to `/api/v1/auth`.
 - CSRF: double-submit cookie (`tpl_csrf`) echoed in `x-csrf-token` on every unsafe method.
-- Every route is private unless decorated with `@Public()`.
+- Every route is private unless decorated with `@Public()` (from `@template/http`).

@@ -13,6 +13,7 @@ export { createOpenApiDocument, type OpenApiMetadata } from './openapi/create-op
 export { DOCS_PATH, setupSwagger } from './openapi/setup-swagger.js';
 export { createCorsOptions } from './security/cors.options.js';
 export { createHelmetMiddleware } from './security/helmet.options.js';
+export { IS_PUBLIC_KEY, Public } from './security/public.decorator.js';
 export {
   RateLimit,
   SkipRateLimit,

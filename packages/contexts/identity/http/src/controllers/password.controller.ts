@@ -2,12 +2,11 @@ import { Body, Controller, HttpCode, HttpStatus, Post, Res } from '@nestjs/commo
 import { CommandBus } from '@nestjs/cqrs';
 import { ApiTags } from '@nestjs/swagger';
 import { IdentityRoutes } from '@template/contracts/identity';
-import { RateLimit } from '@template/http';
+import { Public, RateLimit } from '@template/http';
 import { RequestPasswordResetCommand, ResetPasswordCommand } from '@template/identity-application';
 import type { Response } from 'express';
 
 import { AuthCookiesService } from '../cookies/auth-cookies.service.js';
-import { Public } from '../decorators/public.decorator.js';
 import { ForgotPasswordDto } from '../dto/requests/forgot-password.dto.js';
 import { ResetPasswordDto } from '../dto/requests/reset-password.dto.js';
 

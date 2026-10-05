@@ -1,11 +1,12 @@
 import { Controller, Get, VERSION_NEUTRAL } from '@nestjs/common';
 import { HealthCheck, type HealthCheckResult } from '@nestjs/terminus';
-import { SkipRateLimit } from '@template/http';
+import { Public, SkipRateLimit } from '@template/http';
 
 import { ReadinessService } from '../readiness/readiness.service.js';
 
 /** Kubernetes-style probes, outside `/api/v1`: `/health/live` and `/health/ready`. */
 @Controller({ path: 'health', version: VERSION_NEUTRAL })
+@Public()
 @SkipRateLimit()
 export class HealthController {
   constructor(private readonly readiness: ReadinessService) {}

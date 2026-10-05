@@ -26,6 +26,40 @@
         "typescript-eslint": "8.71.0",
       },
     },
+    "apps/api": {
+      "name": "@template/api",
+      "version": "0.1.0",
+      "dependencies": {
+        "@nestjs/common": "12.1.2",
+        "@nestjs/core": "12.1.2",
+        "@nestjs/cqrs": "12.1.0",
+        "@nestjs/platform-express": "12.1.2",
+        "@nestjs/swagger": "12.0.2",
+        "@template/config": "workspace:*",
+        "@template/contracts": "workspace:*",
+        "@template/database": "workspace:*",
+        "@template/health": "workspace:*",
+        "@template/http": "workspace:*",
+        "@template/identity-application": "workspace:*",
+        "@template/identity-http": "workspace:*",
+        "@template/identity-infrastructure": "workspace:*",
+        "@template/logger": "workspace:*",
+        "@template/messaging": "workspace:*",
+        "@template/queue": "workspace:*",
+        "@template/redis": "workspace:*",
+        "bullmq": "6.3.11",
+        "express": "5.2.1",
+        "reflect-metadata": "0.2.2",
+        "rxjs": "7.8.2",
+      },
+      "devDependencies": {
+        "@nestjs/testing": "12.1.2",
+        "@template/testing": "workspace:*",
+        "@types/express": "5.0.6",
+        "@types/supertest": "7.2.1",
+        "supertest": "7.3.1",
+      },
+    },
     "packages/contexts/identity/application": {
       "name": "@template/identity-application",
       "version": "0.0.1",
@@ -835,6 +869,8 @@
     "@stablelib/base64": ["@stablelib/base64@1.0.1", "", {}, "sha512-1bnPQqSxSuc3Ii6MhBysoWCg58j97aUjuCSZrGSmDxNqtytIi0k8utUenAwTZN4V5mXXYGsVUI9zeBqy+jBOSQ=="],
 
     "@standard-schema/spec": ["@standard-schema/spec@1.1.0", "", {}, "sha512-l2aFy5jALhniG5HgqrD6jXLi/rUWrKvqN/qJx6yoJsgKhblVd+iqqU4RCXavm/jPityDo5TCvKMnpjKnOriy0w=="],
+
+    "@template/api": ["@template/api@workspace:apps/api"],
 
     "@template/config": ["@template/config@workspace:packages/platform/config"],
 
