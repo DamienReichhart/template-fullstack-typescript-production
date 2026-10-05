@@ -97,7 +97,8 @@
     },
     "typecheck": {
       "cache": true,
-      "inputs": ["default", "^production"]
+      "inputs": ["default", "^production"],
+      "dependsOn": ["^build"]
     }
   },
   "sync": {
