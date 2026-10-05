@@ -1,0 +1,11 @@
+dist
+out-tsc
+.next
+coverage
+playwright-report
+test-results
+bun.lock
+.nx
+packages/platform/database/src/generated
+packages/platform/database/prisma/migrations
+apps/api/openapi.json

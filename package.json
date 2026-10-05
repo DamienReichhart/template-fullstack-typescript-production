@@ -1,0 +1,58 @@
+{
+  "name": "@template/source",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "bun@1.4.2",
+  "engines": {
+    "node": ">=24.0.0",
+    "bun": ">=1.4.0"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/shared/*",
+    "packages/frontend/*",
+    "packages/platform/*",
+    "packages/contexts/*/*"
+  ],
+  "scripts": {
+    "prepare": "husky",
+    "dev": "nx run-many -t dev -p api worker scheduler web --parallel=4",
+    "build": "nx run-many -t build",
+    "lint": "nx run-many -t lint",
+    "typecheck": "nx run-many -t typecheck",
+    "test": "nx run-many -t test",
+    "e2e": "nx run-many -t e2e",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "check:structure": "bun tools/scripts/check-structure.ts",
+    "check:server-logic": "bun tools/scripts/check-no-server-logic.ts",
+    "db:generate": "nx run database:prisma-generate",
+    "db:migrate": "nx run database:prisma-migrate",
+    "db:deploy": "nx run database:prisma-deploy",
+    "docker:up": "docker compose up -d --wait",
+    "docker:down": "docker compose down",
+    "openapi": "nx run api:openapi"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "21.2.3",
+    "@commitlint/config-conventional": "21.2.3",
+    "@commitlint/types": "21.2.3",
+    "@eslint/js": "10.0.1",
+    "@nx/eslint": "23.2.1",
+    "@nx/eslint-plugin": "23.2.1",
+    "@nx/js": "23.2.1",
+    "@nx/playwright": "23.2.1",
+    "@types/bun": "1.4.2",
+    "@types/node": "24",
+    "eslint": "10.12.0",
+    "eslint-config-prettier": "10.1.8",
+    "globals": "17.13.0",
+    "husky": "9.1.7",
+    "lint-staged": "17.6.0",
+    "nx": "23.2.1",
+    "prettier": "3.9.9",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.71.0"
+  }
+}
