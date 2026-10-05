@@ -9,7 +9,7 @@ ENV NX_DAEMON=false \
     NX_NO_CLOUD=true \
     NX_SKIP_NX_CACHE=true
 
-# ── Build: full install, compile the api and every package it depends on ─────────
+# ── Build: full install, compile the scheduler and every package it depends on ─────────
 FROM base AS build
 COPY . .
 # Optional `ca` secret: extra CA bundle for TLS-intercepting corporate proxies.
@@ -19,14 +19,23 @@ RUN --mount=type=secret,id=ca,required=false \
     bun install --frozen-lockfile
 RUN bunx nx run scheduler:build --output-style=static
 
-# ── Prune: production dependencies and compiled output only ──────────────────────
-FROM build AS prune
+# ── Manifests: every workspace package.json, which the lockfile describes ────────
+FROM base AS manifests
+RUN --mount=type=bind,from=build,source=/repo,target=/build \
+    cd /build \
+ && find . -name package.json -not -path '*/node_modules/*' | tar -cf - -T - | tar -xf - -C /repo \
+ && cp bun.lock bunfig.toml /repo/
+
+# ── Prune: this app's production dependencies and compiled output, nothing else ──
+FROM manifests AS prune
 RUN --mount=type=secret,id=ca,required=false \
-    rm -rf apps/web apps/web-e2e apps/api-e2e apps/api apps/worker tools \
- && if [ -f /run/secrets/ca ]; then export NODE_EXTRA_CA_CERTS=/run/secrets/ca; fi \
- && bun install --production \
- && find apps packages -type d \( -name src -o -name out-tsc -o -name prisma \) -prune -exec rm -rf {} + \
- && find apps packages \( -name '*.tsbuildinfo' -o -name '*.spec.*' -o -name 'tsconfig*.json' \) -delete
+    if [ -f /run/secrets/ca ]; then export NODE_EXTRA_CA_CERTS=/run/secrets/ca; fi; \
+    bun install --production --frozen-lockfile --ignore-scripts --filter @template/scheduler
+RUN --mount=type=bind,from=build,source=/repo,target=/build \
+    cd /build \
+ && find apps/scheduler packages -type d -name dist -not -path '*/node_modules/*' -prune \
+  | tar -cf - --exclude='*.map' --exclude='*.d.ts' --exclude='*.tsbuildinfo' --exclude='*.spec.*' -T - \
+  | tar -xf - -C /repo
 
 # ── Runtime ──────────────────────────────────────────────────────────────────────
 FROM oven/bun:${BUN_VERSION}-slim AS runtime

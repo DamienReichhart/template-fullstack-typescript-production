@@ -20,19 +20,36 @@ RUN --mount=type=secret,id=ca,required=false \
     bun install --frozen-lockfile
 RUN bunx nx run api:build --output-style=static
 
-# ── Migrations: one-shot job run before each deploy ──────────────────────────────
-FROM build AS migrator
+# ── Manifests: every workspace package.json, which the lockfile describes ────────
+FROM base AS manifests
+RUN --mount=type=bind,from=build,source=/repo,target=/build \
+    cd /build \
+ && find . -name package.json -not -path '*/node_modules/*' | tar -cf - -T - | tar -xf - -C /repo \
+ && cp bun.lock bunfig.toml /repo/
+
+# ── Migrations: one-shot job run before each deploy (Prisma CLI, schema, migrations) ─
+FROM manifests AS migrator
+# Install scripts run here: Prisma's postinstall fetches the schema engine at build time, so the
+# image never downloads anything (or needs write access) when it migrates.
+RUN --mount=type=secret,id=ca,required=false \
+    if [ -f /run/secrets/ca ]; then export NODE_EXTRA_CA_CERTS=/run/secrets/ca; fi; \
+    bun install --frozen-lockfile --filter @template/database
+COPY --from=build /repo/packages/platform/database/prisma.config.ts /repo/packages/platform/database/
+COPY --from=build /repo/packages/platform/database/prisma /repo/packages/platform/database/prisma
 WORKDIR /repo/packages/platform/database
+USER bun
 CMD ["bunx", "prisma", "migrate", "deploy"]
 
-# ── Prune: production dependencies and compiled output only ──────────────────────
-FROM build AS prune
+# ── Prune: this app's production dependencies and compiled output, nothing else ──
+FROM manifests AS prune
 RUN --mount=type=secret,id=ca,required=false \
-    rm -rf apps/web apps/web-e2e apps/api-e2e apps/worker apps/scheduler tools \
- && if [ -f /run/secrets/ca ]; then export NODE_EXTRA_CA_CERTS=/run/secrets/ca; fi \
- && bun install --production \
- && find apps packages -type d \( -name src -o -name out-tsc -o -name prisma \) -prune -exec rm -rf {} + \
- && find apps packages \( -name '*.tsbuildinfo' -o -name '*.spec.*' -o -name 'tsconfig*.json' \) -delete
+    if [ -f /run/secrets/ca ]; then export NODE_EXTRA_CA_CERTS=/run/secrets/ca; fi; \
+    bun install --production --frozen-lockfile --ignore-scripts --filter @template/api
+RUN --mount=type=bind,from=build,source=/repo,target=/build \
+    cd /build \
+ && find apps/api packages -type d -name dist -not -path '*/node_modules/*' -prune \
+  | tar -cf - --exclude='*.map' --exclude='*.d.ts' --exclude='*.tsbuildinfo' --exclude='*.spec.*' -T - \
+  | tar -xf - -C /repo
 
 # ── Runtime ──────────────────────────────────────────────────────────────────────
 FROM oven/bun:${BUN_VERSION}-slim AS runtime
