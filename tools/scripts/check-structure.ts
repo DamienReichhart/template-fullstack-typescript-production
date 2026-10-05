@@ -146,6 +146,33 @@ const featuresDir = join(ROOT, 'apps', 'web', 'src', 'features');
 const features = dirs(featuresDir);
 for (const feature of features) requireFiles(join(featuresDir, feature), ['index.ts']);
 
+/** Integration specs run only through a `test:int` target: a project without one drops them. */
+function findFiles(dir: string, suffix: string): string[] {
+  return entries(dir).flatMap((name) => {
+    const path = join(dir, name);
+    if (name === 'node_modules' || name === 'dist') return [];
+    return isDir(path) ? findFiles(path, suffix) : name.endsWith(suffix) ? [path] : [];
+  });
+}
+const projectRoots = [
+  ...dirs(join(ROOT, 'apps')).map((app) => join(ROOT, 'apps', app)),
+  ...['shared', 'frontend', 'platform'].flatMap((group) =>
+    dirs(join(ROOT, 'packages', group)).map((pkg) => join(ROOT, 'packages', group, pkg)),
+  ),
+  ...contextNames.flatMap((context) =>
+    dirs(join(contextsRoot, context)).map((layer) => join(contextsRoot, context, layer)),
+  ),
+];
+for (const project of projectRoots) {
+  const manifest = join(project, 'package.json');
+  if (!existsSync(manifest) || findFiles(join(project, 'src'), '.int-spec.ts').length === 0)
+    continue;
+  const { nx = {} } = JSON.parse(readFileSync(manifest, 'utf8')) as {
+    nx?: { targets?: Record<string, unknown> };
+  };
+  if (!nx.targets?.['test:int']) fail(project, 'has *.int-spec.ts files but no test:int target');
+}
+
 /** E2E suites mirror what they test. */
 function mirror(dir: string, allowed: string[], label: string) {
   for (const name of dirs(dir)) {
