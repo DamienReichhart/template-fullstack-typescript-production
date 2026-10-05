@@ -26,6 +26,9 @@
     },
     {
       "path": "./packages/platform/redis"
+    },
+    {
+      "path": "./packages/platform/messaging"
     }
   ]
 }

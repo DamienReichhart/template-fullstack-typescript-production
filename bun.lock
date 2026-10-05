@@ -73,6 +73,27 @@
         "pino-pretty": "13.2.0",
       },
     },
+    "packages/platform/messaging": {
+      "name": "@template/messaging",
+      "version": "0.0.1",
+      "dependencies": {
+        "@bull-board/api": "9.10.4",
+        "@bull-board/express": "9.10.4",
+        "@bull-board/nestjs": "9.10.4",
+        "@nestjs/bullmq": "12.0.0",
+        "@nestjs/common": "12.1.2",
+        "@nestjs/core": "12.1.2",
+        "@template/config": "workspace:*",
+        "@template/queue": "workspace:*",
+        "@template/redis": "workspace:*",
+        "bullmq": "6.3.11",
+      },
+      "devDependencies": {
+        "@nestjs/testing": "12.1.2",
+        "reflect-metadata": "0.2.2",
+        "zod": "4.6.5",
+      },
+    },
     "packages/platform/queue": {
       "name": "@template/queue",
       "version": "0.0.1",
@@ -301,6 +322,14 @@
 
     "@borewit/text-codec": ["@borewit/text-codec@0.2.2", "", {}, "sha512-DDaRehssg1aNrH4+2hnj1B7vnUGEjU6OIlyRdkMd0aUdIUvKXrJfXsy8LVtXAy7DRvYVluWbMspsRhz2lcW0mQ=="],
 
+    "@bull-board/api": ["@bull-board/api@9.10.4", "", { "dependencies": { "redis-info": "^3.1.0", "valibot": "^1.5.0" }, "peerDependencies": { "@bull-board/ui": "9.10.4", "bull": "^4.16.5", "bullmq": "^5.56.0 || ^6.0.0" }, "optionalPeers": ["bull", "bullmq"] }, "sha512-DMI4FrNacQRmNsExF4kCXPE01sDiW2o0UgMxRsogFvcLphQIf3TgspiNFURag6CieMneJp2b/ba1TWPJu1Jnpw=="],
+
+    "@bull-board/express": ["@bull-board/express@9.10.4", "", { "dependencies": { "@bull-board/api": "9.10.4", "@bull-board/ui": "9.10.4", "ejs": "^6.0.1", "express": "^5.2.1" } }, "sha512-4vInwCI8x4V/xyxdfw5+vP9HukfYV+s40y/AhvuXyQ/2DJ0DHVDgGj0OuY9PzxTcXgYBQiH9HNYlPYHYpy6+Fg=="],
+
+    "@bull-board/nestjs": ["@bull-board/nestjs@9.10.4", "", { "peerDependencies": { "@bull-board/api": "^9.10.4", "@nestjs/bull-shared": "^10.0.0 || ^11.0.0 || ^12.0.0", "@nestjs/common": "^9.0.0 || ^10.0.0 || ^11.0.0 || ^12.0.0", "@nestjs/core": "^9.0.0 || ^10.0.0 || ^11.0.0 || ^12.0.0", "reflect-metadata": "^0.1.13 || ^0.2.0", "rxjs": "^7.8.1" } }, "sha512-4ZFe8Cf4KcIBLSnpfaf2lFLpAM40pBCXUWOxeRFpJGHVM44cNVjDQ2acE1n0VfF3jBigEYiI4IJNQeeXT4Oi8A=="],
+
+    "@bull-board/ui": ["@bull-board/ui@9.10.4", "", { "dependencies": { "@bull-board/api": "9.10.4" } }, "sha512-eBg7LcIOR1WDZAZBs6l/eclvpnRD0H2PHTLmoMBBTTsbIHh45aCgfKeFMTIbUQ9mmNaHD6rR9vgcylWZ8TFOdg=="],
+
     "@cacheable/memory": ["@cacheable/memory@2.2.0", "", { "dependencies": { "@cacheable/utils": "^2.5.0", "@keyv/bigmap": "^1.3.1", "hookified": "^1.15.1", "keyv": "^5.6.0" } }, "sha512-CTLKqLItRCEixEAewD3/j9DB3/o96gpTPD4eJ1v+DGOlxZRZncRQkGYqqnAGCscYd6RNeXfGeiuCphsPtqyIfQ=="],
 
     "@cacheable/utils": ["@cacheable/utils@2.5.0", "", { "dependencies": { "hashery": "^1.5.1", "keyv": "^5.6.0" } }, "sha512-buipgOVDkkPXNR5+xBpDw7Zk2n1EvU7qBJCNUcL7rhQ//kfpOXPAvQ511Os0vpLYJ1pZnvudNytkQt2hst3wqA=="],
@@ -419,6 +448,10 @@
 
     "@napi-rs/wasm-runtime": ["@napi-rs/wasm-runtime@0.2.4", "", { "dependencies": { "@emnapi/core": "^1.1.0", "@emnapi/runtime": "^1.1.0", "@tybys/wasm-util": "^0.9.0" } }, "sha512-9zESzOO5aDByvhIAsOy9TbpZ0Ur2AJbUI7UT73kcUTS2mxAMHOBaa1st/jAymNoCtvrit99kkzT1FZuXVcgfIQ=="],
 
+    "@nestjs/bull-shared": ["@nestjs/bull-shared@12.0.0", "", { "dependencies": { "tslib": "2.8.1" }, "peerDependencies": { "@nestjs/common": "^10.0.0 || ^11.0.0 || ^12.0.0", "@nestjs/core": "^10.0.0 || ^11.0.0 || ^12.0.0" } }, "sha512-OShKmwIt00oK2DIqKP4mjh9C2RQsoHPZbBsQwbnETPmK/+Ld1xyYQa1WOrYKKA8qoSzZJvxQaA6/4sV5SfAIyA=="],
+
+    "@nestjs/bullmq": ["@nestjs/bullmq@12.0.0", "", { "dependencies": { "@nestjs/bull-shared": "^12.0.0", "tslib": "2.8.1" }, "peerDependencies": { "@nestjs/common": "^10.0.0 || ^11.0.0 || ^12.0.0", "@nestjs/core": "^10.0.0 || ^11.0.0 || ^12.0.0", "bullmq": "^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0" } }, "sha512-8aOL+TA2W6BgWVeNroofk4CDJrutPt8m+Kp5oghwOUHF73mSPDWTS2vPssuF8IrBq8g195JnKAc2Tu1OdQidLQ=="],
+
     "@nestjs/common": ["@nestjs/common@12.1.2", "", { "dependencies": { "@standard-schema/spec": "1.1.0", "file-type": "22.1.1", "iterare": "1.2.1", "load-esm": "1.0.3", "tslib": "2.8.1", "uid": "2.0.2" }, "peerDependencies": { "class-transformer": ">=0.4.1", "class-validator": ">=0.13.2", "reflect-metadata": "^0.1.12 || ^0.2.0", "rxjs": "^7.1.0" }, "optionalPeers": ["class-transformer", "class-validator"] }, "sha512-e2tvLcEaG18sJy5IXrdSLv0ZBpR5djWxypCLkLuMAEFCvVPYL1lEIhvAMBkarlg+ZA8tbZN40J0tFurUl9NpdA=="],
 
     "@nestjs/core": ["@nestjs/core@12.1.2", "", { "dependencies": { "fast-safe-stringify": "2.1.1", "iterare": "1.2.1", "path-to-regexp": "8.4.2", "tslib": "2.8.1", "uid": "2.0.2" }, "peerDependencies": { "@nestjs/common": "^12.0.0", "@nestjs/microservices": "^12.0.0", "@nestjs/platform-express": "^12.0.0", "@nestjs/websockets": "^12.0.0", "reflect-metadata": "^0.1.12 || ^0.2.0", "rxjs": "^7.1.0" }, "optionalPeers": ["@nestjs/microservices", "@nestjs/platform-express", "@nestjs/websockets"] }, "sha512-ieNRDv6P6dLsF/wMz9IUjwnyQbj7/Oluq1FXe3Xhje7TFSKPprLc83QniA2I6tjkr7YVDosdL2Dj7CVv9kU8og=="],
@@ -524,6 +557,8 @@
     "@template/i18n": ["@template/i18n@workspace:packages/shared/i18n"],
 
     "@template/logger": ["@template/logger@workspace:packages/platform/logger"],
+
+    "@template/messaging": ["@template/messaging@workspace:packages/platform/messaging"],
 
     "@template/queue": ["@template/queue@workspace:packages/platform/queue"],
 
@@ -1267,6 +1302,8 @@
 
     "redis-errors": ["redis-errors@1.2.0", "", {}, "sha512-1qny3OExCf0UvUV/5wpYKf2YwPcOqXzkwKKSmKHiE6ZMQs5heeE/c8eXK+PNllPvmjgAbfnsbpkGZWy8cBpn9w=="],
 
+    "redis-info": ["redis-info@3.1.0", "", { "dependencies": { "lodash": "^4.17.11" } }, "sha512-ER4L9Sh/vm63DkIE0bkSjxluQlioBiBgf5w1UuldaW/3vPcecdljVDisZhmnCMvsxHNiARTTDDHGg9cGwTfrKg=="],
+
     "reflect-metadata": ["reflect-metadata@0.2.2", "", {}, "sha512-urBwgfrvVP/eAyXx4hluJivBKzuEbSQs9rKWCrCkbSxNv8mxPcUZKeuoF3Uy4mJl3Lwprp6yy5/39VWigZ4K6Q=="],
 
     "regenerate": ["regenerate@1.5.0", "", {}, "sha512-1s+CxXjJ71i7LNVy8nYwg47XV4y6lAnOEhsMtSKq3WpmPfhl9LuKlTqKIn/3yUpE8lBz+W+TT88Bxyhnr0U4yw=="],
@@ -1433,7 +1470,7 @@
 
     "uuid": ["uuid@14.0.2", "", { "bin": { "uuid": "dist-node/bin/uuid" } }, "sha512-xZe/16rV4aa+HGSOCiY2YeLT1OybRLrrkL/Rqaq7p7GMVXjFh+6wN4oMYgjFmnSnhY8t6Xpdl2l9qmnHYuMHwQ=="],
 
-    "valibot": ["valibot@1.4.2", "", { "peerDependencies": { "typescript": ">=5" }, "optionalPeers": ["typescript"] }, "sha512-gjdCvJ6d3RyHAneqxMYMW9QMCwYMb3jpOO0IyHZV1bnRHFBHrX3VkIILt5XYR0WhwHiH7Mty8ovuPZ/O3gamrg=="],
+    "valibot": ["valibot@1.5.0", "", { "peerDependencies": { "typescript": ">=5" }, "optionalPeers": ["typescript"] }, "sha512-nil6AkP2TChWL43Z5uJ6GTxX01CUA+g8LWUM+N/rB9NBbkUMaUsi9PUNzlUPgoKASgmx9f7eGOYpJ04/fSa6FQ=="],
 
     "vary": ["vary@1.1.2", "", {}, "sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg=="],
 
@@ -1479,11 +1516,15 @@
 
     "@babel/preset-env/semver": ["semver@6.3.1", "", { "bin": { "semver": "bin/semver.js" } }, "sha512-BR7VvDCVHO+q2xBEWskxS6DJE1qRnb7DxzUrogb71CWoSficBxYsiAGd+Kl0mmq/MprG9yArRkyrQxTO6XjMzA=="],
 
+    "@bull-board/express/ejs": ["ejs@6.0.1", "", { "bin": { "ejs": "bin/cli.js" } }, "sha512-UaaM14yby8U3k02ihS1Bmj5Kz2d7CCQM1scxpgs4Mhkq8F1wR2gl3+Ts4h5Ne4Mnt7M9m4Dw7jsuMr3+xO4vZA=="],
+
     "@commitlint/config-validator/ajv": ["ajv@8.20.0", "", { "dependencies": { "fast-deep-equal": "^3.1.3", "fast-uri": "^3.0.1", "json-schema-traverse": "^1.0.0", "require-from-string": "^2.0.2" } }, "sha512-Thbli+OlOj+iMPYFBVBfJ3OmCAnaSyNn4M1vz9T6Gka5Jt9ba/HIR56joy65tY6kx/FCF5VXNB819Y7/GUrBGA=="],
 
     "@eslint-community/eslint-utils/eslint-visitor-keys": ["eslint-visitor-keys@3.4.3", "", {}, "sha512-wpc+LXeiyiisxPlEkUzU6svyS1frIO3Mgxj1fdy7Pm8Ygzguax2N3Fa/D/ag1WqbOprdI+uY6wMUl8/a2G+iag=="],
 
     "@eslint/config-array/minimatch": ["minimatch@10.2.6", "", { "dependencies": { "brace-expansion": "^5.0.8" } }, "sha512-vpLQEs+VLCr1nU0BXS07maYoFwlDAH0gngQuuttxIwutDFEMHq2blX+8vpgxDdK3J1PwjCJiep77OitTZ4Ll1A=="],
+
+    "@prisma/dev/valibot": ["valibot@1.4.2", "", { "peerDependencies": { "typescript": ">=5" }, "optionalPeers": ["typescript"] }, "sha512-gjdCvJ6d3RyHAneqxMYMW9QMCwYMb3jpOO0IyHZV1bnRHFBHrX3VkIILt5XYR0WhwHiH7Mty8ovuPZ/O3gamrg=="],
 
     "@prisma/engines/@prisma/get-platform": ["@prisma/get-platform@7.10.0", "", { "dependencies": { "@prisma/debug": "7.10.0" } }, "sha512-0bra1LFYi8xNw0yqV62bHJNQk4BKleOngZiqPWIQc7a3+9q6rqsnqJ15BuepP8943PFMvtmgnP52juZsyYkA6w=="],
 
