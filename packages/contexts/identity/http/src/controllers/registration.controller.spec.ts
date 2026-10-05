@@ -2,7 +2,7 @@ import 'reflect-metadata';
 
 import { afterEach, describe, expect, it } from 'bun:test';
 
-import { createIdentityTestApp } from '../testing/create-identity-test-app.js';
+import { createIdentityTestApp } from '../testing/create-identity-test-app.ts';
 
 let context: Awaited<ReturnType<typeof createIdentityTestApp>>;
 

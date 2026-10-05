@@ -4,7 +4,7 @@ import { describe, expect, it } from 'bun:test';
 import type { ExecutionContext } from '@nestjs/common';
 import type { Reflector } from '@nestjs/core';
 
-import { RolesGuard } from './roles.guard.js';
+import { RolesGuard } from './roles.guard.ts';
 
 function guardFor(roles: string[] | undefined, user?: { role: string }) {
   const reflector = { getAllAndOverride: () => roles } as unknown as Reflector;

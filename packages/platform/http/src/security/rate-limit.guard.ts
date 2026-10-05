@@ -11,9 +11,9 @@ import { CommonErrorCode } from '@template/contracts/common';
 import { InjectRedis, type Redis } from '@template/redis';
 import type { Request, Response } from 'express';
 
-import { ApiProblemException } from '../errors/api-problem.exception.js';
-import { RATE_LIMIT_KEY, type RateLimitOptions } from './rate-limit.decorators.js';
-import { RedisRateLimiter } from './redis-rate-limiter.js';
+import { ApiProblemException } from '../errors/api-problem.exception.ts';
+import { RATE_LIMIT_KEY, type RateLimitOptions } from './rate-limit.decorators.ts';
+import { RedisRateLimiter } from './redis-rate-limiter.ts';
 
 /**
  * Global per-IP, per-route rate limit. Exposes the IETF `RateLimit-*` headers and

@@ -1,7 +1,7 @@
 import { afterAll, beforeEach, describe, expect, it } from 'bun:test';
 import { createRedisConnection } from '@template/redis';
 
-import { RedisRateLimiter } from './redis-rate-limiter.js';
+import { RedisRateLimiter } from './redis-rate-limiter.ts';
 
 const redis = createRedisConnection(process.env['REDIS_URL'] ?? 'redis://localhost:6379', {
   db: 15,

@@ -3,7 +3,7 @@ import { defineJob, defineQueue } from '@template/queue';
 import { UnrecoverableError, type Job } from 'bullmq';
 import { z } from 'zod';
 
-import { onJob, TypedProcessor } from './typed-processor.js';
+import { onJob, TypedProcessor } from './typed-processor.ts';
 
 const reports = defineQueue('reports');
 const generateReport = defineJob(reports, 'generate-report', z.object({ reportId: z.string() }));

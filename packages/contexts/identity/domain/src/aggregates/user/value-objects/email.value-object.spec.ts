@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'bun:test';
 
-import { InvalidEmailError } from '../errors/invalid-email.error.js';
-import { Email } from './email.value-object.js';
+import { InvalidEmailError } from '../errors/invalid-email.error.ts';
+import { Email } from './email.value-object.ts';
 
 describe('Email', () => {
   it('normalises case and surrounding whitespace', () => {

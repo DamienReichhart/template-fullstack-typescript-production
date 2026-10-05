@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'bun:test';
 
-import { DomainEvent } from '../events/domain-event.js';
-import { AggregateRoot } from './aggregate-root.js';
-import { Identifier } from './identifier.js';
+import { DomainEvent } from '../events/domain-event.ts';
+import { AggregateRoot } from './aggregate-root.ts';
+import { Identifier } from './identifier.ts';
 
 class OrderId extends Identifier {
   static create() {

@@ -9,8 +9,8 @@ import {
 import { isUserRole } from '@template/identity-domain';
 import { errors, jwtVerify, SignJWT } from 'jose';
 
-import type { IdentityConfig } from '../../config/identity.config.js';
-import { identityConfig } from '../../config/identity-env.schema.js';
+import type { IdentityConfig } from '../../config/identity.config.ts';
+import { identityConfig } from '../../config/identity-env.schema.ts';
 
 const ALGORITHM = 'HS256';
 const AUDIENCE = 'template-web';

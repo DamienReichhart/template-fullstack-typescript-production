@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'bun:test';
 import type { User as UserRecord } from '@template/database';
 
-import { UserMapper } from './user.mapper.js';
+import { UserMapper } from './user.mapper.ts';
 
 const record: UserRecord = {
   id: '0199b0a0-0000-7000-8000-000000000001',

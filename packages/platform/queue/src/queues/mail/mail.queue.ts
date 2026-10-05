@@ -1,4 +1,4 @@
-import { defineQueue } from '../../core/define-queue.js';
+import { defineQueue } from '../../core/define-queue.ts';
 
 /**
  * Transactional emails. Payloads can carry one-time tokens, so completed jobs are removed

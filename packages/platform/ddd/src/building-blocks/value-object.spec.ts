@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'bun:test';
 
-import { ValueObject } from './value-object.js';
+import { ValueObject } from './value-object.ts';
 
 class Money extends ValueObject<{ amount: number; currency: string; at?: Date }> {
   static of(amount: number, currency: string, at?: Date) {

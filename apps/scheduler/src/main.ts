@@ -5,7 +5,7 @@ import { Logger } from '@template/logger';
 
 async function bootstrap(): Promise<void> {
   // Imported here so an invalid environment is reported by the catch below, not as a stack trace.
-  const { SchedulerModule } = await import('./scheduler.module.js');
+  const { SchedulerModule } = await import('./scheduler.module.ts');
   const app = await NestFactory.createApplicationContext(SchedulerModule, { bufferLogs: true });
   app.useLogger(app.get(Logger));
   app.enableShutdownHooks();

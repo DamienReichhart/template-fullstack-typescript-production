@@ -6,9 +6,9 @@ import { Public, RateLimit } from '@template/http';
 import { RequestPasswordResetCommand, ResetPasswordCommand } from '@template/identity-application';
 import type { Response } from 'express';
 
-import { AuthCookiesService } from '../cookies/auth-cookies.service.js';
-import { ForgotPasswordDto } from '../dto/requests/forgot-password.dto.js';
-import { ResetPasswordDto } from '../dto/requests/reset-password.dto.js';
+import { AuthCookiesService } from '../cookies/auth-cookies.service.ts';
+import { ForgotPasswordDto } from '../dto/requests/forgot-password.dto.ts';
+import { ResetPasswordDto } from '../dto/requests/reset-password.dto.ts';
 
 const routes = IdentityRoutes.auth;
 

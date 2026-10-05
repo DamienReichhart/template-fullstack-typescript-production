@@ -1,12 +1,12 @@
 import { describe, expect, it } from 'bun:test';
 
-import { UserId } from '../user/value-objects/user-id.value-object.js';
-import { RefreshTokenAlreadyRotatedError } from './errors/refresh-token-already-rotated.error.js';
-import { RefreshTokenReuseDetectedError } from './errors/refresh-token-reuse-detected.error.js';
-import { SessionExpiredError } from './errors/session-expired.error.js';
-import { SessionRevokedError } from './errors/session-revoked.error.js';
-import { Session } from './session.aggregate.js';
-import { RefreshTokenHash } from './value-objects/refresh-token-hash.value-object.js';
+import { UserId } from '../user/value-objects/user-id.value-object.ts';
+import { RefreshTokenAlreadyRotatedError } from './errors/refresh-token-already-rotated.error.ts';
+import { RefreshTokenReuseDetectedError } from './errors/refresh-token-reuse-detected.error.ts';
+import { SessionExpiredError } from './errors/session-expired.error.ts';
+import { SessionRevokedError } from './errors/session-revoked.error.ts';
+import { Session } from './session.aggregate.ts';
+import { RefreshTokenHash } from './value-objects/refresh-token-hash.value-object.ts';
 
 const t0 = new Date('2026-01-01T00:00:00.000Z');
 const t1 = new Date('2026-01-01T01:00:00.000Z');

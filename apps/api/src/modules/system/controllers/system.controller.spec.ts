@@ -6,8 +6,8 @@ import { QueryBus } from '@nestjs/cqrs';
 import { createTestApp } from '@template/testing';
 import request from 'supertest';
 
-import { SystemStatusService } from '../services/system-status.service.js';
-import { SystemController } from './system.controller.js';
+import { SystemStatusService } from '../services/system-status.service.ts';
+import { SystemController } from './system.controller.ts';
 
 let app: INestApplication;
 

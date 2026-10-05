@@ -17,10 +17,10 @@ import {
 } from '@template/identity-domain';
 import type { Request, Response } from 'express';
 
-import { AuthCookiesService } from '../cookies/auth-cookies.service.js';
-import { Client } from '../decorators/client-info.decorator.js';
-import { LoginDto } from '../dto/requests/login.dto.js';
-import { CurrentUserDto, toCurrentUserDto } from '../dto/responses/current-user.dto.js';
+import { AuthCookiesService } from '../cookies/auth-cookies.service.ts';
+import { Client } from '../decorators/client-info.decorator.ts';
+import { LoginDto } from '../dto/requests/login.dto.ts';
+import { CurrentUserDto, toCurrentUserDto } from '../dto/responses/current-user.dto.ts';
 
 const routes = IdentityRoutes.auth;
 const refreshCookie = (request: Request) =>

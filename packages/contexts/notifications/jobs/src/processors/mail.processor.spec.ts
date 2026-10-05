@@ -8,7 +8,7 @@ import {
 } from '@template/notifications-application';
 import type { Job } from 'bullmq';
 
-import { MailProcessor } from './mail.processor.js';
+import { MailProcessor } from './mail.processor.ts';
 
 function setup() {
   const execute = mock(async () => undefined);

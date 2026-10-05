@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'bun:test';
 import { z } from 'zod';
 
-import { defineJob } from './define-job.js';
-import { defineQueue } from './define-queue.js';
+import { defineJob } from './define-job.ts';
+import { defineQueue } from './define-queue.ts';
 
 describe('defineQueue / defineJob', () => {
   const reports = defineQueue('reports', { defaultJobOptions: { attempts: 2 } });

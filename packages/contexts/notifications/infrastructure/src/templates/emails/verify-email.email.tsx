@@ -1,9 +1,9 @@
 import { Link } from '@react-email/components';
 
-import { EmailButton } from '../components/email-button.js';
-import { EmailHeading, EmailParagraph } from '../components/email-text.js';
-import { EmailLayout } from '../layouts/email-layout.js';
-import type { Translate } from '../translate.js';
+import { EmailButton } from '../components/email-button.tsx';
+import { EmailHeading, EmailParagraph } from '../components/email-text.tsx';
+import { EmailLayout } from '../layouts/email-layout.tsx';
+import type { Translate } from '../translate.ts';
 
 export interface VerifyEmailEmailProps {
   t: Translate;

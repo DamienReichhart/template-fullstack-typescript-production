@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { MessagingModule } from '@template/messaging';
 
-import { identityMaintenanceSchedules } from './schedules/identity-maintenance.schedules.js';
+import { identityMaintenanceSchedules } from './schedules/identity-maintenance.schedules.ts';
 
 /** Declares the identity context's recurring jobs. */
 @Module({

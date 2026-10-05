@@ -5,8 +5,8 @@ import { IdentityRoutes, type CurrentUserResponse } from '@template/contracts/id
 import { ZodResponse } from '@template/http';
 import { GetCurrentUserQuery } from '@template/identity-application';
 
-import { CurrentUser, type AuthenticatedUser } from '../decorators/current-user.decorator.js';
-import { CurrentUserDto, toCurrentUserDto } from '../dto/responses/current-user.dto.js';
+import { CurrentUser, type AuthenticatedUser } from '../decorators/current-user.decorator.ts';
+import { CurrentUserDto, toCurrentUserDto } from '../dto/responses/current-user.dto.ts';
 
 @ApiTags('me')
 @ApiCookieAuth()

@@ -1,9 +1,9 @@
 import { describe, expect, it } from 'bun:test';
 import { UserNotFoundError } from '@template/identity-domain';
 
-import { createIdentityTestKit } from '../../testing/identity-test-kit.js';
-import { GetCurrentUserHandler } from './get-current-user.handler.js';
-import { GetCurrentUserQuery } from './get-current-user.query.js';
+import { createIdentityTestKit } from '../../testing/identity-test-kit.ts';
+import { GetCurrentUserHandler } from './get-current-user.handler.ts';
+import { GetCurrentUserQuery } from './get-current-user.query.ts';
 
 describe('GetCurrentUserHandler', () => {
   it('returns the view of the user', async () => {

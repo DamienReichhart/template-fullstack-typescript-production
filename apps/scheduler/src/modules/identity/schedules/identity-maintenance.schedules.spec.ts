@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'bun:test';
 
-import { identityMaintenanceSchedules } from './identity-maintenance.schedules.js';
+import { identityMaintenanceSchedules } from './identity-maintenance.schedules.ts';
 
 describe('identityMaintenanceSchedules', () => {
   it('declares valid payloads for their jobs', () => {

@@ -1,3 +1,3 @@
-export * from './common/index.js';
-export * from './identity/index.js';
-export * from './system/index.js';
+export * from './common/index.ts';
+export * from './identity/index.ts';
+export * from './system/index.ts';

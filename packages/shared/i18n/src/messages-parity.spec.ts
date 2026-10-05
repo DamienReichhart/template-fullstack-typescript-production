@@ -2,9 +2,9 @@ import { describe, expect, it } from 'bun:test';
 import { readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 
-import { defaultLocale, locales } from './config/locales.js';
-import { namespaces } from './config/namespaces.js';
-import { loadMessages } from './loaders/load-messages.js';
+import { defaultLocale, locales } from './config/locales.ts';
+import { namespaces } from './config/namespaces.ts';
+import { loadMessages } from './loaders/load-messages.ts';
 
 const MESSAGES_DIR = join(import.meta.dir, '..', 'messages');
 

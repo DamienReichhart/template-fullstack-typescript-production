@@ -2,7 +2,7 @@ import { Module, type DynamicModule } from '@nestjs/common';
 import { appConfig, type ConfigType } from '@template/config';
 import { LoggerModule as PinoLoggerModule } from 'nestjs-pino';
 
-import { createPinoOptions } from './options/pino-options.factory.js';
+import { createPinoOptions } from './options/pino-options.factory.ts';
 
 export interface LoggerModuleOptions {
   /** Added to every log line as `service`, e.g. `api`, `worker`. */

@@ -7,7 +7,7 @@ import {
   type UserId,
 } from '@template/identity-domain';
 
-import { OneTimeTokenMapper } from '../mappers/one-time-token.mapper.js';
+import { OneTimeTokenMapper } from '../mappers/one-time-token.mapper.ts';
 
 @Injectable()
 export class PrismaOneTimeTokenRepository extends OneTimeTokenRepository {

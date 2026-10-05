@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'bun:test';
 import type { ReadinessService } from '@template/health';
 
-import { SystemStatusService } from './system-status.service.js';
+import { SystemStatusService } from './system-status.service.ts';
 
 const readiness = (database: 'up' | 'down') =>
   ({

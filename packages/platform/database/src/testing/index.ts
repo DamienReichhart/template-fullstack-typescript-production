@@ -1,1 +1,1 @@
-export { resetDatabase } from './reset-database.js';
+export { resetDatabase } from './reset-database.ts';

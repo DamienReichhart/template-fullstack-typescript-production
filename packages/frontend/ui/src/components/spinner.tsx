@@ -1,7 +1,7 @@
 import { Loader2 } from 'lucide-react';
 import type { ComponentProps } from 'react';
 
-import { cn } from '../lib/cn.js';
+import { cn } from '../lib/cn.ts';
 
 export function Spinner({ className, ...props }: ComponentProps<'svg'>) {
   return (

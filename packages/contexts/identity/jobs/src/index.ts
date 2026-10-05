@@ -1,2 +1,2 @@
-export { IdentityJobsModule, type IdentityJobsModuleOptions } from './identity-jobs.module.js';
-export { IdentityMaintenanceProcessor } from './processors/identity-maintenance.processor.js';
+export { IdentityJobsModule, type IdentityJobsModuleOptions } from './identity-jobs.module.ts';
+export { IdentityMaintenanceProcessor } from './processors/identity-maintenance.processor.ts';

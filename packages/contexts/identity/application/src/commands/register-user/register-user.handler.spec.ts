@@ -1,9 +1,9 @@
 import { describe, expect, it } from 'bun:test';
 import { Email, EmailAlreadyTakenError, UserRegisteredEvent } from '@template/identity-domain';
 
-import { createIdentityTestKit } from '../../testing/identity-test-kit.js';
-import { RegisterUserCommand } from './register-user.command.js';
-import { RegisterUserHandler } from './register-user.handler.js';
+import { createIdentityTestKit } from '../../testing/identity-test-kit.ts';
+import { RegisterUserCommand } from './register-user.command.ts';
+import { RegisterUserHandler } from './register-user.handler.ts';
 
 function setup() {
   const kit = createIdentityTestKit();

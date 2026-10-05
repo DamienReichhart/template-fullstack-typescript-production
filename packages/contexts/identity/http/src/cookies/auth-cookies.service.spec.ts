@@ -2,7 +2,7 @@ import { describe, expect, it, mock } from 'bun:test';
 import type { AuthSessionView } from '@template/identity-application';
 import type { Response } from 'express';
 
-import { AuthCookiesService } from './auth-cookies.service.js';
+import { AuthCookiesService } from './auth-cookies.service.ts';
 
 function fakeResponse() {
   const cookie = mock(() => undefined);

@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'bun:test';
 import { UserRegisteredEvent } from '@template/identity-domain';
 
-import { createIdentityTestKit } from '../../testing/identity-test-kit.js';
-import { SendOnboardingEmailsHandler } from './send-onboarding-emails.handler.js';
+import { createIdentityTestKit } from '../../testing/identity-test-kit.ts';
+import { SendOnboardingEmailsHandler } from './send-onboarding-emails.handler.ts';
 
 describe('SendOnboardingEmailsHandler', () => {
   it('sends the welcome email then a verification link', async () => {

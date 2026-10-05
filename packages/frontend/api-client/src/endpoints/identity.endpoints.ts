@@ -11,7 +11,7 @@ import {
   type VerifyEmailRequest,
 } from '@template/contracts/identity';
 
-import type { HttpClient } from '../core/http-client.js';
+import type { HttpClient } from '../core/http-client.ts';
 
 const auth = (route: string) => apiPath(IdentityRoutes.auth.controller, route);
 const routes = IdentityRoutes.auth;

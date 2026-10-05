@@ -2,7 +2,7 @@ import { Controller, Get, VERSION_NEUTRAL } from '@nestjs/common';
 import { HealthCheck, type HealthCheckResult } from '@nestjs/terminus';
 import { Public, SkipRateLimit } from '@template/http';
 
-import { ReadinessService } from '../readiness/readiness.service.js';
+import { ReadinessService } from '../readiness/readiness.service.ts';
 
 /** Kubernetes-style probes, outside `/api/v1`: `/health/live` and `/health/ready`. */
 @Controller({ path: 'health', version: VERSION_NEUTRAL })

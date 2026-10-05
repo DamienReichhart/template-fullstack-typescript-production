@@ -5,7 +5,7 @@ import {
   InvalidAccessTokenError,
   type AccessTokenClaims,
   type IssuedAccessToken,
-} from '../../ports/security/access-token-issuer.port.js';
+} from '../../ports/security/access-token-issuer.port.ts';
 
 /** Tokens are readable JSON so tests can assert their claims. */
 export class FakeAccessTokenIssuer extends AccessTokenIssuer {

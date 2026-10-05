@@ -4,8 +4,8 @@ import { CommonErrorCode } from '@template/contracts/common';
 import { ApiProblemException } from '@template/http';
 import type { UserRole } from '@template/identity-domain';
 
-import type { AuthenticatedRequest } from '../decorators/current-user.decorator.js';
-import { ROLES_KEY } from '../decorators/roles.decorator.js';
+import type { AuthenticatedRequest } from '../decorators/current-user.decorator.ts';
+import { ROLES_KEY } from '../decorators/roles.decorator.ts';
 
 @Injectable()
 export class RolesGuard implements CanActivate {

@@ -2,7 +2,7 @@ import type { Provider } from '@nestjs/common';
 import type { ConfigType } from '@template/config';
 import { IdentitySettings } from '@template/identity-application';
 
-import { identityConfig } from './identity-env.schema.js';
+import { identityConfig } from './identity-env.schema.ts';
 
 export type IdentityConfig = ConfigType<typeof identityConfig>;
 

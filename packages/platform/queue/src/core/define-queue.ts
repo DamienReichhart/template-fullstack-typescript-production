@@ -1,6 +1,6 @@
 import type { JobsOptions } from 'bullmq';
 
-import { defaultJobOptions } from './default-job-options.js';
+import { defaultJobOptions } from './default-job-options.ts';
 
 export interface QueueDefinition<Name extends string = string> {
   readonly name: Name;

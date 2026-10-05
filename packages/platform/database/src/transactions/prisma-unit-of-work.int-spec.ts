@@ -5,10 +5,10 @@ import { Test } from '@nestjs/testing';
 import { ConfigModule, databaseConfig } from '@template/config';
 import { UnitOfWork } from '@template/ddd';
 
-import { PrismaService } from '../client/prisma.service.js';
-import { DatabaseModule } from '../database.module.js';
-import { resetDatabase } from '../testing/reset-database.js';
-import { PrismaTransactionHost } from './transaction-host.js';
+import { PrismaService } from '../client/prisma.service.ts';
+import { DatabaseModule } from '../database.module.ts';
+import { resetDatabase } from '../testing/reset-database.ts';
+import { PrismaTransactionHost } from './transaction-host.ts';
 
 const user = (id: string) => ({
   id,

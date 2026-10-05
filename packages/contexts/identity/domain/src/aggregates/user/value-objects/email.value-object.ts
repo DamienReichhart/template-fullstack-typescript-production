@@ -1,6 +1,6 @@
 import { ValueObject } from '@template/ddd';
 
-import { InvalidEmailError } from '../errors/invalid-email.error.js';
+import { InvalidEmailError } from '../errors/invalid-email.error.ts';
 
 const EMAIL_SHAPE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 

@@ -10,8 +10,8 @@ import {
   type FieldValues,
 } from 'react-hook-form';
 
-import { cn } from '../../lib/cn.js';
-import { Label } from '../../primitives/label.js';
+import { cn } from '../../lib/cn.ts';
+import { Label } from '../../primitives/label.tsx';
 
 /** `<Form {...form}>` makes a react-hook-form instance available to every field below. */
 export const Form = FormProvider;

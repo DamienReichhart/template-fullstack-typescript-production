@@ -2,9 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { addHours, Clock, UnitOfWork } from '@template/ddd';
 import { OneTimeToken, OneTimeTokenRepository, type User } from '@template/identity-domain';
 
-import { IdentitySettings } from '../ports/configuration/identity-settings.port.js';
-import { IdentityNotifier } from '../ports/notifications/identity-notifier.port.js';
-import { SecureTokenGenerator } from '../ports/security/secure-token-generator.port.js';
+import { IdentitySettings } from '../ports/configuration/identity-settings.port.ts';
+import { IdentityNotifier } from '../ports/notifications/identity-notifier.port.ts';
+import { SecureTokenGenerator } from '../ports/security/secure-token-generator.port.ts';
 
 /** Issues a fresh email-verification token (voiding older ones) and asks for the email. */
 @Injectable()

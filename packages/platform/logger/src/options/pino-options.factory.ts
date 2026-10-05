@@ -1,7 +1,7 @@
 import type { Params } from 'nestjs-pino';
 
-import { resolveRequestId } from '../request-context/request-id.js';
-import { REDACTED_PATHS } from './redaction.js';
+import { resolveRequestId } from '../request-context/request-id.ts';
+import { REDACTED_PATHS } from './redaction.ts';
 
 export interface PinoOptionsInput {
   service: string;

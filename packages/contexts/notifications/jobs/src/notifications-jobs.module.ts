@@ -2,7 +2,7 @@ import { Module, type DynamicModule, type Type } from '@nestjs/common';
 import { MessagingModule } from '@template/messaging';
 import { mailQueue } from '@template/queue';
 
-import { MailProcessor } from './processors/mail.processor.js';
+import { MailProcessor } from './processors/mail.processor.ts';
 
 export interface NotificationsJobsModuleOptions {
   /** `NotificationsApplicationModule.register(...)`: passed in, never imported. */

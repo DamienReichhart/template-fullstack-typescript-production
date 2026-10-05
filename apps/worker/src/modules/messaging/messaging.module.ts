@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { loadConfig } from '@template/config';
 import { MessagingModule as PlatformMessagingModule } from '@template/messaging';
 
-import { workerConfig } from '../config/worker.config.js';
+import { workerConfig } from '../config/worker.config.ts';
 
 const { worker } = loadConfig([workerConfig]);
 

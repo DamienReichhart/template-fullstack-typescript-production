@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { emailSchema } from '../../common/schemas/email.schema.js';
+import { emailSchema } from '../../common/schemas/email.schema.ts';
 
 /** No length policy on login: an old password must still be able to sign in. */
 export const loginRequestSchema = z.object({

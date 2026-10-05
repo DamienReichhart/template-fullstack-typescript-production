@@ -7,7 +7,7 @@ import {
   type FieldValues,
 } from 'react-hook-form';
 
-import { FormFieldContext } from './form.js';
+import { FormFieldContext } from './form.tsx';
 
 /** A react-hook-form `Controller` that also tells nested `Form*` components which field they are. */
 export function FormField<

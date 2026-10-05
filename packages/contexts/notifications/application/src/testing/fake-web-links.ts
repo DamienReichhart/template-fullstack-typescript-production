@@ -1,4 +1,4 @@
-import { WebLinks } from '../ports/web-links.port.js';
+import { WebLinks } from '../ports/web-links.port.ts';
 
 export class FakeWebLinks extends WebLinks {
   home(locale: string): string {

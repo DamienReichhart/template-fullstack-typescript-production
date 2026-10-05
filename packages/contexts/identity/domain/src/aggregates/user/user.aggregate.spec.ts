@@ -1,11 +1,11 @@
 import { describe, expect, it } from 'bun:test';
 
-import { EmailVerifiedEvent } from './events/email-verified.event.js';
-import { PasswordChangedEvent } from './events/password-changed.event.js';
-import { UserRegisteredEvent } from './events/user-registered.event.js';
-import { User } from './user.aggregate.js';
-import { Email } from './value-objects/email.value-object.js';
-import { PasswordHash } from './value-objects/password-hash.value-object.js';
+import { EmailVerifiedEvent } from './events/email-verified.event.ts';
+import { PasswordChangedEvent } from './events/password-changed.event.ts';
+import { UserRegisteredEvent } from './events/user-registered.event.ts';
+import { User } from './user.aggregate.ts';
+import { Email } from './value-objects/email.value-object.ts';
+import { PasswordHash } from './value-objects/password-hash.value-object.ts';
 
 const now = new Date('2026-01-01T00:00:00.000Z');
 const later = new Date('2026-01-02T00:00:00.000Z');

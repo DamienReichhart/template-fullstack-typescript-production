@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'bun:test';
 
-import { createIdentityTestKit } from '../../testing/identity-test-kit.js';
-import { LogoutCommand } from './logout.command.js';
-import { LogoutHandler } from './logout.handler.js';
+import { createIdentityTestKit } from '../../testing/identity-test-kit.ts';
+import { LogoutCommand } from './logout.command.ts';
+import { LogoutHandler } from './logout.handler.ts';
 
 describe('LogoutHandler', () => {
   it('revokes the session of the refresh token', async () => {

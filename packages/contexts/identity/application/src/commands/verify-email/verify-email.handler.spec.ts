@@ -1,9 +1,9 @@
 import { describe, expect, it } from 'bun:test';
 import { EmailVerifiedEvent, InvalidOrExpiredTokenError } from '@template/identity-domain';
 
-import { createIdentityTestKit } from '../../testing/identity-test-kit.js';
-import { VerifyEmailCommand } from './verify-email.command.js';
-import { VerifyEmailHandler } from './verify-email.handler.js';
+import { createIdentityTestKit } from '../../testing/identity-test-kit.ts';
+import { VerifyEmailCommand } from './verify-email.command.ts';
+import { VerifyEmailHandler } from './verify-email.handler.ts';
 
 async function setup() {
   const kit = createIdentityTestKit();

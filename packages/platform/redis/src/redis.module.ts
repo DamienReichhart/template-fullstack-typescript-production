@@ -2,8 +2,8 @@ import { Injectable, Module, type DynamicModule, type OnApplicationShutdown } fr
 import { redisConfig, type ConfigType } from '@template/config';
 import type { Redis } from 'ioredis';
 
-import { createRedisConnection } from './connection/create-redis-connection.js';
-import { InjectRedis, REDIS_CLIENT } from './redis.tokens.js';
+import { createRedisConnection } from './connection/create-redis-connection.ts';
+import { InjectRedis, REDIS_CLIENT } from './redis.tokens.ts';
 
 @Injectable()
 class RedisLifecycle implements OnApplicationShutdown {

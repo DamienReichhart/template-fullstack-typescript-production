@@ -5,8 +5,8 @@ import { identityMaintenanceQueue, mailQueue, type QueueDefinition } from '@temp
 import type { Queue } from 'bullmq';
 import type { Express } from 'express';
 
-import { IdentityModule } from '../identity/identity.module.js';
-import { BullBoardAuthMiddleware } from './middleware/bull-board-auth.middleware.js';
+import { IdentityModule } from '../identity/identity.module.ts';
+import { BullBoardAuthMiddleware } from './middleware/bull-board-auth.middleware.ts';
 
 export const BULL_BOARD_PATH = '/admin/queues';
 const BOARD_QUEUES: QueueDefinition[] = [mailQueue, identityMaintenanceQueue];

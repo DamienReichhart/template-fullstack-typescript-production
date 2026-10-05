@@ -2,8 +2,8 @@ import { CommandHandler, type ICommandHandler } from '@nestjs/cqrs';
 import { Clock } from '@template/ddd';
 import { RefreshTokenHash, SessionRepository } from '@template/identity-domain';
 
-import { SecureTokenGenerator } from '../../ports/security/secure-token-generator.port.js';
-import { LogoutCommand } from './logout.command.js';
+import { SecureTokenGenerator } from '../../ports/security/secure-token-generator.port.ts';
+import { LogoutCommand } from './logout.command.ts';
 
 @CommandHandler(LogoutCommand)
 export class LogoutHandler implements ICommandHandler<LogoutCommand, void> {

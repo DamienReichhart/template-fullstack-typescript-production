@@ -1,10 +1,10 @@
 import type { EmailTemplate } from '@template/notifications-application';
 import type { ReactElement } from 'react';
 
-import { ResetPasswordEmail } from '../templates/emails/reset-password.email.js';
-import { VerifyEmailEmail } from '../templates/emails/verify-email.email.js';
-import { WelcomeEmail } from '../templates/emails/welcome.email.js';
-import type { Translate } from '../templates/translate.js';
+import { ResetPasswordEmail } from '../templates/emails/reset-password.email.tsx';
+import { VerifyEmailEmail } from '../templates/emails/verify-email.email.tsx';
+import { WelcomeEmail } from '../templates/emails/welcome.email.tsx';
+import type { Translate } from '../templates/translate.ts';
 
 export interface CatalogEntry {
   subject: string;

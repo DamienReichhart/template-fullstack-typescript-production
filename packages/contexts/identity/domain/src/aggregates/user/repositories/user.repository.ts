@@ -1,6 +1,6 @@
-import type { User } from '../user.aggregate.js';
-import type { Email } from '../value-objects/email.value-object.js';
-import type { UserId } from '../value-objects/user-id.value-object.js';
+import type { User } from '../user.aggregate.ts';
+import type { Email } from '../value-objects/email.value-object.ts';
+import type { UserId } from '../value-objects/user-id.value-object.ts';
 
 /** Port: implemented in the infrastructure layer, faked in application tests. */
 export abstract class UserRepository {

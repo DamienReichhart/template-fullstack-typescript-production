@@ -1,8 +1,8 @@
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'bun:test';
 import { Email, EmailAlreadyTakenError, PasswordHash, User } from '@template/identity-domain';
 
-import { createPersistenceTestContext } from './persistence-test-context.js';
-import { PrismaUserRepository } from './prisma-user.repository.js';
+import { createPersistenceTestContext } from './persistence-test-context.ts';
+import { PrismaUserRepository } from './prisma-user.repository.ts';
 
 const register = (email: string) =>
   User.register({

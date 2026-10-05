@@ -5,7 +5,7 @@ import type { CommandBus } from '@nestjs/cqrs';
 import { PurgeExpiredSessionsCommand } from '@template/identity-application';
 import type { Job } from 'bullmq';
 
-import { IdentityMaintenanceProcessor } from './identity-maintenance.processor.js';
+import { IdentityMaintenanceProcessor } from './identity-maintenance.processor.ts';
 
 describe('IdentityMaintenanceProcessor', () => {
   it('runs the purge command for purge-expired-sessions jobs', async () => {

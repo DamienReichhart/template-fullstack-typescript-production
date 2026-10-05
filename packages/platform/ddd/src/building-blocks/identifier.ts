@@ -1,6 +1,6 @@
 import { v7 as uuidv7, validate } from 'uuid';
 
-import { DomainError } from '../errors/domain-error.js';
+import { DomainError } from '../errors/domain-error.ts';
 
 export class InvalidIdentifierError extends DomainError {
   constructor(value: string) {

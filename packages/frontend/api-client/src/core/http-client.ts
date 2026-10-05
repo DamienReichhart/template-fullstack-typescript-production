@@ -2,10 +2,10 @@ import { apiPath, AuthCookies, CommonErrorCode, HttpHeaders } from '@template/co
 import { IdentityErrorCode, IdentityRoutes } from '@template/contracts/identity';
 import type { z } from 'zod';
 
-import { ApiError } from './api-error.js';
-import { browserCookies, readCookie } from './cookies.js';
-import { CsrfTokenProvider } from './csrf.js';
-import { RefreshCoordinator } from './refresh-coordinator.js';
+import { ApiError } from './api-error.ts';
+import { browserCookies, readCookie } from './cookies.ts';
+import { CsrfTokenProvider } from './csrf.ts';
+import { RefreshCoordinator } from './refresh-coordinator.ts';
 
 export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 

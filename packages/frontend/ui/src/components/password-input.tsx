@@ -3,8 +3,8 @@
 import { Eye, EyeOff } from 'lucide-react';
 import { useState, type ComponentProps } from 'react';
 
-import { cn } from '../lib/cn.js';
-import { Input } from '../primitives/input.js';
+import { cn } from '../lib/cn.ts';
+import { Input } from '../primitives/input.tsx';
 
 export interface PasswordInputProps extends Omit<ComponentProps<'input'>, 'type'> {
   /** Accessible labels of the toggle, translated by the caller. */

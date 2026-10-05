@@ -2,7 +2,7 @@ import { afterEach, describe, expect, it } from 'bun:test';
 import { cleanup, render, screen } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 
-import { PasswordInput } from './password-input.js';
+import { PasswordInput } from './password-input.tsx';
 
 afterEach(cleanup);
 

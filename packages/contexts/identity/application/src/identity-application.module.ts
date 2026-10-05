@@ -1,20 +1,20 @@
 import { Module, type DynamicModule, type Type } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
 
-import { LoginHandler } from './commands/login/login.handler.js';
-import { LogoutHandler } from './commands/logout/logout.handler.js';
-import { PurgeExpiredSessionsHandler } from './commands/purge-expired-sessions/purge-expired-sessions.handler.js';
-import { RefreshSessionHandler } from './commands/refresh-session/refresh-session.handler.js';
-import { RegisterUserHandler } from './commands/register-user/register-user.handler.js';
-import { RequestPasswordResetHandler } from './commands/request-password-reset/request-password-reset.handler.js';
-import { ResendEmailVerificationHandler } from './commands/resend-email-verification/resend-email-verification.handler.js';
-import { ResetPasswordHandler } from './commands/reset-password/reset-password.handler.js';
-import { VerifyEmailHandler } from './commands/verify-email/verify-email.handler.js';
-import { SendPasswordResetEmailHandler } from './event-handlers/password-reset-requested/send-password-reset-email.handler.js';
-import { SendOnboardingEmailsHandler } from './event-handlers/user-registered/send-onboarding-emails.handler.js';
-import { GetCurrentUserHandler } from './queries/get-current-user/get-current-user.handler.js';
-import { SessionIssuer } from './services/session-issuer.service.js';
-import { VerificationEmailSender } from './services/verification-email.sender.js';
+import { LoginHandler } from './commands/login/login.handler.ts';
+import { LogoutHandler } from './commands/logout/logout.handler.ts';
+import { PurgeExpiredSessionsHandler } from './commands/purge-expired-sessions/purge-expired-sessions.handler.ts';
+import { RefreshSessionHandler } from './commands/refresh-session/refresh-session.handler.ts';
+import { RegisterUserHandler } from './commands/register-user/register-user.handler.ts';
+import { RequestPasswordResetHandler } from './commands/request-password-reset/request-password-reset.handler.ts';
+import { ResendEmailVerificationHandler } from './commands/resend-email-verification/resend-email-verification.handler.ts';
+import { ResetPasswordHandler } from './commands/reset-password/reset-password.handler.ts';
+import { VerifyEmailHandler } from './commands/verify-email/verify-email.handler.ts';
+import { SendPasswordResetEmailHandler } from './event-handlers/password-reset-requested/send-password-reset-email.handler.ts';
+import { SendOnboardingEmailsHandler } from './event-handlers/user-registered/send-onboarding-emails.handler.ts';
+import { GetCurrentUserHandler } from './queries/get-current-user/get-current-user.handler.ts';
+import { SessionIssuer } from './services/session-issuer.service.ts';
+import { VerificationEmailSender } from './services/verification-email.sender.ts';
 
 const commandHandlers = [
   RegisterUserHandler,

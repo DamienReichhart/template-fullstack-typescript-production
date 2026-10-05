@@ -19,8 +19,8 @@ import {
 import { createTestApp } from '@template/testing';
 import request from 'supertest';
 
-import { identityCookieConfig } from '../cookies/cookie-options.js';
-import { IdentityHttpModule } from '../identity-http.module.js';
+import { identityCookieConfig } from '../cookies/cookie-options.ts';
+import { IdentityHttpModule } from '../identity-http.module.ts';
 
 @Module({})
 class FakeIdentityInfrastructureModule {

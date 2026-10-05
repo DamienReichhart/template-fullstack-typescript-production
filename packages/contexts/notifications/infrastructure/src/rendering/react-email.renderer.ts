@@ -8,8 +8,8 @@ import {
 } from '@template/notifications-application';
 import { createTranslator } from 'use-intl/core';
 
-import type { Translate } from '../templates/translate.js';
-import { buildEmail } from './email-catalog.js';
+import type { Translate } from '../templates/translate.ts';
+import { buildEmail } from './email-catalog.tsx';
 
 /**
  * Renders React Email templates with the `emails` catalog of `@template/i18n`, so emails

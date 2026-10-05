@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'bun:test';
 
-import { createIdentityTestKit } from '../../testing/identity-test-kit.js';
-import { ResendEmailVerificationCommand } from './resend-email-verification.command.js';
-import { ResendEmailVerificationHandler } from './resend-email-verification.handler.js';
+import { createIdentityTestKit } from '../../testing/identity-test-kit.ts';
+import { ResendEmailVerificationCommand } from './resend-email-verification.command.ts';
+import { ResendEmailVerificationHandler } from './resend-email-verification.handler.ts';
 
 function setup() {
   const kit = createIdentityTestKit();

@@ -3,8 +3,15 @@
   "compilerOptions": {
     "outDir": "out-tsc/spec",
     "tsBuildInfoFile": "out-tsc/spec/tsconfig.spec.tsbuildinfo",
-    "types": ["bun", "node"]
+    "types": ["bun", "node"],
+    "rewriteRelativeImportExtensions": false,
+    "allowImportingTsExtensions": true,
+    "emitDeclarationOnly": true
   },
   "include": ["src/**/*.spec.ts"],
-  "references": [{ "path": "./tsconfig.app.json" }]
+  "references": [
+    {
+      "path": "./tsconfig.app.json"
+    }
+  ]
 }

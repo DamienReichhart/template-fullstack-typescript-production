@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'bun:test';
 
-import { ReactEmailRenderer } from './react-email.renderer.js';
+import { ReactEmailRenderer } from './react-email.renderer.ts';
 
 const renderer = new ReactEmailRenderer();
 const url = 'https://app.test/fr/verify-email?token=abc';

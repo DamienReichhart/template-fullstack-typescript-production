@@ -1,16 +1,16 @@
 import { Module, type DynamicModule, type Type } from '@nestjs/common';
 import { APP_GUARD } from '@nestjs/core';
 
-import { MeController } from './controllers/me.controller.js';
-import { PasswordController } from './controllers/password.controller.js';
-import { RegistrationController } from './controllers/registration.controller.js';
-import { SessionController } from './controllers/session.controller.js';
-import { AuthCookiesService } from './cookies/auth-cookies.service.js';
-import { IdentityErrorMapper } from './errors/identity-error.mapper.js';
-import { AccessTokenGuard } from './guards/access-token.guard.js';
-import { CsrfGuard } from './guards/csrf.guard.js';
-import { EmailVerifiedGuard } from './guards/email-verified.guard.js';
-import { RolesGuard } from './guards/roles.guard.js';
+import { MeController } from './controllers/me.controller.ts';
+import { PasswordController } from './controllers/password.controller.ts';
+import { RegistrationController } from './controllers/registration.controller.ts';
+import { SessionController } from './controllers/session.controller.ts';
+import { AuthCookiesService } from './cookies/auth-cookies.service.ts';
+import { IdentityErrorMapper } from './errors/identity-error.mapper.ts';
+import { AccessTokenGuard } from './guards/access-token.guard.ts';
+import { CsrfGuard } from './guards/csrf.guard.ts';
+import { EmailVerifiedGuard } from './guards/email-verified.guard.ts';
+import { RolesGuard } from './guards/roles.guard.ts';
 
 export interface IdentityHttpModuleOptions {
   /** `IdentityApplicationModule.register(...)`: passed in, never imported, like every layer. */

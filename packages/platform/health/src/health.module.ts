@@ -2,12 +2,12 @@ import { Module, type DynamicModule, type Provider, type Type } from '@nestjs/co
 import { TerminusModule } from '@nestjs/terminus';
 import type { ConfigDefinition, ConfigType, defineProbeConfig } from '@template/config';
 
-import { HealthController } from './controllers/health.controller.js';
-import { DependencyIndicator } from './indicators/dependency-indicator.js';
-import { PrismaIndicator } from './indicators/prisma.indicator.js';
-import { RedisIndicator } from './indicators/redis.indicator.js';
-import { PROBE_PORT, ProbeServerLifecycle } from './probe/probe-server.lifecycle.js';
-import { DEPENDENCY_INDICATORS, ReadinessService } from './readiness/readiness.service.js';
+import { HealthController } from './controllers/health.controller.ts';
+import { DependencyIndicator } from './indicators/dependency-indicator.ts';
+import { PrismaIndicator } from './indicators/prisma.indicator.ts';
+import { RedisIndicator } from './indicators/redis.indicator.ts';
+import { PROBE_PORT, ProbeServerLifecycle } from './probe/probe-server.lifecycle.ts';
+import { DEPENDENCY_INDICATORS, ReadinessService } from './readiness/readiness.service.ts';
 
 export type Dependency = 'database' | 'redis';
 

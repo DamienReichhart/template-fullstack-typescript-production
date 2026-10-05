@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'bun:test';
 
-import { createNotificationsTestKit } from '../../testing/notifications-test-kit.js';
-import { SendEmailVerificationCommand } from './send-email-verification.command.js';
-import { SendEmailVerificationHandler } from './send-email-verification.handler.js';
+import { createNotificationsTestKit } from '../../testing/notifications-test-kit.ts';
+import { SendEmailVerificationCommand } from './send-email-verification.command.ts';
+import { SendEmailVerificationHandler } from './send-email-verification.handler.ts';
 
 describe('SendEmailVerificationHandler', () => {
   it('links to the verification page with the token and states the remaining validity', async () => {

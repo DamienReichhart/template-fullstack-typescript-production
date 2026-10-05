@@ -9,9 +9,9 @@ import {
   UserRepository,
 } from '@template/identity-domain';
 
-import { IdentitySettings } from '../../ports/configuration/identity-settings.port.js';
-import { IdentityNotifier } from '../../ports/notifications/identity-notifier.port.js';
-import { SecureTokenGenerator } from '../../ports/security/secure-token-generator.port.js';
+import { IdentitySettings } from '../../ports/configuration/identity-settings.port.ts';
+import { IdentityNotifier } from '../../ports/notifications/identity-notifier.port.ts';
+import { SecureTokenGenerator } from '../../ports/security/secure-token-generator.port.ts';
 
 /** Policy: when a password reset is requested, email a fresh single-use reset link. */
 @EventsHandler(PasswordResetRequestedEvent)

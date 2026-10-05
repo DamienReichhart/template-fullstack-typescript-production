@@ -6,7 +6,7 @@ import { Test } from '@nestjs/testing';
 import { defineJob, defineQueue } from '@template/queue';
 import { z } from 'zod';
 
-import { JobProducer } from './job-producer.js';
+import { JobProducer } from './job-producer.ts';
 
 const reports = defineQueue('reports');
 const generateReport = defineJob(reports, 'generate-report', z.object({ reportId: z.uuid() }), {

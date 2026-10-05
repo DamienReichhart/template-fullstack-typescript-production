@@ -6,10 +6,10 @@ import { Resend } from 'resend';
 import {
   notificationsConfig,
   type NotificationsConfig,
-} from '../config/notifications-env.schema.js';
-import { CaptureMailer } from './capture/capture.mailer.js';
-import { ConsoleMailer } from './console/console.mailer.js';
-import { ResendMailer } from './resend/resend.mailer.js';
+} from '../config/notifications-env.schema.ts';
+import { CaptureMailer } from './capture/capture.mailer.ts';
+import { ConsoleMailer } from './console/console.mailer.ts';
+import { ResendMailer } from './resend/resend.mailer.ts';
 
 /** Binds `Mailer` to the transport chosen by `MAIL_TRANSPORT`. */
 export const mailerProvider: Provider = {

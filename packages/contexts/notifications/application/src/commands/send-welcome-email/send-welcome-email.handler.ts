@@ -1,9 +1,9 @@
 import { CommandHandler, type ICommandHandler } from '@nestjs/cqrs';
 
-import { EmailRenderer } from '../../ports/email-renderer.port.js';
-import { Mailer } from '../../ports/mailer.port.js';
-import { WebLinks } from '../../ports/web-links.port.js';
-import { SendWelcomeEmailCommand } from './send-welcome-email.command.js';
+import { EmailRenderer } from '../../ports/email-renderer.port.ts';
+import { Mailer } from '../../ports/mailer.port.ts';
+import { WebLinks } from '../../ports/web-links.port.ts';
+import { SendWelcomeEmailCommand } from './send-welcome-email.command.ts';
 
 @CommandHandler(SendWelcomeEmailCommand)
 export class SendWelcomeEmailHandler implements ICommandHandler<SendWelcomeEmailCommand, void> {

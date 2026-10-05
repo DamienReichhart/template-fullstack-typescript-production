@@ -1,4 +1,4 @@
-import type { PrismaClient } from '../generated/prisma/client.js';
+import type { PrismaClient } from '../generated/prisma/client.ts';
 
 /** Empties every table except the migrations ledger. For integration and e2e suites only. */
 export async function resetDatabase(prisma: PrismaClient): Promise<void> {

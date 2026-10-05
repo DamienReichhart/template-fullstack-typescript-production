@@ -7,8 +7,8 @@ import { Test } from '@nestjs/testing';
 import { defineJob, defineQueue } from '@template/queue';
 import { z } from 'zod';
 
-import { JobSchedulerRegistrar } from './job-scheduler-registrar.js';
-import { defineSchedule, ScheduleBundle } from './schedule-definition.js';
+import { JobSchedulerRegistrar } from './job-scheduler-registrar.ts';
+import { defineSchedule, ScheduleBundle } from './schedule-definition.ts';
 
 const cleanup = defineQueue('cleanup');
 const purge = defineJob(cleanup, 'purge', z.object({}), { attempts: 1 });

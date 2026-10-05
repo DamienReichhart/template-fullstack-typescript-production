@@ -4,10 +4,10 @@ import { httpConfig, type ConfigType } from '@template/config';
 import { API_PREFIX, API_VERSION } from '@template/contracts/common';
 import cookieParser from 'cookie-parser';
 
-import type { OpenApiMetadata } from '../openapi/create-openapi-document.js';
-import { DOCS_PATH, setupSwagger } from '../openapi/setup-swagger.js';
-import { createCorsOptions } from '../security/cors.options.js';
-import { createHelmetMiddleware } from '../security/helmet.options.js';
+import type { OpenApiMetadata } from '../openapi/create-openapi-document.ts';
+import { DOCS_PATH, setupSwagger } from '../openapi/setup-swagger.ts';
+import { createCorsOptions } from '../security/cors.options.ts';
+import { createHelmetMiddleware } from '../security/helmet.options.ts';
 
 export interface HttpAppOptions extends OpenApiMetadata {
   /** Paths serving HTML tools (e.g. `/admin/queues`), given a CSP that allows their scripts. */

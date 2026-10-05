@@ -1,13 +1,13 @@
 import { AggregateRoot } from '@template/ddd';
 
-import { EmailVerifiedEvent } from './events/email-verified.event.js';
-import { PasswordChangedEvent } from './events/password-changed.event.js';
-import { PasswordResetRequestedEvent } from './events/password-reset-requested.event.js';
-import { UserRegisteredEvent } from './events/user-registered.event.js';
-import type { Email } from './value-objects/email.value-object.js';
-import type { PasswordHash } from './value-objects/password-hash.value-object.js';
-import { UserId } from './value-objects/user-id.value-object.js';
-import type { UserRole } from './value-objects/user-role.value-object.js';
+import { EmailVerifiedEvent } from './events/email-verified.event.ts';
+import { PasswordChangedEvent } from './events/password-changed.event.ts';
+import { PasswordResetRequestedEvent } from './events/password-reset-requested.event.ts';
+import { UserRegisteredEvent } from './events/user-registered.event.ts';
+import type { Email } from './value-objects/email.value-object.ts';
+import type { PasswordHash } from './value-objects/password-hash.value-object.ts';
+import { UserId } from './value-objects/user-id.value-object.ts';
+import type { UserRole } from './value-objects/user-role.value-object.ts';
 
 export interface UserProps {
   email: Email;

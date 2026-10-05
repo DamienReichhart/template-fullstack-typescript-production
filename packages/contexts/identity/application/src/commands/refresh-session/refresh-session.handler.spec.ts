@@ -6,9 +6,9 @@ import {
   SessionRevokedError,
 } from '@template/identity-domain';
 
-import { createIdentityTestKit } from '../../testing/identity-test-kit.js';
-import { RefreshSessionCommand } from './refresh-session.command.js';
-import { RefreshSessionHandler } from './refresh-session.handler.js';
+import { createIdentityTestKit } from '../../testing/identity-test-kit.ts';
+import { RefreshSessionCommand } from './refresh-session.command.ts';
+import { RefreshSessionHandler } from './refresh-session.handler.ts';
 
 async function setup() {
   const kit = createIdentityTestKit();

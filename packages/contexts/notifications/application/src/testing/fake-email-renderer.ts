@@ -1,6 +1,6 @@
-import type { RenderedEmail } from '../models/email-message.js';
-import type { EmailTemplate } from '../models/email-template.js';
-import { EmailRenderer } from '../ports/email-renderer.port.js';
+import type { RenderedEmail } from '../models/email-message.ts';
+import type { EmailTemplate } from '../models/email-template.ts';
+import { EmailRenderer } from '../ports/email-renderer.port.ts';
 
 export class FakeEmailRenderer extends EmailRenderer {
   readonly rendered: EmailTemplate[] = [];

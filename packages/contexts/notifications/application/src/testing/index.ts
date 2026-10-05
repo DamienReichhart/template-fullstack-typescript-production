@@ -1,4 +1,4 @@
-export { FakeEmailRenderer } from './fake-email-renderer.js';
-export { FakeMailer } from './fake-mailer.js';
-export { FakeWebLinks } from './fake-web-links.js';
-export { createNotificationsTestKit } from './notifications-test-kit.js';
+export { FakeEmailRenderer } from './fake-email-renderer.ts';
+export { FakeMailer } from './fake-mailer.ts';
+export { FakeWebLinks } from './fake-web-links.ts';
+export { createNotificationsTestKit } from './notifications-test-kit.ts';

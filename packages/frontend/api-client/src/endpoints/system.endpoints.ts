@@ -7,7 +7,7 @@ import {
   type PingResponse,
 } from '@template/contracts/system';
 
-import type { HttpClient } from '../core/http-client.js';
+import type { HttpClient } from '../core/http-client.ts';
 
 const routes = SystemRoutes.system;
 

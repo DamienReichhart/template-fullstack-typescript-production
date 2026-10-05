@@ -1,12 +1,12 @@
 import { AggregateRoot } from '@template/ddd';
 
-import type { UserId } from '../user/value-objects/user-id.value-object.js';
-import { RefreshTokenAlreadyRotatedError } from './errors/refresh-token-already-rotated.error.js';
-import { RefreshTokenReuseDetectedError } from './errors/refresh-token-reuse-detected.error.js';
-import { SessionExpiredError } from './errors/session-expired.error.js';
-import { SessionRevokedError } from './errors/session-revoked.error.js';
-import type { RefreshTokenHash } from './value-objects/refresh-token-hash.value-object.js';
-import { SessionId } from './value-objects/session-id.value-object.js';
+import type { UserId } from '../user/value-objects/user-id.value-object.ts';
+import { RefreshTokenAlreadyRotatedError } from './errors/refresh-token-already-rotated.error.ts';
+import { RefreshTokenReuseDetectedError } from './errors/refresh-token-reuse-detected.error.ts';
+import { SessionExpiredError } from './errors/session-expired.error.ts';
+import { SessionRevokedError } from './errors/session-revoked.error.ts';
+import type { RefreshTokenHash } from './value-objects/refresh-token-hash.value-object.ts';
+import { SessionId } from './value-objects/session-id.value-object.ts';
 
 /** How long a just-rotated refresh token is tolerated as a concurrent refresh, not theft. */
 export const ROTATION_GRACE_PERIOD_MS = 10_000;

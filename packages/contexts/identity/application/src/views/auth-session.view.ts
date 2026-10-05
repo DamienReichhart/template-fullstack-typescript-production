@@ -1,4 +1,4 @@
-import type { CurrentUserView } from './current-user.view.js';
+import type { CurrentUserView } from './current-user.view.ts';
 
 /** Everything the transport needs to sign a client in: who, and the two tokens. */
 export interface AuthSessionView {

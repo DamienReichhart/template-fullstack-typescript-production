@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'bun:test';
 import type { ExecutionContext } from '@nestjs/common';
 
-import { CsrfGuard } from './csrf.guard.js';
+import { CsrfGuard } from './csrf.guard.ts';
 
 function contextFor(method: string, cookie?: string, header?: string) {
   return {

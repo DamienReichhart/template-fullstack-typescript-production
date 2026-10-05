@@ -1,8 +1,8 @@
 import { FixedClock } from '@template/ddd';
 
-import { FakeEmailRenderer } from './fake-email-renderer.js';
-import { FakeMailer } from './fake-mailer.js';
-import { FakeWebLinks } from './fake-web-links.js';
+import { FakeEmailRenderer } from './fake-email-renderer.ts';
+import { FakeMailer } from './fake-mailer.ts';
+import { FakeWebLinks } from './fake-web-links.ts';
 
 export function createNotificationsTestKit() {
   return {

@@ -1,9 +1,9 @@
 import { AggregateRoot } from '@template/ddd';
 
-import type { UserId } from '../user/value-objects/user-id.value-object.js';
-import { InvalidOrExpiredTokenError } from './errors/invalid-or-expired-token.error.js';
-import { OneTimeTokenId } from './value-objects/one-time-token-id.value-object.js';
-import type { OneTimeTokenPurpose } from './value-objects/one-time-token-purpose.value-object.js';
+import type { UserId } from '../user/value-objects/user-id.value-object.ts';
+import { InvalidOrExpiredTokenError } from './errors/invalid-or-expired-token.error.ts';
+import { OneTimeTokenId } from './value-objects/one-time-token-id.value-object.ts';
+import type { OneTimeTokenPurpose } from './value-objects/one-time-token-purpose.value-object.ts';
 
 export interface OneTimeTokenProps {
   userId: UserId;

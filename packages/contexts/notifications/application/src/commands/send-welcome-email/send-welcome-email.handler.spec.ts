@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'bun:test';
 
-import { createNotificationsTestKit } from '../../testing/notifications-test-kit.js';
-import { SendWelcomeEmailCommand } from './send-welcome-email.command.js';
-import { SendWelcomeEmailHandler } from './send-welcome-email.handler.js';
+import { createNotificationsTestKit } from '../../testing/notifications-test-kit.ts';
+import { SendWelcomeEmailCommand } from './send-welcome-email.command.ts';
+import { SendWelcomeEmailHandler } from './send-welcome-email.handler.ts';
 
 describe('SendWelcomeEmailHandler', () => {
   it('renders the welcome template in the recipient language and sends it', async () => {

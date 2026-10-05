@@ -48,15 +48,6 @@
       }
     },
     {
-      "plugin": "@nx/js/typescript",
-      "include": ["apps/web/**/*", "apps/api-e2e/**/*", "apps/web-e2e/**/*"],
-      "options": {
-        "typecheck": {
-          "targetName": "typecheck"
-        }
-      }
-    },
-    {
       "plugin": "@nx/eslint/plugin",
       "options": {
         "targetName": "lint"
@@ -88,7 +79,8 @@
           "projects": ["database"],
           "target": "prisma-deploy-test"
         }
-      ]
+      ],
+      "parallelism": false
     },
     "lint": {
       "cache": true,
@@ -102,6 +94,10 @@
       "cache": false,
       "continuous": true,
       "dependsOn": ["^prisma-generate"]
+    },
+    "typecheck": {
+      "cache": true,
+      "inputs": ["default", "^production"]
     }
   },
   "sync": {

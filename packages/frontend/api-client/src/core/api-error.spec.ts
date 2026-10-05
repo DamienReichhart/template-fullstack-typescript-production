@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'bun:test';
 
-import { ApiError } from './api-error.js';
+import { ApiError } from './api-error.ts';
 
 const problemResponse = (body: unknown, status: number) =>
   new Response(JSON.stringify(body), {

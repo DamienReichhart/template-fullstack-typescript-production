@@ -5,7 +5,7 @@ import {
   RefreshTokenReuseDetectedError,
 } from '@template/identity-domain';
 
-import { IdentityErrorMapper } from './identity-error.mapper.js';
+import { IdentityErrorMapper } from './identity-error.mapper.ts';
 
 const mapper = new IdentityErrorMapper();
 

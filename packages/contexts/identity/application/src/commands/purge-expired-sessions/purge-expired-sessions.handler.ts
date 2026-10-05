@@ -2,7 +2,7 @@ import { CommandHandler, type ICommandHandler } from '@nestjs/cqrs';
 import { addDays, Clock } from '@template/ddd';
 import { OneTimeTokenRepository, SessionRepository } from '@template/identity-domain';
 
-import { PurgeExpiredSessionsCommand, type PurgeResult } from './purge-expired-sessions.command.js';
+import { PurgeExpiredSessionsCommand, type PurgeResult } from './purge-expired-sessions.command.ts';
 
 /** Ended sessions stay this long for support and audit questions ("where was I signed in?"). */
 export const ENDED_SESSION_RETENTION_DAYS = 7;

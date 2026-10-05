@@ -6,8 +6,8 @@ import {
   UserRepository,
 } from '@template/identity-domain';
 
-import { SecureTokenGenerator } from '../../ports/security/secure-token-generator.port.js';
-import { VerifyEmailCommand } from './verify-email.command.js';
+import { SecureTokenGenerator } from '../../ports/security/secure-token-generator.port.ts';
+import { VerifyEmailCommand } from './verify-email.command.ts';
 
 @CommandHandler(VerifyEmailCommand)
 export class VerifyEmailHandler implements ICommandHandler<VerifyEmailCommand, void> {

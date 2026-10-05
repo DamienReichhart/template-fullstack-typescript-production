@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'bun:test';
 
-import { CryptoSecureTokenGenerator } from './crypto-secure-token-generator.js';
+import { CryptoSecureTokenGenerator } from './crypto-secure-token-generator.ts';
 
 const generator = new CryptoSecureTokenGenerator();
 

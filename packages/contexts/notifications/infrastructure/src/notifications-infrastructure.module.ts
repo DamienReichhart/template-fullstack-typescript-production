@@ -5,10 +5,10 @@ import { EmailRenderer, Mailer, WebLinks } from '@template/notifications-applica
 import {
   notificationsConfig,
   type NotificationsConfig,
-} from './config/notifications-env.schema.js';
-import { UrlWebLinks } from './links/url-web-links.js';
-import { mailerProvider } from './mailers/mailer.factory.js';
-import { ReactEmailRenderer } from './rendering/react-email.renderer.js';
+} from './config/notifications-env.schema.ts';
+import { UrlWebLinks } from './links/url-web-links.ts';
+import { mailerProvider } from './mailers/mailer.factory.ts';
+import { ReactEmailRenderer } from './rendering/react-email.renderer.ts';
 
 /** Binds the notifications ports. Requires `ConfigModule` with `notificationsConfig`. */
 @Module({})

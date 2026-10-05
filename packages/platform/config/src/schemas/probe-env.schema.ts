@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
-import { defineConfig } from '../loader/config-definition.js';
-import { port } from './env-helpers.js';
+import { defineConfig } from '../loader/config-definition.ts';
+import { port } from './env-helpers.ts';
 
 /** Health-probe port of a non-HTTP runnable, read from an app-specific variable. */
 export function defineProbeConfig(portVariable: `${string}_HEALTH_PORT`) {

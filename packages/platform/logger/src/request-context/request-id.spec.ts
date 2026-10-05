@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'bun:test';
 import type { IncomingMessage, ServerResponse } from 'node:http';
 
-import { resolveRequestId } from './request-id.js';
+import { resolveRequestId } from './request-id.ts';
 
 function exchange(requestId?: string) {
   const headers: Record<string, string> = {};

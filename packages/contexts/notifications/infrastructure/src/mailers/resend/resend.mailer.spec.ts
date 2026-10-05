@@ -1,7 +1,7 @@
 import { describe, expect, it, mock } from 'bun:test';
 import type { Resend } from 'resend';
 
-import { MailDeliveryError, ResendMailer } from './resend.mailer.js';
+import { MailDeliveryError, ResendMailer } from './resend.mailer.ts';
 
 const message = {
   to: 'ada@example.com',

@@ -1,5 +1,5 @@
 export {
   NotificationsJobsModule,
   type NotificationsJobsModuleOptions,
-} from './notifications-jobs.module.js';
-export { MailProcessor } from './processors/mail.processor.js';
+} from './notifications-jobs.module.ts';
+export { MailProcessor } from './processors/mail.processor.ts';

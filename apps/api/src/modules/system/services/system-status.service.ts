@@ -3,7 +3,7 @@ import { appConfig, type ConfigType } from '@template/config';
 import type { PingResponse, ServiceStatus } from '@template/contracts/system';
 import { ReadinessService, type DependencyStatus } from '@template/health';
 
-import { APP_VERSION } from '../app-version.js';
+import { APP_VERSION } from '../app-version.ts';
 
 const toServiceStatus = (status: DependencyStatus | undefined): ServiceStatus =>
   status ? { status: status.status, latencyMs: status.latencyMs } : { status: 'down' };

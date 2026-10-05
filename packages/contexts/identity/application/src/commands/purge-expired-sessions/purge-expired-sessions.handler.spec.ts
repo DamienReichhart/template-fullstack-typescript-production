@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'bun:test';
 
-import { createIdentityTestKit } from '../../testing/identity-test-kit.js';
-import { PurgeExpiredSessionsCommand } from './purge-expired-sessions.command.js';
-import { PurgeExpiredSessionsHandler } from './purge-expired-sessions.handler.js';
+import { createIdentityTestKit } from '../../testing/identity-test-kit.ts';
+import { PurgeExpiredSessionsCommand } from './purge-expired-sessions.command.ts';
+import { PurgeExpiredSessionsHandler } from './purge-expired-sessions.handler.ts';
 
 const DAY = 24 * 3600 * 1000;
 

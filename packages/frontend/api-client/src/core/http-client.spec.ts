@@ -1,8 +1,8 @@
 import { describe, expect, it, mock } from 'bun:test';
 import { z } from 'zod';
 
-import { ApiError } from './api-error.js';
-import { HttpClient } from './http-client.js';
+import { ApiError } from './api-error.ts';
+import { HttpClient } from './http-client.ts';
 
 type Handler = (url: string, init: RequestInit) => Response | Promise<Response>;
 

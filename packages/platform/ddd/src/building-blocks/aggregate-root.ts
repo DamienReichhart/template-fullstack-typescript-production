@@ -1,6 +1,6 @@
-import type { DomainEvent } from '../events/domain-event.js';
-import { Entity } from './entity.js';
-import type { Identifier } from './identifier.js';
+import type { DomainEvent } from '../events/domain-event.ts';
+import { Entity } from './entity.ts';
+import type { Identifier } from './identifier.ts';
 
 /**
  * The consistency boundary of a cluster of objects. State changes go through its methods,

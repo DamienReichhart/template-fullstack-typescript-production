@@ -1,6 +1,6 @@
 import { describe, expect, it, mock } from 'bun:test';
 
-import { RefreshCoordinator } from './refresh-coordinator.js';
+import { RefreshCoordinator } from './refresh-coordinator.ts';
 
 describe('RefreshCoordinator', () => {
   it('shares one refresh between concurrent callers', async () => {

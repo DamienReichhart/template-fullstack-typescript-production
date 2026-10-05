@@ -17,9 +17,9 @@ import { createZodDto, ZodValidationPipe } from 'nestjs-zod';
 import request from 'supertest';
 import { z } from 'zod';
 
-import { ApiProblemException } from './api-problem.exception.js';
-import { DomainErrorMapper, type MappedError } from './error-mapper.js';
-import { ProblemDetailsFilter } from './problem-details.filter.js';
+import { ApiProblemException } from './api-problem.exception.ts';
+import { DomainErrorMapper, type MappedError } from './error-mapper.ts';
+import { ProblemDetailsFilter } from './problem-details.filter.ts';
 
 class OutOfStockError extends Error {}
 

@@ -6,8 +6,8 @@ import {
   type OnApplicationShutdown,
 } from '@nestjs/common';
 
-import { ReadinessService } from '../readiness/readiness.service.js';
-import { ProbeServer } from './probe-server.js';
+import { ReadinessService } from '../readiness/readiness.service.ts';
+import { ProbeServer } from './probe-server.ts';
 
 export const PROBE_PORT = Symbol.for('template:probe-port');
 

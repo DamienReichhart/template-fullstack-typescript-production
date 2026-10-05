@@ -3,7 +3,7 @@ import { Injectable, Logger, type OnApplicationBootstrap } from '@nestjs/common'
 import { DiscoveryService, ModuleRef } from '@nestjs/core';
 import type { Queue } from 'bullmq';
 
-import { ScheduleBundle, type ScheduleDefinition } from './schedule-definition.js';
+import { ScheduleBundle, type ScheduleDefinition } from './schedule-definition.ts';
 
 /**
  * Makes Redis match the declared schedules on every boot: upserts each declared job

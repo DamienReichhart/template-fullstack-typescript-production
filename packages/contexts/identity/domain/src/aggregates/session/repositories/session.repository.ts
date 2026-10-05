@@ -1,6 +1,6 @@
-import type { UserId } from '../../user/value-objects/user-id.value-object.js';
-import type { Session } from '../session.aggregate.js';
-import type { RefreshTokenHash } from '../value-objects/refresh-token-hash.value-object.js';
+import type { UserId } from '../../user/value-objects/user-id.value-object.ts';
+import type { Session } from '../session.aggregate.ts';
+import type { RefreshTokenHash } from '../value-objects/refresh-token-hash.value-object.ts';
 
 export abstract class SessionRepository {
   /** Matches the current **or the previous** refresh token, so reuse can be detected. */

@@ -1,7 +1,7 @@
 import type { INestApplication } from '@nestjs/common';
 import { SwaggerModule } from '@nestjs/swagger';
 
-import { createOpenApiDocument, type OpenApiMetadata } from './create-openapi-document.js';
+import { createOpenApiDocument, type OpenApiMetadata } from './create-openapi-document.ts';
 
 export const DOCS_PATH = 'docs';
 

@@ -1,7 +1,7 @@
 import { Module, type DynamicModule } from '@nestjs/common';
 
-import type { ConfigDefinition } from './loader/config-definition.js';
-import { loadConfig, type EnvSource } from './loader/load-env.js';
+import type { ConfigDefinition } from './loader/config-definition.ts';
+import { loadConfig, type EnvSource } from './loader/load-env.ts';
 
 export interface ConfigModuleOptions {
   /** Every config slice the app needs. Validated together when the module is created. */

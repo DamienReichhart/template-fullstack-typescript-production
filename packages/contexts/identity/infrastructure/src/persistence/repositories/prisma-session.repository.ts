@@ -7,7 +7,7 @@ import {
   type UserId,
 } from '@template/identity-domain';
 
-import { SessionMapper } from '../mappers/session.mapper.js';
+import { SessionMapper } from '../mappers/session.mapper.ts';
 
 @Injectable()
 export class PrismaSessionRepository extends SessionRepository {

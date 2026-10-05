@@ -1,6 +1,6 @@
-import type { Locale } from '../config/locales.js';
-import { namespaces } from '../config/namespaces.js';
-import type { Messages } from '../types/messages.js';
+import type { Locale } from '../config/locales.ts';
+import { namespaces } from '../config/namespaces.ts';
+import type { Messages } from '../types/messages.ts';
 
 /**
  * Loads every namespace of a locale. Resolved through the package's own `./messages/*`

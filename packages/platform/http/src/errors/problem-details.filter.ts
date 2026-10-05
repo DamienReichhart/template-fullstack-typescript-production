@@ -13,9 +13,9 @@ import type { Request, Response } from 'express';
 import { ZodValidationException } from 'nestjs-zod';
 import type { z } from 'zod';
 
-import { ApiProblemException } from './api-problem.exception.js';
-import { DomainErrorMapper } from './error-mapper.js';
-import { createProblem } from './problem-details.factory.js';
+import { ApiProblemException } from './api-problem.exception.ts';
+import { DomainErrorMapper } from './error-mapper.ts';
+import { createProblem } from './problem-details.factory.ts';
 
 const CODE_BY_STATUS: Partial<Record<number, string>> = {
   [HttpStatus.BAD_REQUEST]: CommonErrorCode.badRequest,

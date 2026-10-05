@@ -11,12 +11,12 @@ import {
 } from '@template/identity-application';
 import type { Response } from 'express';
 
-import { AuthCookiesService } from '../cookies/auth-cookies.service.js';
-import { Client } from '../decorators/client-info.decorator.js';
-import { RegisterDto } from '../dto/requests/register.dto.js';
-import { ResendVerificationDto } from '../dto/requests/resend-verification.dto.js';
-import { VerifyEmailDto } from '../dto/requests/verify-email.dto.js';
-import { CurrentUserDto, toCurrentUserDto } from '../dto/responses/current-user.dto.js';
+import { AuthCookiesService } from '../cookies/auth-cookies.service.ts';
+import { Client } from '../decorators/client-info.decorator.ts';
+import { RegisterDto } from '../dto/requests/register.dto.ts';
+import { ResendVerificationDto } from '../dto/requests/resend-verification.dto.ts';
+import { VerifyEmailDto } from '../dto/requests/verify-email.dto.ts';
+import { CurrentUserDto, toCurrentUserDto } from '../dto/responses/current-user.dto.ts';
 
 const routes = IdentityRoutes.auth;
 

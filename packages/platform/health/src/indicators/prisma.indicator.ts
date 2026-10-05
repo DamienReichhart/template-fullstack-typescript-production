@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@template/database';
 
-import { DependencyIndicator } from './dependency-indicator.js';
-import { measure, type DependencyStatus } from './dependency-status.js';
+import { DependencyIndicator } from './dependency-indicator.ts';
+import { measure, type DependencyStatus } from './dependency-status.ts';
 
 @Injectable()
 export class PrismaIndicator extends DependencyIndicator {

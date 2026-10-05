@@ -10,7 +10,7 @@ import {
   identityCookieConfig,
   REFRESH_COOKIE_PATH,
   type IdentityCookieConfig,
-} from './cookie-options.js';
+} from './cookie-options.ts';
 
 /**
  * Owns every auth cookie. Tokens are httpOnly (unreadable by scripts); the CSRF token and

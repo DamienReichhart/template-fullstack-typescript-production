@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule as PlatformConfigModule } from '@template/config';
 
-import { schedulerConfigDefinitions } from './scheduler.config.js';
+import { schedulerConfigDefinitions } from './scheduler.config.ts';
 
 @Module({
   imports: [PlatformConfigModule.forRoot({ definitions: schedulerConfigDefinitions })],

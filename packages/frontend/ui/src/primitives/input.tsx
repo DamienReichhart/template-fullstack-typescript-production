@@ -1,6 +1,6 @@
 import type { ComponentProps } from 'react';
 
-import { cn } from '../lib/cn.js';
+import { cn } from '../lib/cn.ts';
 
 export function Input({ className, type, ...props }: ComponentProps<'input'>) {
   return (

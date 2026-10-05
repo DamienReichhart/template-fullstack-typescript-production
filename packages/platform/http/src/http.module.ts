@@ -1,9 +1,9 @@
 import { Module, type DynamicModule } from '@nestjs/common';
 import { APP_FILTER, APP_GUARD, DiscoveryModule } from '@nestjs/core';
 
-import { ProblemDetailsFilter } from './errors/problem-details.filter.js';
-import { RateLimitGuard } from './security/rate-limit.guard.js';
-import { zodValidationProviders } from './validation/zod-validation.providers.js';
+import { ProblemDetailsFilter } from './errors/problem-details.filter.ts';
+import { RateLimitGuard } from './security/rate-limit.guard.ts';
+import { zodValidationProviders } from './validation/zod-validation.providers.ts';
 
 /**
  * Cross-cutting HTTP behaviour: RFC 9457 errors, Zod validation and serialisation, and the

@@ -5,13 +5,13 @@ import { redisConfig, type ConfigType } from '@template/config';
 import type { QueueDefinition } from '@template/queue';
 import { createRedisConnection } from '@template/redis';
 
-import { JobProducer } from './producer/job-producer.js';
-import { JobSchedulerRegistrar } from './scheduling/job-scheduler-registrar.js';
-import { ScheduleBundle, type ScheduleDefinition } from './scheduling/schedule-definition.js';
+import { JobProducer } from './producer/job-producer.ts';
+import { JobSchedulerRegistrar } from './scheduling/job-scheduler-registrar.ts';
+import { ScheduleBundle, type ScheduleDefinition } from './scheduling/schedule-definition.ts';
 import {
   WORKER_CONCURRENCY,
   WorkerConcurrencyTuner,
-} from './scheduling/worker-concurrency.tuner.js';
+} from './scheduling/worker-concurrency.tuner.ts';
 
 export interface MessagingModuleOptions {
   /** Shown in Redis `CLIENT LIST`, e.g. `worker`. */

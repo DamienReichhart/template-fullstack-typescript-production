@@ -15,14 +15,14 @@ import {
 import { MessagingModule } from '@template/messaging';
 import { mailQueue } from '@template/queue';
 
-import { identitySettingsProvider } from './config/identity.config.js';
-import { BullMqIdentityNotifier } from './messaging/bullmq-identity-notifier.js';
-import { PrismaOneTimeTokenRepository } from './persistence/repositories/prisma-one-time-token.repository.js';
-import { PrismaSessionRepository } from './persistence/repositories/prisma-session.repository.js';
-import { PrismaUserRepository } from './persistence/repositories/prisma-user.repository.js';
-import { Argon2PasswordHasher } from './security/hashing/argon2-password-hasher.js';
-import { CryptoSecureTokenGenerator } from './security/tokens/crypto-secure-token-generator.js';
-import { JwtAccessTokenIssuer } from './security/tokens/jwt-access-token-issuer.js';
+import { identitySettingsProvider } from './config/identity.config.ts';
+import { BullMqIdentityNotifier } from './messaging/bullmq-identity-notifier.ts';
+import { PrismaOneTimeTokenRepository } from './persistence/repositories/prisma-one-time-token.repository.ts';
+import { PrismaSessionRepository } from './persistence/repositories/prisma-session.repository.ts';
+import { PrismaUserRepository } from './persistence/repositories/prisma-user.repository.ts';
+import { Argon2PasswordHasher } from './security/hashing/argon2-password-hasher.ts';
+import { CryptoSecureTokenGenerator } from './security/tokens/crypto-secure-token-generator.ts';
+import { JwtAccessTokenIssuer } from './security/tokens/jwt-access-token-issuer.ts';
 
 const ports = [
   UserRepository,

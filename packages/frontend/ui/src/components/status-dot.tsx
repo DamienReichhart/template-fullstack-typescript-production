@@ -1,4 +1,4 @@
-import { cn } from '../lib/cn.js';
+import { cn } from '../lib/cn.ts';
 
 const tones = {
   up: 'bg-success',

@@ -6,7 +6,7 @@ import { FixedClock } from '@template/ddd';
 import { FakeAccessTokenIssuer } from '@template/identity-application/testing';
 import type { ExecutionContext } from '@nestjs/common';
 
-import { AccessTokenGuard } from './access-token.guard.js';
+import { AccessTokenGuard } from './access-token.guard.ts';
 
 function contextWith(cookies: Record<string, string>, isPublic = false) {
   const request: Record<string, unknown> = { cookies };

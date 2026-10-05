@@ -1,6 +1,6 @@
-import type { UserId } from '../../user/value-objects/user-id.value-object.js';
-import type { OneTimeToken } from '../one-time-token.aggregate.js';
-import type { OneTimeTokenPurpose } from '../value-objects/one-time-token-purpose.value-object.js';
+import type { UserId } from '../../user/value-objects/user-id.value-object.ts';
+import type { OneTimeToken } from '../one-time-token.aggregate.ts';
+import type { OneTimeTokenPurpose } from '../value-objects/one-time-token-purpose.value-object.ts';
 
 export abstract class OneTimeTokenRepository {
   abstract findByHash(

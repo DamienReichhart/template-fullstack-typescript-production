@@ -1,10 +1,10 @@
 import { CommandHandler, type ICommandHandler } from '@nestjs/cqrs';
 import { Clock } from '@template/ddd';
 
-import { EmailRenderer } from '../../ports/email-renderer.port.js';
-import { Mailer } from '../../ports/mailer.port.js';
-import { WebLinks } from '../../ports/web-links.port.js';
-import { SendPasswordResetEmailCommand } from './send-password-reset-email.command.js';
+import { EmailRenderer } from '../../ports/email-renderer.port.ts';
+import { Mailer } from '../../ports/mailer.port.ts';
+import { WebLinks } from '../../ports/web-links.port.ts';
+import { SendPasswordResetEmailCommand } from './send-password-reset-email.command.ts';
 
 const MINUTE = 60_000;
 

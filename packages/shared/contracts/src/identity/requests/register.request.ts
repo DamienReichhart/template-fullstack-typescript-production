@@ -1,8 +1,8 @@
 import { z } from 'zod';
 
-import { emailSchema } from '../../common/schemas/email.schema.js';
-import { preferredLocaleSchema } from '../../common/schemas/locale.schema.js';
-import { passwordSchema } from '../../common/schemas/password.schema.js';
+import { emailSchema } from '../../common/schemas/email.schema.ts';
+import { preferredLocaleSchema } from '../../common/schemas/locale.schema.ts';
+import { passwordSchema } from '../../common/schemas/password.schema.ts';
 
 export const registerRequestSchema = z.object({
   name: z

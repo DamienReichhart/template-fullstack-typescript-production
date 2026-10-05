@@ -5,8 +5,8 @@ import {
   type HealthCheckResult,
 } from '@nestjs/terminus';
 
-import { DependencyIndicator } from '../indicators/dependency-indicator.js';
-import type { DependencyStatus } from '../indicators/dependency-status.js';
+import { DependencyIndicator } from '../indicators/dependency-indicator.ts';
+import type { DependencyStatus } from '../indicators/dependency-status.ts';
 
 export const DEPENDENCY_INDICATORS = Symbol.for('template:dependency-indicators');
 

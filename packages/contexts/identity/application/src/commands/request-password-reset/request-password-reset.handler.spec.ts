@@ -1,9 +1,9 @@
 import { describe, expect, it } from 'bun:test';
 import { PasswordResetRequestedEvent } from '@template/identity-domain';
 
-import { createIdentityTestKit } from '../../testing/identity-test-kit.js';
-import { RequestPasswordResetCommand } from './request-password-reset.command.js';
-import { RequestPasswordResetHandler } from './request-password-reset.handler.js';
+import { createIdentityTestKit } from '../../testing/identity-test-kit.ts';
+import { RequestPasswordResetCommand } from './request-password-reset.command.ts';
+import { RequestPasswordResetHandler } from './request-password-reset.handler.ts';
 
 function setup() {
   const kit = createIdentityTestKit();

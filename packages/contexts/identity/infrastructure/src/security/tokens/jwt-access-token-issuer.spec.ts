@@ -2,8 +2,8 @@ import { describe, expect, it } from 'bun:test';
 import { FixedClock } from '@template/ddd';
 import { InvalidAccessTokenError } from '@template/identity-application';
 
-import type { IdentityConfig } from '../../config/identity.config.js';
-import { JwtAccessTokenIssuer } from './jwt-access-token-issuer.js';
+import type { IdentityConfig } from '../../config/identity.config.ts';
+import { JwtAccessTokenIssuer } from './jwt-access-token-issuer.ts';
 
 const config = {
   JWT_ACCESS_SECRET: 'a-test-secret-that-is-long-enough-for-hs256',

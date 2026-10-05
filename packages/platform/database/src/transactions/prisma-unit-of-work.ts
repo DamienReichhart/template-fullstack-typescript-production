@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { UnitOfWork } from '@template/ddd';
 
-import { PrismaTransactionHost } from './transaction-host.js';
+import { PrismaTransactionHost } from './transaction-host.ts';
 
 @Injectable()
 export class PrismaUnitOfWork extends UnitOfWork {

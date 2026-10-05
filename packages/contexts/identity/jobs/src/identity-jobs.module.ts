@@ -2,7 +2,7 @@ import { Module, type DynamicModule, type Type } from '@nestjs/common';
 import { MessagingModule } from '@template/messaging';
 import { identityMaintenanceQueue } from '@template/queue';
 
-import { IdentityMaintenanceProcessor } from './processors/identity-maintenance.processor.js';
+import { IdentityMaintenanceProcessor } from './processors/identity-maintenance.processor.ts';
 
 export interface IdentityJobsModuleOptions {
   /** `IdentityApplicationModule.register(...)`: passed in, never imported. */

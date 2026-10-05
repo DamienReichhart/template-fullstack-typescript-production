@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'bun:test';
 
-import { Argon2PasswordHasher } from './argon2-password-hasher.js';
+import { Argon2PasswordHasher } from './argon2-password-hasher.ts';
 
 const hasher = new Argon2PasswordHasher();
 

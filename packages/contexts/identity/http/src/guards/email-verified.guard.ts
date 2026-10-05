@@ -4,8 +4,8 @@ import { CommonErrorCode } from '@template/contracts/common';
 import { IdentityErrorCode } from '@template/contracts/identity';
 import { ApiProblemException } from '@template/http';
 
-import type { AuthenticatedRequest } from '../decorators/current-user.decorator.js';
-import { REQUIRE_VERIFIED_EMAIL_KEY } from '../decorators/require-verified-email.decorator.js';
+import type { AuthenticatedRequest } from '../decorators/current-user.decorator.ts';
+import { REQUIRE_VERIFIED_EMAIL_KEY } from '../decorators/require-verified-email.decorator.ts';
 
 /**
  * Reads the `emailVerified` claim of the access token. Clients refresh their session right

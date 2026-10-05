@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'bun:test';
 import { z } from 'zod';
 
-import { defineConfig } from './config-definition.js';
-import { EnvValidationError, loadConfig } from './load-env.js';
+import { defineConfig } from './config-definition.ts';
+import { EnvValidationError, loadConfig } from './load-env.ts';
 
 const portConfig = defineConfig('port', z.object({ PORT: z.coerce.number().int().positive() }));
 const urlConfig = defineConfig('url', z.object({ PUBLIC_URL: z.url() }));

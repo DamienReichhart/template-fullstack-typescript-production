@@ -2,8 +2,8 @@ import { Logger } from '@nestjs/common';
 import { EventsHandler, type IEventHandler } from '@nestjs/cqrs';
 import { UserId, UserRegisteredEvent, UserRepository } from '@template/identity-domain';
 
-import { IdentityNotifier } from '../../ports/notifications/identity-notifier.port.js';
-import { VerificationEmailSender } from '../../services/verification-email.sender.js';
+import { IdentityNotifier } from '../../ports/notifications/identity-notifier.port.ts';
+import { VerificationEmailSender } from '../../services/verification-email.sender.ts';
 
 /**
  * Policy: when a user registers, welcome them and ask them to verify their email.

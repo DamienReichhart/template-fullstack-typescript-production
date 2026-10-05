@@ -1,4 +1,4 @@
-import { PasswordHasher } from '../../ports/security/password-hasher.port.js';
+import { PasswordHasher } from '../../ports/security/password-hasher.port.ts';
 
 /** Reversible on purpose: tests can assert which password was hashed. */
 export class FakePasswordHasher extends PasswordHasher {

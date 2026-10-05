@@ -1,8 +1,8 @@
 import { QueryHandler, type IQueryHandler } from '@nestjs/cqrs';
 import { UserId, UserNotFoundError, UserRepository } from '@template/identity-domain';
 
-import { toCurrentUserView, type CurrentUserView } from '../../views/current-user.view.js';
-import { GetCurrentUserQuery } from './get-current-user.query.js';
+import { toCurrentUserView, type CurrentUserView } from '../../views/current-user.view.ts';
+import { GetCurrentUserQuery } from './get-current-user.query.ts';
 
 @QueryHandler(GetCurrentUserQuery)
 export class GetCurrentUserHandler implements IQueryHandler<GetCurrentUserQuery, CurrentUserView> {

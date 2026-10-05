@@ -5,4 +5,4 @@ export {
   readOutbox,
   waitForEmail,
   type CapturedEmail,
-} from '../mailers/capture/capture-outbox.js';
+} from '../mailers/capture/capture-outbox.ts';

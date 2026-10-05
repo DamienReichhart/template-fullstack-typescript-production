@@ -2,8 +2,8 @@
 
 import type { ComponentProps } from 'react';
 
-import { cn } from '../../lib/cn.js';
-import { useFormField } from './form.js';
+import { cn } from '../../lib/cn.ts';
+import { useFormField } from './form.tsx';
 
 /**
  * The field's error message, or `children` when the field is valid. Messages arrive already

@@ -1,7 +1,7 @@
 import {
   IdentityNotifier,
   type Recipient,
-} from '../../ports/notifications/identity-notifier.port.js';
+} from '../../ports/notifications/identity-notifier.port.ts';
 
 export type SentNotification =
   | { kind: 'welcome'; recipient: Recipient }

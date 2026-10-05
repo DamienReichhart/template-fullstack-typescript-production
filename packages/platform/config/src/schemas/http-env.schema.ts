@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
-import { defineConfig } from '../loader/config-definition.js';
-import { booleanFlag, commaSeparatedList, port, positiveInt } from './env-helpers.js';
+import { defineConfig } from '../loader/config-definition.ts';
+import { booleanFlag, commaSeparatedList, port, positiveInt } from './env-helpers.ts';
 
 export const httpConfig = defineConfig(
   'http',

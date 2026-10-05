@@ -1,4 +1,4 @@
-import type { Identifier } from './identifier.js';
+import type { Identifier } from './identifier.ts';
 
 /** An object defined by its identity: two entities with the same id are the same entity. */
 export abstract class Entity<Id extends Identifier, Props extends object> {

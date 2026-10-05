@@ -11,8 +11,8 @@ import { writeFileSync } from 'node:fs';
 import { NestFactory } from '@nestjs/core';
 import { configureRouting, createOpenApiDocument } from '@template/http';
 
-import { AppModule } from '../app.module.js';
-import { APP_VERSION } from '../modules/system/app-version.js';
+import { AppModule } from '../app.module.ts';
+import { APP_VERSION } from '../modules/system/app-version.ts';
 
 const app = await NestFactory.create(AppModule, { preview: true, logger: false });
 configureRouting(app);

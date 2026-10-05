@@ -1,6 +1,6 @@
 import { createServer, type Server } from 'node:http';
 
-import type { DependencyStatus } from '../indicators/dependency-status.js';
+import type { DependencyStatus } from '../indicators/dependency-status.ts';
 
 export interface ProbeServerOptions {
   port: number;

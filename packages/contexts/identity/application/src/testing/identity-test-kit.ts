@@ -1,17 +1,17 @@
 import { FixedClock, ImmediateUnitOfWork } from '@template/ddd';
 import { Email, PasswordHash, User } from '@template/identity-domain';
 
-import type { IdentitySettings } from '../ports/configuration/identity-settings.port.js';
-import { SessionIssuer } from '../services/session-issuer.service.js';
-import { VerificationEmailSender } from '../services/verification-email.sender.js';
-import { FakeAccessTokenIssuer } from './fakes/fake-access-token-issuer.js';
-import { FakeIdentityNotifier } from './fakes/fake-identity-notifier.js';
-import { FakePasswordHasher } from './fakes/fake-password-hasher.js';
-import { FakeSecureTokenGenerator } from './fakes/fake-secure-token-generator.js';
-import { RecordingEventBus } from './fakes/recording-event-bus.js';
-import { InMemoryOneTimeTokenRepository } from './repositories/in-memory-one-time-token.repository.js';
-import { InMemorySessionRepository } from './repositories/in-memory-session.repository.js';
-import { InMemoryUserRepository } from './repositories/in-memory-user.repository.js';
+import type { IdentitySettings } from '../ports/configuration/identity-settings.port.ts';
+import { SessionIssuer } from '../services/session-issuer.service.ts';
+import { VerificationEmailSender } from '../services/verification-email.sender.ts';
+import { FakeAccessTokenIssuer } from './fakes/fake-access-token-issuer.ts';
+import { FakeIdentityNotifier } from './fakes/fake-identity-notifier.ts';
+import { FakePasswordHasher } from './fakes/fake-password-hasher.ts';
+import { FakeSecureTokenGenerator } from './fakes/fake-secure-token-generator.ts';
+import { RecordingEventBus } from './fakes/recording-event-bus.ts';
+import { InMemoryOneTimeTokenRepository } from './repositories/in-memory-one-time-token.repository.ts';
+import { InMemorySessionRepository } from './repositories/in-memory-session.repository.ts';
+import { InMemoryUserRepository } from './repositories/in-memory-user.repository.ts';
 
 /**
  * Every port of the identity application layer, faked and wired together.

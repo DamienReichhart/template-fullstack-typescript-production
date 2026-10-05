@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'bun:test';
 
-import { PASSWORD_MAX_LENGTH, PASSWORD_MIN_LENGTH, passwordSchema } from './password.schema.js';
+import { PASSWORD_MAX_LENGTH, PASSWORD_MIN_LENGTH, passwordSchema } from './password.schema.ts';
 
 describe('passwordSchema', () => {
   it('accepts a passphrase within bounds', () => {

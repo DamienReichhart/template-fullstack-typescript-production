@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'bun:test';
 import { PasswordResetRequestedEvent } from '@template/identity-domain';
 
-import { createIdentityTestKit } from '../../testing/identity-test-kit.js';
-import { SendPasswordResetEmailHandler } from './send-password-reset-email.handler.js';
+import { createIdentityTestKit } from '../../testing/identity-test-kit.ts';
+import { SendPasswordResetEmailHandler } from './send-password-reset-email.handler.ts';
 
 function setup() {
   const kit = createIdentityTestKit();

@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'bun:test';
 
-import { createNotificationsTestKit } from '../../testing/notifications-test-kit.js';
-import { SendPasswordResetEmailCommand } from './send-password-reset-email.command.js';
-import { SendPasswordResetEmailHandler } from './send-password-reset-email.handler.js';
+import { createNotificationsTestKit } from '../../testing/notifications-test-kit.ts';
+import { SendPasswordResetEmailCommand } from './send-password-reset-email.command.ts';
+import { SendPasswordResetEmailHandler } from './send-password-reset-email.handler.ts';
 
 describe('SendPasswordResetEmailHandler', () => {
   it('links to the reset page with the token and states the remaining validity', async () => {

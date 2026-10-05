@@ -1,7 +1,7 @@
 import type { JobsOptions } from 'bullmq';
 import type { z } from 'zod';
 
-import type { QueueDefinition } from './define-queue.js';
+import type { QueueDefinition } from './define-queue.ts';
 
 /**
  * A job contract: the queue it runs on, its name and its payload schema. Producers and

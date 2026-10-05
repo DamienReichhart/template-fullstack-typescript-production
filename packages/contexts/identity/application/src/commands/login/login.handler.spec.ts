@@ -1,9 +1,9 @@
 import { describe, expect, it } from 'bun:test';
 import { InvalidCredentialsError } from '@template/identity-domain';
 
-import { createIdentityTestKit } from '../../testing/identity-test-kit.js';
-import { LoginCommand } from './login.command.js';
-import { LoginHandler } from './login.handler.js';
+import { createIdentityTestKit } from '../../testing/identity-test-kit.ts';
+import { LoginCommand } from './login.command.ts';
+import { LoginHandler } from './login.handler.ts';
 
 function setup() {
   const kit = createIdentityTestKit();

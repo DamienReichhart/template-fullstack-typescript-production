@@ -6,9 +6,9 @@ import {
   PasswordChangedEvent,
 } from '@template/identity-domain';
 
-import { createIdentityTestKit } from '../../testing/identity-test-kit.js';
-import { ResetPasswordCommand } from './reset-password.command.js';
-import { ResetPasswordHandler } from './reset-password.handler.js';
+import { createIdentityTestKit } from '../../testing/identity-test-kit.ts';
+import { ResetPasswordCommand } from './reset-password.command.ts';
+import { ResetPasswordHandler } from './reset-password.handler.ts';
 
 async function setup() {
   const kit = createIdentityTestKit();

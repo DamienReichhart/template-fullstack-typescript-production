@@ -1,5 +1,5 @@
-import type { ConfigDefinition, ConfigType } from './config-definition.js';
-import { formatEnvErrors, toEnvIssues, type EnvIssue } from './format-env-errors.js';
+import type { ConfigDefinition, ConfigType } from './config-definition.ts';
+import { formatEnvErrors, toEnvIssues, type EnvIssue } from './format-env-errors.ts';
 
 export type EnvSource = Record<string, string | undefined>;
 

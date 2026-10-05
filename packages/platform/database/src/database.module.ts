@@ -1,8 +1,8 @@
 import { Module, type DynamicModule } from '@nestjs/common';
 import { UnitOfWork } from '@template/ddd';
 
-import { PrismaClientModule } from './client/prisma-client.module.js';
-import { PrismaUnitOfWork } from './transactions/prisma-unit-of-work.js';
+import { PrismaClientModule } from './client/prisma-client.module.ts';
+import { PrismaUnitOfWork } from './transactions/prisma-unit-of-work.ts';
 
 /**
  * Postgres access for the whole app: `PrismaService`, the `PrismaTransactionHost` used by

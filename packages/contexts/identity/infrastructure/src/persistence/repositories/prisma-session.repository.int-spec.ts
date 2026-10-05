@@ -1,9 +1,9 @@
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'bun:test';
 import { Email, PasswordHash, RefreshTokenHash, Session, User } from '@template/identity-domain';
 
-import { createPersistenceTestContext } from './persistence-test-context.js';
-import { PrismaSessionRepository } from './prisma-session.repository.js';
-import { PrismaUserRepository } from './prisma-user.repository.js';
+import { createPersistenceTestContext } from './persistence-test-context.ts';
+import { PrismaSessionRepository } from './prisma-session.repository.ts';
+import { PrismaUserRepository } from './prisma-user.repository.ts';
 
 const t0 = new Date('2026-01-01T00:00:00.000Z');
 const t1 = new Date('2026-01-01T01:00:00.000Z');

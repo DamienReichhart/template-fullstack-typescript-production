@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
-import { defineJob } from '../../core/define-job.js';
-import { mailQueue } from './mail.queue.js';
+import { defineJob } from '../../core/define-job.ts';
+import { mailQueue } from './mail.queue.ts';
 
 const recipient = {
   email: z.email(),

@@ -2,7 +2,7 @@ import { describe, expect, it, mock } from 'bun:test';
 import type { JobProducer } from '@template/messaging';
 import { sendEmailVerificationJob, sendWelcomeEmailJob } from '@template/queue';
 
-import { BullMqIdentityNotifier } from './bullmq-identity-notifier.js';
+import { BullMqIdentityNotifier } from './bullmq-identity-notifier.ts';
 
 const recipient = { email: 'ada@example.com', name: 'Ada', locale: 'fr' };
 

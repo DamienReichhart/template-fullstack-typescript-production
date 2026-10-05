@@ -2,7 +2,7 @@ import { CommandHandler, EventBus, type ICommandHandler } from '@nestjs/cqrs';
 import { Clock } from '@template/ddd';
 import { Email, UserRepository } from '@template/identity-domain';
 
-import { RequestPasswordResetCommand } from './request-password-reset.command.js';
+import { RequestPasswordResetCommand } from './request-password-reset.command.ts';
 
 @CommandHandler(RequestPasswordResetCommand)
 export class RequestPasswordResetHandler implements ICommandHandler<

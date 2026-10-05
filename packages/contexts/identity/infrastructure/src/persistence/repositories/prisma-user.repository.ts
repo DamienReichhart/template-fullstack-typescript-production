@@ -8,7 +8,7 @@ import {
   type UserId,
 } from '@template/identity-domain';
 
-import { UserMapper } from '../mappers/user.mapper.js';
+import { UserMapper } from '../mappers/user.mapper.ts';
 
 @Injectable()
 export class PrismaUserRepository extends UserRepository {

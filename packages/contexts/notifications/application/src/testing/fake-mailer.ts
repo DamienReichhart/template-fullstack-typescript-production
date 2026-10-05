@@ -1,5 +1,5 @@
-import type { EmailMessage } from '../models/email-message.js';
-import { Mailer } from '../ports/mailer.port.js';
+import type { EmailMessage } from '../models/email-message.ts';
+import { Mailer } from '../ports/mailer.port.ts';
 
 export class FakeMailer extends Mailer {
   readonly sent: EmailMessage[] = [];

@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { defineConfig } from '../loader/config-definition.js';
+import { defineConfig } from '../loader/config-definition.ts';
 
 export const redisConfig = defineConfig(
   'redis',

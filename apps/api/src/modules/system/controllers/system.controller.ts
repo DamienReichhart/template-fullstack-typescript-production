@@ -10,8 +10,8 @@ import { Public, ZodResponse } from '@template/http';
 import { GetCurrentUserQuery } from '@template/identity-application';
 import { CurrentUser, RequireVerifiedEmail, type AuthenticatedUser } from '@template/identity-http';
 
-import { AuthenticatedPingDto, PingDto } from '../dto/ping.dto.js';
-import { SystemStatusService } from '../services/system-status.service.js';
+import { AuthenticatedPingDto, PingDto } from '../dto/ping.dto.ts';
+import { SystemStatusService } from '../services/system-status.service.ts';
 
 const routes = SystemRoutes.system;
 

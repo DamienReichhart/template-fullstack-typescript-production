@@ -8,9 +8,9 @@ import {
   UserRepository,
 } from '@template/identity-domain';
 
-import { PasswordHasher } from '../../ports/security/password-hasher.port.js';
-import { SecureTokenGenerator } from '../../ports/security/secure-token-generator.port.js';
-import { ResetPasswordCommand } from './reset-password.command.js';
+import { PasswordHasher } from '../../ports/security/password-hasher.port.ts';
+import { SecureTokenGenerator } from '../../ports/security/secure-token-generator.port.ts';
+import { ResetPasswordCommand } from './reset-password.command.ts';
 
 @CommandHandler(ResetPasswordCommand)
 export class ResetPasswordHandler implements ICommandHandler<ResetPasswordCommand, void> {

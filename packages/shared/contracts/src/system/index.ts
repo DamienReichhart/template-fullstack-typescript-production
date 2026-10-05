@@ -5,5 +5,5 @@ export {
   type AuthenticatedPingResponse,
   type PingResponse,
   type ServiceStatus,
-} from './responses/ping.response.js';
-export { SystemRoutes } from './system.routes.js';
+} from './responses/ping.response.ts';
+export { SystemRoutes } from './system.routes.ts';

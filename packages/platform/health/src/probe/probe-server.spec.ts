@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, it } from 'bun:test';
 
-import type { DependencyStatus } from '../indicators/dependency-status.js';
-import { ProbeServer } from './probe-server.js';
+import type { DependencyStatus } from '../indicators/dependency-status.ts';
+import { ProbeServer } from './probe-server.ts';
 
 let server: ProbeServer | undefined;
 

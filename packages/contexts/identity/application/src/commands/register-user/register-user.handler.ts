@@ -8,10 +8,10 @@ import {
   UserRepository,
 } from '@template/identity-domain';
 
-import { PasswordHasher } from '../../ports/security/password-hasher.port.js';
-import { SessionIssuer } from '../../services/session-issuer.service.js';
-import type { AuthSessionView } from '../../views/auth-session.view.js';
-import { RegisterUserCommand } from './register-user.command.js';
+import { PasswordHasher } from '../../ports/security/password-hasher.port.ts';
+import { SessionIssuer } from '../../services/session-issuer.service.ts';
+import type { AuthSessionView } from '../../views/auth-session.view.ts';
+import { RegisterUserCommand } from './register-user.command.ts';
 
 @CommandHandler(RegisterUserCommand)
 export class RegisterUserHandler implements ICommandHandler<RegisterUserCommand, AuthSessionView> {

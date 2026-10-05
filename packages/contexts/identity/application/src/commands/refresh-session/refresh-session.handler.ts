@@ -8,10 +8,10 @@ import {
   UserRepository,
 } from '@template/identity-domain';
 
-import { SecureTokenGenerator } from '../../ports/security/secure-token-generator.port.js';
-import { SessionIssuer } from '../../services/session-issuer.service.js';
-import type { AuthSessionView } from '../../views/auth-session.view.js';
-import { RefreshSessionCommand } from './refresh-session.command.js';
+import { SecureTokenGenerator } from '../../ports/security/secure-token-generator.port.ts';
+import { SessionIssuer } from '../../services/session-issuer.service.ts';
+import type { AuthSessionView } from '../../views/auth-session.view.ts';
+import { RefreshSessionCommand } from './refresh-session.command.ts';
 
 @CommandHandler(RefreshSessionCommand)
 export class RefreshSessionHandler implements ICommandHandler<

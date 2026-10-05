@@ -1,10 +1,10 @@
 import { CommandHandler, type ICommandHandler } from '@nestjs/cqrs';
 import { Clock } from '@template/ddd';
 
-import { EmailRenderer } from '../../ports/email-renderer.port.js';
-import { Mailer } from '../../ports/mailer.port.js';
-import { WebLinks } from '../../ports/web-links.port.js';
-import { SendEmailVerificationCommand } from './send-email-verification.command.js';
+import { EmailRenderer } from '../../ports/email-renderer.port.ts';
+import { Mailer } from '../../ports/mailer.port.ts';
+import { WebLinks } from '../../ports/web-links.port.ts';
+import { SendEmailVerificationCommand } from './send-email-verification.command.ts';
 
 const HOUR = 3_600_000;
 

@@ -1,4 +1,4 @@
-import { Clock } from './clock.js';
+import { Clock } from './clock.ts';
 
 /** A controllable clock for tests: time only moves when the test says so. */
 export class FixedClock extends Clock {
