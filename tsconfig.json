@@ -74,6 +74,9 @@
     },
     {
       "path": "./packages/frontend/api-client"
+    },
+    {
+      "path": "./packages/frontend/ui"
     }
   ]
 }
