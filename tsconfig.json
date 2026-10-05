@@ -50,6 +50,9 @@
     },
     {
       "path": "./packages/contexts/identity/http"
+    },
+    {
+      "path": "./packages/contexts/identity/jobs"
     }
   ]
 }
