@@ -1,7 +1,7 @@
 # Notifications context
 
 Renders and delivers transactional emails. Vocabulary: [`GLOSSARY.md`](./GLOSSARY.md).
-Map of all contexts: [`/GLOSSARY-MAP.md`](../../../GLOSSARY-MAP.md).
+Map of all contexts: [`/CONTEXT.md`](../../../CONTEXT.md).
 
 ## Layers
 

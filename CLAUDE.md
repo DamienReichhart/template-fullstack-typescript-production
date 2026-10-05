@@ -4,7 +4,7 @@ Nx + Bun monorepo: a NestJS api, a BullMQ worker and scheduler, a Next.js web ap
 
 ## Before you change code
 
-- Name things with the glossary: `GLOSSARY-MAP.md` leads to each context's `GLOSSARY.md`.
+- Name things with the glossary: `CONTEXT.md` leads to each context's `GLOSSARY.md`.
 - Adding a context, command, query, job, schedule, web feature or locale: follow its recipe in `docs/guides/`.
 - Adding a project or a folder an app or context does not have yet: `docs/architecture/conventions.md` (`bun run check:structure` enforces it).
 - An import the boundary rule rejects is a design signal, not a lint nuisance: `docs/architecture/boundaries.md`.
@@ -33,4 +33,4 @@ The five canonical triage labels, unchanged. See `docs/agents/triage-labels.md`.
 
 ### Domain docs
 
-Multi-context: `GLOSSARY-MAP.md` at the root, one `GLOSSARY.md` per context. See `docs/agents/domain.md`.
+Multi-context: `CONTEXT.md` at the root (`GLOSSARY-MAP.md` is a symlink to it), one `GLOSSARY.md` per context. See `docs/agents/domain.md`.

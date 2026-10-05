@@ -4,7 +4,7 @@ A new context is a new language before it is new code: agree on its terms first 
 then create only the layers it needs. Notifications has no `domain` and no `http`.
 
 1. **Language** — `packages/contexts/<context>/GLOSSARY.md` (format: the identity glossary), a line in
-   `GLOSSARY-MAP.md` for the context and one per relationship with another context.
+   `CONTEXT.md` for the context and one per relationship with another context.
 2. **Packages** — one per layer, `packages/contexts/<context>/<layer>/`, copied from the identity
    equivalent: `package.json` named `@template/<context>-<layer>` with tags
    `scope:<context>` and `layer:<layer>`, `tsconfig*.json`, `eslint.config.mjs`, `src/index.ts`,

@@ -62,7 +62,7 @@ docs/                  adr · architecture · guides · agents
 
 Each app and context has a README saying what it owns. Start with:
 
-- [`GLOSSARY-MAP.md`](./GLOSSARY-MAP.md): the contexts, their language and how they talk.
+- [`CONTEXT.md`](./CONTEXT.md): the contexts, their language and how they talk.
 - [`docs/architecture/boundaries.md`](./docs/architecture/boundaries.md): who may import whom, and why.
 - [`docs/architecture/conventions.md`](./docs/architecture/conventions.md): where each kind of file goes.
 - [`docs/guides/`](./docs/guides/): recipes to add a context, a command or query, a job or schedule,
