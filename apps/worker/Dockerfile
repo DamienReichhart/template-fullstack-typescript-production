@@ -12,12 +12,18 @@ ENV NX_DAEMON=false \
 # ── Build: full install, compile the api and every package it depends on ─────────
 FROM base AS build
 COPY . .
-RUN bun install --frozen-lockfile
+# Optional `ca` secret: extra CA bundle for TLS-intercepting corporate proxies.
+#   docker build --secret id=ca,src=/path/to/ca.crt ...
+RUN --mount=type=secret,id=ca,required=false \
+    if [ -f /run/secrets/ca ]; then export NODE_EXTRA_CA_CERTS=/run/secrets/ca; fi; \
+    bun install --frozen-lockfile
 RUN bunx nx run worker:build --output-style=static
 
 # ── Prune: production dependencies and compiled output only ──────────────────────
 FROM build AS prune
-RUN rm -rf apps/web apps/web-e2e apps/api-e2e apps/api apps/scheduler tools \
+RUN --mount=type=secret,id=ca,required=false \
+    rm -rf apps/web apps/web-e2e apps/api-e2e apps/api apps/scheduler tools \
+ && if [ -f /run/secrets/ca ]; then export NODE_EXTRA_CA_CERTS=/run/secrets/ca; fi \
  && bun install --production \
  && find apps packages -type d \( -name src -o -name out-tsc -o -name prisma \) -prune -exec rm -rf {} + \
  && find apps packages \( -name '*.tsbuildinfo' -o -name '*.spec.*' -o -name 'tsconfig*.json' \) -delete
