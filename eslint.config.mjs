@@ -72,6 +72,14 @@ export default [
     ],
   },
   {
+    files: ['**/*.ts', '**/*.tsx'],
+    languageOptions: {
+      // Nest resolves constructor parameters from emitted decorator metadata: with these
+      // flags typescript-eslint keeps injected classes as value imports.
+      parserOptions: { emitDecoratorMetadata: true, experimentalDecorators: true },
+    },
+  },
+  {
     files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx', '**/*.mjs'],
     rules: {
       '@nx/enforce-module-boundaries': [
@@ -95,26 +103,11 @@ export default [
     },
   },
   {
-    // Nest resolves constructor parameters from emitted metadata, so injected
-    // classes must stay value imports even when only used as types.
-    files: [
-      'apps/api/**/*.ts',
-      'apps/worker/**/*.ts',
-      'apps/scheduler/**/*.ts',
-      'packages/platform/**/*.ts',
-      'packages/contexts/**/*.ts',
-    ],
-    rules: {
-      '@typescript-eslint/consistent-type-imports': 'off',
-    },
-  },
-  {
     files: [
       '**/*.spec.ts',
       '**/*.spec.tsx',
       '**/*.int-spec.ts',
       '**/*.e2e-spec.ts',
-      'tools/**/*.ts',
       '**/scripts/**/*.ts',
     ],
     rules: {

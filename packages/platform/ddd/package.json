@@ -15,7 +15,7 @@
     "dist"
   ],
   "scripts": {
-    "test": "bun --conditions=@template/source test"
+    "test": "bun --conditions=@template/source test --pass-with-no-tests"
   },
   "nx": {
     "name": "ddd",

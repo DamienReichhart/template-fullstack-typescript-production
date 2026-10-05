@@ -21,7 +21,9 @@
       "plugin": "@nx/js/typescript",
       "include": ["packages/**/*"],
       "options": {
-        "typecheck": { "targetName": "typecheck" },
+        "typecheck": {
+          "targetName": "typecheck"
+        },
         "build": {
           "targetName": "build",
           "configName": "tsconfig.lib.json",
@@ -34,7 +36,9 @@
       "plugin": "@nx/js/typescript",
       "include": ["apps/api/**/*", "apps/worker/**/*", "apps/scheduler/**/*"],
       "options": {
-        "typecheck": { "targetName": "typecheck" },
+        "typecheck": {
+          "targetName": "typecheck"
+        },
         "build": {
           "targetName": "build",
           "configName": "tsconfig.app.json",
@@ -47,16 +51,22 @@
       "plugin": "@nx/js/typescript",
       "include": ["apps/web/**/*", "apps/api-e2e/**/*", "apps/web-e2e/**/*"],
       "options": {
-        "typecheck": { "targetName": "typecheck" }
+        "typecheck": {
+          "targetName": "typecheck"
+        }
       }
     },
     {
       "plugin": "@nx/eslint/plugin",
-      "options": { "targetName": "lint" }
+      "options": {
+        "targetName": "lint"
+      }
     },
     {
       "plugin": "@nx/playwright/plugin",
-      "options": { "targetName": "e2e" }
+      "options": {
+        "targetName": "e2e"
+      }
     }
   ],
   "targetDefaults": {
@@ -67,11 +77,18 @@
     },
     "test": {
       "cache": true,
-      "inputs": ["default", "^production"]
+      "inputs": ["default", "^production"],
+      "dependsOn": ["^prisma-generate"]
     },
     "test:int": {
       "cache": false,
-      "dependsOn": ["^build"]
+      "dependsOn": [
+        "^prisma-generate",
+        {
+          "projects": ["database"],
+          "target": "prisma-deploy-test"
+        }
+      ]
     },
     "lint": {
       "cache": true,
@@ -83,7 +100,8 @@
     },
     "dev": {
       "cache": false,
-      "continuous": true
+      "continuous": true,
+      "dependsOn": ["^prisma-generate"]
     }
   },
   "sync": {

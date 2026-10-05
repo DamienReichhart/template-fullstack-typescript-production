@@ -17,6 +17,9 @@
     },
     {
       "path": "./packages/platform/logger"
+    },
+    {
+      "path": "./packages/platform/database"
     }
   ]
 }
