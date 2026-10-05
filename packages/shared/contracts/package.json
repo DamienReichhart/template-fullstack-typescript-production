@@ -30,7 +30,7 @@
     "dist"
   ],
   "scripts": {
-    "test": "bun test"
+    "test": "bun --conditions=@template/source test"
   },
   "nx": {
     "name": "contracts",
