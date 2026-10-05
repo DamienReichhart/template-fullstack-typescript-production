@@ -26,6 +26,13 @@
         "typescript-eslint": "8.71.0",
       },
     },
+    "packages/contexts/identity/domain": {
+      "name": "@template/identity-domain",
+      "version": "0.0.1",
+      "dependencies": {
+        "@template/ddd": "workspace:*",
+      },
+    },
     "packages/platform/config": {
       "name": "@template/config",
       "version": "0.0.1",
@@ -631,6 +638,8 @@
     "@template/http": ["@template/http@workspace:packages/platform/http"],
 
     "@template/i18n": ["@template/i18n@workspace:packages/shared/i18n"],
+
+    "@template/identity-domain": ["@template/identity-domain@workspace:packages/contexts/identity/domain"],
 
     "@template/logger": ["@template/logger@workspace:packages/platform/logger"],
 

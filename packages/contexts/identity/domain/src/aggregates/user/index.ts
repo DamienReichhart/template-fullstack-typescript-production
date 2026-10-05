@@ -1,0 +1,15 @@
+export { EmailAlreadyTakenError } from './errors/email-already-taken.error.js';
+export { EmailNotVerifiedError } from './errors/email-not-verified.error.js';
+export { InvalidCredentialsError } from './errors/invalid-credentials.error.js';
+export { InvalidEmailError } from './errors/invalid-email.error.js';
+export { UserNotFoundError } from './errors/user-not-found.error.js';
+export { EmailVerifiedEvent } from './events/email-verified.event.js';
+export { PasswordChangedEvent } from './events/password-changed.event.js';
+export { PasswordResetRequestedEvent } from './events/password-reset-requested.event.js';
+export { UserRegisteredEvent } from './events/user-registered.event.js';
+export { UserRepository } from './repositories/user.repository.js';
+export { User, type RegisterUserInput, type UserProps } from './user.aggregate.js';
+export { Email } from './value-objects/email.value-object.js';
+export { PasswordHash } from './value-objects/password-hash.value-object.js';
+export { UserId } from './value-objects/user-id.value-object.js';
+export { isUserRole, UserRoles, type UserRole } from './value-objects/user-role.value-object.js';

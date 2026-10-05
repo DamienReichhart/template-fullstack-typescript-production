@@ -38,6 +38,9 @@
     },
     {
       "path": "./packages/platform/testing"
+    },
+    {
+      "path": "./packages/contexts/identity/domain"
     }
   ]
 }

@@ -111,8 +111,8 @@ const apiModules = dirs(join(ROOT, 'apps', 'api', 'src', 'modules'));
 const contractsSrc = join(ROOT, 'packages', 'shared', 'contracts', 'src');
 const contractAreas = dirs(contractsSrc).filter((name) => name !== 'common');
 for (const area of contractAreas) {
-  const mirrorsExist = contextNames.length > 0 || apiModules.length > 0;
-  if (mirrorsExist && !contextNames.includes(area) && !apiModules.includes(area)) {
+  // Checked once the api composes modules: that is where contexts and api modules meet.
+  if (apiModules.length > 0 && !contextNames.includes(area) && !apiModules.includes(area)) {
     fail(
       join(contractsSrc, area),
       'contract folders must be named after a bounded context or an api module',
