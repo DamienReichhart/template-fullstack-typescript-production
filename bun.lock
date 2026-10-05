@@ -154,6 +154,20 @@
         "ioredis": "6.0.0",
       },
     },
+    "packages/platform/testing": {
+      "name": "@template/testing",
+      "version": "0.0.1",
+      "dependencies": {
+        "@nestjs/common": "12.1.2",
+        "@nestjs/core": "12.1.2",
+        "@nestjs/platform-express": "12.1.2",
+        "@nestjs/testing": "12.1.2",
+        "@template/http": "workspace:*",
+        "cookie-parser": "1.4.7",
+        "nestjs-zod": "5.5.0",
+        "reflect-metadata": "0.2.2",
+      },
+    },
     "packages/shared/contracts": {
       "name": "@template/contracts",
       "version": "0.0.1",
@@ -624,6 +638,8 @@
     "@template/queue": ["@template/queue@workspace:packages/platform/queue"],
 
     "@template/redis": ["@template/redis@workspace:packages/platform/redis"],
+
+    "@template/testing": ["@template/testing@workspace:packages/platform/testing"],
 
     "@tokenizer/inflate": ["@tokenizer/inflate@0.4.1", "", { "dependencies": { "debug": "^4.4.3", "token-types": "^6.1.1" } }, "sha512-2mAv+8pkG6GIZiF1kNg1jAjh27IDxEPKwdGul3snfztFerfPGI1LjDezZp3i7BElXompqEtPmoPx6c2wgtWsOA=="],
 

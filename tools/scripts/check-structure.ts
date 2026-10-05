@@ -89,13 +89,13 @@ for (const context of contextNames) {
   }
 }
 
-/** Platform: a Nest-aware package exposes src/<package>.module.ts. */
+/** Platform: an infrastructure package (`type:infra`) exposes src/<package>.module.ts. */
 const platformRoot = join(ROOT, 'packages', 'platform');
 for (const pkg of dirs(platformRoot)) {
   const manifest = join(platformRoot, pkg, 'package.json');
   if (!existsSync(manifest)) continue;
-  const { dependencies = {}, peerDependencies = {} } = JSON.parse(readFileSync(manifest, 'utf8'));
-  if ('@nestjs/common' in { ...dependencies, ...peerDependencies }) {
+  const { nx = {} } = JSON.parse(readFileSync(manifest, 'utf8')) as { nx?: { tags?: string[] } };
+  if (nx.tags?.includes('type:infra')) {
     requireFiles(join(platformRoot, pkg, 'src'), ['index.ts', `${pkg}.module.ts`]);
   }
 }
