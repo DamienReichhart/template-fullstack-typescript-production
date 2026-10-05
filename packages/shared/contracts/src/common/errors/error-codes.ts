@@ -1,5 +1,6 @@
 /** Errors any endpoint can return. Context-specific codes live next to their context's contracts. */
 export const CommonErrorCode = {
+  badRequest: 'BAD_REQUEST',
   validationFailed: 'VALIDATION_FAILED',
   unauthenticated: 'UNAUTHENTICATED',
   forbidden: 'FORBIDDEN',

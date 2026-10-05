@@ -1,4 +1,5 @@
 {
+  "BAD_REQUEST": "La requête est invalide.",
   "VALIDATION_FAILED": "Certains champs sont invalides.",
   "UNAUTHENTICATED": "Veuillez vous connecter pour continuer.",
   "FORBIDDEN": "Vous n'êtes pas autorisé à effectuer cette action.",

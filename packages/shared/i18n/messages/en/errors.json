@@ -1,4 +1,5 @@
 {
+  "BAD_REQUEST": "The request is invalid.",
   "VALIDATION_FAILED": "Some fields are invalid.",
   "UNAUTHENTICATED": "Please sign in to continue.",
   "FORBIDDEN": "You are not allowed to do this.",
