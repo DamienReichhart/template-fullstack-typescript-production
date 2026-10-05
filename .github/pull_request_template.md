@@ -11,4 +11,4 @@
 - [ ] Commits follow Conventional Commits and each one stands alone
 - [ ] Tests cover the change (unit, `*.int-spec.ts`, or e2e where behaviour crosses apps)
 - [ ] New user-facing text is translated in every locale
-- [ ] Docs updated: CONTEXT.md / GLOSSARY.md for new domain terms, README for new commands
+- [ ] Docs updated: GLOSSARY.md (and GLOSSARY-MAP.md) for new domain terms, an ADR for a hard-to-reverse decision, README for new commands

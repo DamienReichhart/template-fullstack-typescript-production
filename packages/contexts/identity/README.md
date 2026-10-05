@@ -1,7 +1,7 @@
 # Identity context
 
 Registration, sign-in, sessions, email verification and password reset.
-Vocabulary: [`GLOSSARY.md`](./GLOSSARY.md). Map of all contexts: [`/CONTEXT.md`](../../../CONTEXT.md).
+Vocabulary: [`GLOSSARY.md`](./GLOSSARY.md). Map of all contexts: [`/GLOSSARY-MAP.md`](../../../GLOSSARY-MAP.md).
 
 ## Layers
 
