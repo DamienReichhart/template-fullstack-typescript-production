@@ -38,11 +38,14 @@ export interface RateLimitResult {
   resetInSeconds: number;
 }
 
+/** Redis key prefix of every rate-limit counter (end-to-end suites reset them between tests). */
+export const RATE_LIMIT_KEY_PREFIX = 'rate-limit';
+
 /** Counters live in Redis so every API replica enforces the same budget. */
 export class RedisRateLimiter {
   constructor(
     private readonly redis: Redis,
-    private readonly prefix = 'rate-limit',
+    private readonly prefix = RATE_LIMIT_KEY_PREFIX,
   ) {}
 
   async hit(key: string, limit: number, windowSeconds: number): Promise<RateLimitResult> {

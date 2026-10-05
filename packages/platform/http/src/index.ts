@@ -20,4 +20,8 @@ export {
   type RateLimitOptions,
 } from './security/rate-limit.decorators.ts';
 export { RateLimitGuard } from './security/rate-limit.guard.ts';
-export { RedisRateLimiter, type RateLimitResult } from './security/redis-rate-limiter.ts';
+export {
+  RATE_LIMIT_KEY_PREFIX,
+  RedisRateLimiter,
+  type RateLimitResult,
+} from './security/redis-rate-limiter.ts';
