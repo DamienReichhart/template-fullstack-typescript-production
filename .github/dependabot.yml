@@ -1,0 +1,50 @@
+version: 2
+updates:
+  - package-ecosystem: bun
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 10
+    # Packages released together move together: one PR per family keeps the lockfile coherent.
+    groups:
+      nx:
+        patterns: ['nx', '@nx/*']
+      nestjs:
+        patterns: ['@nestjs/*', 'nestjs-*']
+      next-react:
+        patterns: ['next', '@next/*', 'react', 'react-dom', '@types/react*', 'next-intl']
+      prisma:
+        patterns: ['prisma', '@prisma/*']
+      lint-format:
+        patterns: ['eslint*', '@eslint/*', 'typescript-eslint', 'prettier', '@typescript-eslint/*']
+      testing:
+        patterns: ['@playwright/*', '@testing-library/*', 'happy-dom', '@happy-dom/*']
+    ignore:
+      # TypeScript 7 drops the JS API typescript-eslint and Next rely on (see docs/adr).
+      - dependency-name: typescript
+        update-types: ['version-update:semver-major']
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    groups:
+      actions:
+        patterns: ['*']
+
+  - package-ecosystem: docker
+    directories: ['/apps/api', '/apps/worker', '/apps/scheduler', '/apps/web']
+    schedule:
+      interval: weekly
+      day: monday
+    groups:
+      base-images:
+        patterns: ['*']
+
+  - package-ecosystem: docker-compose
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday

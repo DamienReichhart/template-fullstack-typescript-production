@@ -1,0 +1,52 @@
+{
+  "name": "@template/identity-infrastructure",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "@template/source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "test": "bun --conditions=@template/source test --pass-with-no-tests"
+  },
+  "nx": {
+    "name": "identity-infrastructure",
+    "tags": [
+      "scope:identity",
+      "layer:infrastructure"
+    ],
+    "targets": {
+      "test:int": {
+        "command": "bun --conditions=@template/source --env-file=../../../../.env test --pass-with-no-tests $(find ./src -name '*.int-spec.ts')",
+        "options": {
+          "cwd": "{projectRoot}"
+        }
+      }
+    }
+  },
+  "dependencies": {
+    "@nestjs/common": "12.1.2",
+    "@node-rs/argon2": "2.2.1",
+    "@template/config": "workspace:*",
+    "@template/database": "workspace:*",
+    "@template/ddd": "workspace:*",
+    "@template/identity-application": "workspace:*",
+    "@template/identity-domain": "workspace:*",
+    "@template/messaging": "workspace:*",
+    "@template/queue": "workspace:*",
+    "jose": "6.2.12",
+    "zod": "4.6.5"
+  },
+  "devDependencies": {
+    "@nestjs/testing": "12.1.2",
+    "reflect-metadata": "0.2.2"
+  }
+}

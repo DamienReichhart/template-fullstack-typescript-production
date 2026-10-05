@@ -1,0 +1,25 @@
+{
+  "connectionTest": {
+    "title": "Connexion à l'API",
+    "description": "Vérifiez que l'application web peut joindre l'API et ses dépendances.",
+    "ping": "Tester la connexion",
+    "authenticatedPing": "Tester la connexion authentifiée",
+    "requiresVerifiedEmail": "Le test authentifié nécessite un e-mail vérifié.",
+    "idle": "Aucun test lancé.",
+    "version": "Version {version}",
+    "environment": "Environnement : {environment}",
+    "uptime": "Disponibilité : {seconds, number} s",
+    "latency": "{ms, number} ms",
+    "authenticatedAs": "Authentifié en tant que {email} ({role})",
+    "status": {
+      "ok": "Opérationnel",
+      "degraded": "Dégradé",
+      "up": "En ligne",
+      "down": "Hors ligne"
+    },
+    "services": {
+      "database": "Base de données",
+      "redis": "Redis"
+    }
+  }
+}

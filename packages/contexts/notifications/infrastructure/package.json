@@ -1,0 +1,52 @@
+{
+  "name": "@template/notifications-infrastructure",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "@template/source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./testing": {
+      "@template/source": "./src/testing/index.ts",
+      "types": "./dist/testing/index.d.ts",
+      "default": "./dist/testing/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "test": "bun --conditions=@template/source test --pass-with-no-tests"
+  },
+  "nx": {
+    "name": "notifications-infrastructure",
+    "tags": [
+      "scope:notifications",
+      "layer:infrastructure"
+    ]
+  },
+  "dependencies": {
+    "@nestjs/common": "12.1.2",
+    "@react-email/components": "1.0.12",
+    "@react-email/render": "2.1.0",
+    "@template/config": "workspace:*",
+    "@template/ddd": "workspace:*",
+    "@template/i18n": "workspace:*",
+    "@template/notifications-application": "workspace:*",
+    "@template/redis": "workspace:*",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "resend": "6.32.0",
+    "use-intl": "4.14.9",
+    "zod": "4.6.5"
+  },
+  "devDependencies": {
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "reflect-metadata": "0.2.2"
+  }
+}

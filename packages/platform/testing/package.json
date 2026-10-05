@@ -1,0 +1,38 @@
+{
+  "name": "@template/testing",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "@template/source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "test": "bun --conditions=@template/source test --pass-with-no-tests"
+  },
+  "nx": {
+    "name": "testing",
+    "tags": [
+      "scope:platform",
+      "type:testing"
+    ]
+  },
+  "dependencies": {
+    "@nestjs/common": "12.1.2",
+    "@nestjs/core": "12.1.2",
+    "@nestjs/platform-express": "12.1.2",
+    "@nestjs/testing": "12.1.2",
+    "@template/contracts": "workspace:*",
+    "@template/http": "workspace:*",
+    "cookie-parser": "1.4.7",
+    "nestjs-zod": "5.5.0",
+    "reflect-metadata": "0.2.2"
+  }
+}

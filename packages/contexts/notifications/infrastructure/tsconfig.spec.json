@@ -1,0 +1,19 @@
+{
+  "extends": "../../../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "out-tsc/spec",
+    "tsBuildInfoFile": "out-tsc/spec/tsconfig.spec.tsbuildinfo",
+    "types": ["bun", "node"],
+    "jsx": "react-jsx",
+    "lib": ["es2024", "dom", "dom.iterable"],
+    "rewriteRelativeImportExtensions": false,
+    "allowImportingTsExtensions": true,
+    "emitDeclarationOnly": true
+  },
+  "include": ["src/**/*.spec.ts", "src/**/*.spec.tsx"],
+  "references": [
+    {
+      "path": "./tsconfig.lib.json"
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "name": "@template/logger",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "@template/source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "test": "bun --conditions=@template/source test --pass-with-no-tests"
+  },
+  "nx": {
+    "name": "logger",
+    "tags": [
+      "scope:platform",
+      "type:infra"
+    ]
+  },
+  "dependencies": {
+    "@nestjs/common": "12.1.2",
+    "@template/config": "workspace:*",
+    "@template/contracts": "workspace:*",
+    "nestjs-pino": "5.3.1",
+    "pino": "10.4.0",
+    "pino-http": "11.0.0",
+    "pino-pretty": "13.2.0"
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "appName": "Template",
+  "actions": {
+    "backToHome": "Retour à l'accueil",
+    "retry": "Réessayer",
+    "goToDashboard": "Aller au tableau de bord",
+    "dismiss": "Fermer"
+  },
+  "navigation": {
+    "home": "Accueil",
+    "dashboard": "Tableau de bord",
+    "login": "Se connecter",
+    "register": "Créer un compte",
+    "mainLabel": "Navigation principale"
+  },
+  "localeSwitcher": {
+    "label": "Langue",
+    "locales": {
+      "en": "English",
+      "fr": "Français"
+    }
+  },
+  "states": {
+    "loading": "Chargement…",
+    "error": {
+      "title": "Une erreur est survenue",
+      "description": "Une erreur inattendue s'est produite. Veuillez réessayer."
+    },
+    "notFound": {
+      "title": "Page introuvable",
+      "description": "La page que vous cherchez n'existe pas ou a été déplacée."
+    }
+  },
+  "footer": {
+    "copyright": "© {year} Template. Tous droits réservés."
+  }
+}

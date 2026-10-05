@@ -1,0 +1,11 @@
+export { ImmediateUnitOfWork, UnitOfWork } from './application/unit-of-work.ts';
+export { AggregateRoot } from './building-blocks/aggregate-root.ts';
+export { Entity } from './building-blocks/entity.ts';
+export { Identifier, InvalidIdentifierError } from './building-blocks/identifier.ts';
+export { ValueObject } from './building-blocks/value-object.ts';
+export { DomainError } from './errors/domain-error.ts';
+export { DomainEvent } from './events/domain-event.ts';
+export { Clock } from './time/clock.ts';
+export { FixedClock } from './time/fixed-clock.ts';
+export { SystemClock } from './time/system-clock.ts';
+export { addDays, addHours, addMinutes, addSeconds } from './time/durations.ts';

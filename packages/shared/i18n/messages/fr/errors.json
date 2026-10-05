@@ -1,0 +1,19 @@
+{
+  "BAD_REQUEST": "La requête est invalide.",
+  "VALIDATION_FAILED": "Certains champs sont invalides.",
+  "UNAUTHENTICATED": "Veuillez vous connecter pour continuer.",
+  "FORBIDDEN": "Vous n'êtes pas autorisé à effectuer cette action.",
+  "NOT_FOUND": "La ressource demandée est introuvable.",
+  "RATE_LIMITED": "Trop de tentatives. Patientez un instant puis réessayez.",
+  "CSRF_TOKEN_INVALID": "Votre session n'est plus à jour. Veuillez rafraîchir la page.",
+  "INTERNAL_ERROR": "Une erreur est survenue de notre côté. Veuillez réessayer.",
+  "EMAIL_ALREADY_TAKEN": "Un compte existe déjà avec cet e-mail.",
+  "INVALID_CREDENTIALS": "E-mail ou mot de passe incorrect.",
+  "EMAIL_NOT_VERIFIED": "Veuillez d'abord vérifier votre adresse e-mail.",
+  "SESSION_EXPIRED": "Votre session a expiré. Veuillez vous reconnecter.",
+  "SESSION_REVOKED": "Votre session a été fermée. Veuillez vous reconnecter.",
+  "SESSION_REFRESH_CONFLICT": "Votre session a été rafraîchie dans un autre onglet. Veuillez réessayer.",
+  "INVALID_OR_EXPIRED_TOKEN": "Ce lien est invalide ou a expiré.",
+  "NETWORK_ERROR": "Impossible de joindre le serveur. Vérifiez votre connexion.",
+  "UNKNOWN": "Une erreur inattendue s'est produite."
+}

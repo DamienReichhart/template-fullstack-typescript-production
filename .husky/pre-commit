@@ -1,0 +1,4 @@
+bunx lint-staged
+bun run check:structure
+bun run check:server-logic
+bunx nx affected -t typecheck test --uncommitted

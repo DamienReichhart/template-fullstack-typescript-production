@@ -1,0 +1,12 @@
+{
+  "recommendations": [
+    "nrwl.angular-console",
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "bradlc.vscode-tailwindcss",
+    "prisma.prisma",
+    "oven.bun-vscode",
+    "ms-playwright.playwright",
+    "lokalise.i18n-ally"
+  ]
+}

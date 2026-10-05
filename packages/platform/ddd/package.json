@@ -1,0 +1,30 @@
+{
+  "name": "@template/ddd",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "@template/source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "test": "bun --conditions=@template/source test --pass-with-no-tests"
+  },
+  "nx": {
+    "name": "ddd",
+    "tags": [
+      "scope:platform",
+      "type:ddd"
+    ]
+  },
+  "dependencies": {
+    "uuid": "14.0.2"
+  }
+}

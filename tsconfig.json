@@ -1,0 +1,82 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compileOnSave": false,
+  "files": [],
+  "references": [
+    {
+      "path": "./packages/shared/contracts"
+    },
+    {
+      "path": "./packages/shared/i18n"
+    },
+    {
+      "path": "./packages/platform/config"
+    },
+    {
+      "path": "./packages/platform/ddd"
+    },
+    {
+      "path": "./packages/platform/logger"
+    },
+    {
+      "path": "./packages/platform/database"
+    },
+    {
+      "path": "./packages/platform/queue"
+    },
+    {
+      "path": "./packages/platform/redis"
+    },
+    {
+      "path": "./packages/platform/messaging"
+    },
+    {
+      "path": "./packages/platform/http"
+    },
+    {
+      "path": "./packages/platform/health"
+    },
+    {
+      "path": "./packages/platform/testing"
+    },
+    {
+      "path": "./packages/contexts/identity/domain"
+    },
+    {
+      "path": "./packages/contexts/identity/application"
+    },
+    {
+      "path": "./packages/contexts/identity/infrastructure"
+    },
+    {
+      "path": "./packages/contexts/identity/http"
+    },
+    {
+      "path": "./packages/contexts/identity/jobs"
+    },
+    {
+      "path": "./packages/contexts/notifications/application"
+    },
+    {
+      "path": "./packages/contexts/notifications/infrastructure"
+    },
+    {
+      "path": "./packages/contexts/notifications/jobs"
+    },
+    {
+      "path": "./apps/api"
+    },
+    {
+      "path": "./apps/worker"
+    },
+    {
+      "path": "./apps/scheduler"
+    },
+    {
+      "path": "./packages/frontend/api-client"
+    },
+    {
+      "path": "./packages/frontend/ui"
+    }
+  ]
+}

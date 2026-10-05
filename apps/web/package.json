@@ -1,0 +1,49 @@
+{
+  "name": "@template/web",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "bun --bun next dev --port 3000",
+    "build": "NODE_ENV=production bun --bun next build",
+    "start": "NODE_ENV=production bun --bun next start --port 3000",
+    "test": "bun --conditions=@template/source test --pass-with-no-tests",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "nx": {
+    "name": "web",
+    "tags": [
+      "scope:frontend",
+      "type:app"
+    ]
+  },
+  "dependencies": {
+    "@hookform/resolvers": "5.9.1",
+    "@tanstack/react-query": "5.104.1",
+    "@template/api-client": "workspace:*",
+    "@template/contracts": "workspace:*",
+    "@template/i18n": "workspace:*",
+    "@template/ui": "workspace:*",
+    "lucide-react": "1.52.0",
+    "next": "16.3.8",
+    "next-intl": "4.14.9",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "react-hook-form": "7.89.0",
+    "zod": "4.6.5",
+    "zustand": "5.0.15"
+  },
+  "devDependencies": {
+    "@happy-dom/global-registrator": "20.14.5",
+    "@next/env": "16.3.8",
+    "@next/eslint-plugin-next": "16.3.8",
+    "@tailwindcss/postcss": "4.3.3",
+    "@testing-library/dom": "10.4.2",
+    "@testing-library/react": "16.3.3",
+    "@testing-library/user-event": "14.6.7",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "eslint-plugin-react-hooks": "7.1.1",
+    "tailwindcss": "4.3.3"
+  }
+}

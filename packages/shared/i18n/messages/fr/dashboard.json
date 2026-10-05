@@ -1,0 +1,5 @@
+{
+  "title": "Tableau de bord",
+  "welcome": "Bienvenue, {name}",
+  "subtitle": "Vous êtes connecté en tant que {email}."
+}

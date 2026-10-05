@@ -1,0 +1,18 @@
+import 'reflect-metadata';
+
+import { NestFactory } from '@nestjs/core';
+import { Logger } from '@template/logger';
+
+async function bootstrap(): Promise<void> {
+  // Imported here so an invalid environment is reported by the catch below, not as a stack trace.
+  const { SchedulerModule } = await import('./scheduler.module.ts');
+  const app = await NestFactory.createApplicationContext(SchedulerModule, { bufferLogs: true });
+  app.useLogger(app.get(Logger));
+  app.enableShutdownHooks();
+  app.get(Logger).log('Scheduler started: schedules synchronised', 'Bootstrap');
+}
+
+bootstrap().catch((error: unknown) => {
+  console.error(error instanceof Error ? error.message : error);
+  process.exit(1);
+});

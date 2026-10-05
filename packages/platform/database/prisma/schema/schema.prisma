@@ -1,0 +1,13 @@
+// One .prisma file per bounded context lives next to this file (identity.prisma, …).
+// This file only holds the generator and the datasource.
+
+generator client {
+  provider            = "prisma-client"
+  output              = "../../src/generated/prisma"
+  moduleFormat        = "esm"
+  importFileExtension = "js"
+}
+
+datasource db {
+  provider = "postgresql"
+}

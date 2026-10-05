@@ -1,0 +1,120 @@
+{
+  "name": "@template/database",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "@template/source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./testing": {
+      "@template/source": "./src/testing/index.ts",
+      "types": "./dist/testing/index.d.ts",
+      "default": "./dist/testing/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "prisma",
+    "prisma.config.ts"
+  ],
+  "scripts": {
+    "test": "bun --conditions=@template/source test --pass-with-no-tests"
+  },
+  "nx": {
+    "name": "database",
+    "tags": [
+      "scope:platform",
+      "type:infra"
+    ],
+    "targets": {
+      "prisma-generate": {
+        "command": "prisma generate",
+        "options": {
+          "cwd": "{projectRoot}"
+        },
+        "cache": true,
+        "inputs": [
+          "{projectRoot}/prisma/schema/**/*",
+          "{projectRoot}/prisma.config.ts"
+        ],
+        "outputs": [
+          "{projectRoot}/src/generated"
+        ]
+      },
+      "prisma-migrate": {
+        "command": "prisma migrate dev",
+        "options": {
+          "cwd": "{projectRoot}"
+        }
+      },
+      "prisma-deploy": {
+        "command": "prisma migrate deploy",
+        "options": {
+          "cwd": "{projectRoot}"
+        }
+      },
+      "prisma-studio": {
+        "command": "prisma studio",
+        "options": {
+          "cwd": "{projectRoot}"
+        },
+        "continuous": true
+      },
+      "build": {
+        "dependsOn": [
+          "prisma-generate",
+          "^build"
+        ]
+      },
+      "typecheck": {
+        "dependsOn": [
+          "prisma-generate",
+          "^typecheck"
+        ]
+      },
+      "test": {
+        "dependsOn": [
+          "prisma-generate"
+        ]
+      },
+      "prisma-deploy-test": {
+        "command": "prisma migrate deploy",
+        "options": {
+          "cwd": "{projectRoot}",
+          "env": {
+            "PRISMA_TARGET": "test"
+          }
+        }
+      },
+      "test:int": {
+        "command": "bun --conditions=@template/source --env-file=../../../.env test --pass-with-no-tests $(find ./src -name '*.int-spec.ts')",
+        "options": {
+          "cwd": "{projectRoot}"
+        },
+        "dependsOn": [
+          "prisma-generate",
+          "prisma-deploy-test"
+        ]
+      }
+    }
+  },
+  "dependencies": {
+    "@nestjs/common": "12.1.2",
+    "@nestjs/core": "12.1.2",
+    "@prisma/adapter-pg": "7.10.0",
+    "@prisma/client": "7.10.0",
+    "@template/config": "workspace:*",
+    "@template/ddd": "workspace:*",
+    "pg": "8.23.1"
+  },
+  "devDependencies": {
+    "@nestjs/platform-express": "12.1.2",
+    "@nestjs/testing": "12.1.2",
+    "prisma": "7.10.0",
+    "reflect-metadata": "0.2.2"
+  }
+}

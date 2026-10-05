@@ -1,0 +1,28 @@
+{
+  "layout": {
+    "footer": "Vous recevez cet e-mail car un compte utilise cette adresse sur {appName}."
+  },
+  "welcome": {
+    "subject": "Bienvenue sur {appName}",
+    "preview": "Votre compte est prêt.",
+    "heading": "Bienvenue, {name} !",
+    "body": "Votre compte est prêt. Nous sommes ravis de vous compter parmi nous.",
+    "cta": "Ouvrir {appName}"
+  },
+  "verifyEmail": {
+    "subject": "Vérifiez votre adresse e-mail",
+    "preview": "Confirmez votre e-mail pour finaliser la création de votre compte.",
+    "heading": "Confirmez votre adresse e-mail",
+    "body": "Cliquez sur le bouton ci-dessous pour vérifier votre adresse e-mail. Le lien expire dans {hours} heures.",
+    "cta": "Vérifier l'e-mail",
+    "ignore": "Si vous n'avez pas créé de compte, vous pouvez ignorer cet e-mail."
+  },
+  "resetPassword": {
+    "subject": "Réinitialisez votre mot de passe",
+    "preview": "Une réinitialisation du mot de passe a été demandée pour votre compte.",
+    "heading": "Réinitialisez votre mot de passe",
+    "body": "Cliquez sur le bouton ci-dessous pour choisir un nouveau mot de passe. Le lien expire dans {minutes} minutes.",
+    "cta": "Réinitialiser le mot de passe",
+    "ignore": "Si vous n'avez pas demandé de réinitialisation, vous pouvez ignorer cet e-mail."
+  }
+}

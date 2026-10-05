@@ -1,0 +1,29 @@
+{
+  "name": "@template/i18n",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "@template/source": "./src/index.ts",
+      "types": "./dist/src/index.d.ts",
+      "default": "./dist/src/index.js"
+    },
+    "./messages/*": "./messages/*",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "messages"
+  ],
+  "scripts": {
+    "test": "bun --conditions=@template/source test --pass-with-no-tests"
+  },
+  "nx": {
+    "name": "i18n",
+    "tags": [
+      "scope:shared",
+      "type:i18n"
+    ]
+  }
+}

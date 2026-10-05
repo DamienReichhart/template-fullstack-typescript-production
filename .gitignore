@@ -1,0 +1,32 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+out-tsc/
+.next/
+*.tsbuildinfo
+next-env.d.ts
+
+# Generated
+packages/platform/database/src/generated/
+
+# Nx
+.nx/cache/
+.nx/workspace-data/
+
+# Tests
+coverage/
+playwright-report/
+test-results/
+blob-report/
+
+# Env
+.env
+.env.*
+!.env.example
+
+# OS / editors
+.DS_Store
+*.log
+.idea/

@@ -1,0 +1,2 @@
+[test]
+preload = ["./src/support/global-setup.ts"]

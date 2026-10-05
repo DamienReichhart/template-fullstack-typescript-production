@@ -1,0 +1,30 @@
+{
+  "extends": "../../../../tsconfig.base.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "dist",
+    "tsBuildInfoFile": "dist/tsconfig.lib.tsbuildinfo",
+    "types": ["node"],
+    "jsx": "react-jsx",
+    "lib": ["es2024", "dom", "dom.iterable"]
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "exclude": ["src/**/*.spec.ts", "src/**/*.spec.tsx"],
+  "references": [
+    {
+      "path": "../../../platform/redis/tsconfig.lib.json"
+    },
+    {
+      "path": "../application/tsconfig.lib.json"
+    },
+    {
+      "path": "../../../shared/i18n/tsconfig.lib.json"
+    },
+    {
+      "path": "../../../platform/ddd/tsconfig.lib.json"
+    },
+    {
+      "path": "../../../platform/config/tsconfig.lib.json"
+    }
+  ]
+}

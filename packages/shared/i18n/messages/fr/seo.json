@@ -1,0 +1,37 @@
+{
+  "default": {
+    "title": "Template",
+    "titleTemplate": "%s · Template",
+    "description": "Monorepo Nx prêt pour la production avec NestJS, BullMQ et Next.js."
+  },
+  "pages": {
+    "landing": {
+      "title": "Construisez sur des fondations qui passent à l'échelle",
+      "description": "Un template prêt pour la production : API NestJS, worker et scheduler BullMQ, frontend Next.js."
+    },
+    "login": {
+      "title": "Se connecter",
+      "description": "Connectez-vous à votre compte."
+    },
+    "register": {
+      "title": "Créer votre compte",
+      "description": "Créez un compte en moins d'une minute."
+    },
+    "verifyEmail": {
+      "title": "Vérification de l'e-mail",
+      "description": "Vérifiez votre adresse e-mail."
+    },
+    "forgotPassword": {
+      "title": "Mot de passe oublié",
+      "description": "Demandez un lien de réinitialisation du mot de passe."
+    },
+    "resetPassword": {
+      "title": "Choisir un nouveau mot de passe",
+      "description": "Définissez un nouveau mot de passe pour votre compte."
+    },
+    "dashboard": {
+      "title": "Tableau de bord",
+      "description": "Votre tableau de bord."
+    }
+  }
+}

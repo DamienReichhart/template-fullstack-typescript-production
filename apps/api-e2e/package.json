@@ -1,0 +1,44 @@
+{
+  "name": "@template/api-e2e",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "nx": {
+    "name": "api-e2e",
+    "tags": [
+      "type:e2e"
+    ],
+    "implicitDependencies": [
+      "api",
+      "worker"
+    ],
+    "targets": {
+      "e2e": {
+        "command": "bun --conditions=@template/source --env-file=../../.env test --timeout 30000 $(find ./src -name '*.e2e-spec.ts' | sort)",
+        "options": {
+          "cwd": "{projectRoot}"
+        },
+        "dependsOn": [
+          "^prisma-generate",
+          {
+            "projects": [
+              "database"
+            ],
+            "target": "prisma-deploy"
+          }
+        ],
+        "cache": false,
+        "parallelism": false
+      }
+    }
+  },
+  "dependencies": {
+    "@template/contracts": "workspace:*",
+    "@template/http": "workspace:*",
+    "@template/notifications-infrastructure": "workspace:*",
+    "ioredis": "6.0.0"
+  }
+}

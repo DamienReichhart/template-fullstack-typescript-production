@@ -1,0 +1,67 @@
+{
+  "name": "@template/api",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "bun --conditions=@template/source --env-file=../../.env --watch src/main.ts",
+    "start": "bun dist/main.js",
+    "test": "bun --conditions=@template/source test --pass-with-no-tests"
+  },
+  "nx": {
+    "name": "api",
+    "tags": [
+      "type:app"
+    ],
+    "targets": {
+      "dev": {
+        "continuous": true,
+        "dependsOn": [
+          "^prisma-generate"
+        ]
+      },
+      "openapi": {
+        "command": "bun --conditions=@template/source --env-file=../../.env src/scripts/generate-openapi.ts",
+        "options": {
+          "cwd": "{projectRoot}"
+        },
+        "dependsOn": [
+          "^prisma-generate"
+        ],
+        "outputs": [
+          "{projectRoot}/openapi.json"
+        ]
+      }
+    }
+  },
+  "dependencies": {
+    "@nestjs/common": "12.1.2",
+    "@nestjs/core": "12.1.2",
+    "@nestjs/cqrs": "12.1.0",
+    "@nestjs/platform-express": "12.1.2",
+    "@nestjs/swagger": "12.0.2",
+    "@template/config": "workspace:*",
+    "@template/contracts": "workspace:*",
+    "@template/database": "workspace:*",
+    "@template/health": "workspace:*",
+    "@template/http": "workspace:*",
+    "@template/identity-application": "workspace:*",
+    "@template/identity-http": "workspace:*",
+    "@template/identity-infrastructure": "workspace:*",
+    "@template/logger": "workspace:*",
+    "@template/messaging": "workspace:*",
+    "@template/queue": "workspace:*",
+    "@template/redis": "workspace:*",
+    "bullmq": "6.3.11",
+    "express": "5.2.1",
+    "reflect-metadata": "0.2.2",
+    "rxjs": "7.8.2"
+  },
+  "devDependencies": {
+    "@nestjs/testing": "12.1.2",
+    "@template/testing": "workspace:*",
+    "@types/express": "5.0.6",
+    "@types/supertest": "7.2.1",
+    "supertest": "7.3.1"
+  }
+}

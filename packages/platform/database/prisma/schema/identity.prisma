@@ -1,0 +1,67 @@
+// ─── Identity context ────────────────────────────────────────────────────────
+// Owned by packages/contexts/identity. Other contexts reference users by id only.
+
+enum UserRole {
+  USER
+  ADMIN
+}
+
+enum OneTimeTokenPurpose {
+  EMAIL_VERIFICATION
+  PASSWORD_RESET
+}
+
+model User {
+  id              String    @id @db.Uuid
+  email           String    @unique
+  name            String
+  passwordHash    String    @map("password_hash")
+  role            UserRole  @default(USER)
+  locale          String    @default("en")
+  emailVerifiedAt DateTime? @map("email_verified_at") @db.Timestamptz(3)
+  createdAt       DateTime  @map("created_at") @db.Timestamptz(3)
+  updatedAt       DateTime  @map("updated_at") @db.Timestamptz(3)
+
+  sessions      Session[]
+  oneTimeTokens OneTimeToken[]
+
+  @@map("users")
+}
+
+/// A signed-in device. Holds the hash of the current refresh token and of the one it replaced,
+/// so a replayed (stolen) token is detected and the session revoked.
+model Session {
+  id                       String    @id @db.Uuid
+  userId                   String    @map("user_id") @db.Uuid
+  refreshTokenHash         String    @unique @map("refresh_token_hash")
+  previousRefreshTokenHash String?   @unique @map("previous_refresh_token_hash")
+  userAgent                String?   @map("user_agent")
+  ipAddress                String?   @map("ip_address")
+  expiresAt                DateTime  @map("expires_at") @db.Timestamptz(3)
+  revokedAt                DateTime? @map("revoked_at") @db.Timestamptz(3)
+  lastUsedAt               DateTime  @map("last_used_at") @db.Timestamptz(3)
+  createdAt                DateTime  @map("created_at") @db.Timestamptz(3)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([expiresAt])
+  @@map("sessions")
+}
+
+/// Single-use secret sent by email (verification, password reset). Only its hash is stored.
+model OneTimeToken {
+  id         String              @id @db.Uuid
+  userId     String              @map("user_id") @db.Uuid
+  purpose    OneTimeTokenPurpose
+  tokenHash  String              @unique @map("token_hash")
+  expiresAt  DateTime            @map("expires_at") @db.Timestamptz(3)
+  consumedAt DateTime?           @map("consumed_at") @db.Timestamptz(3)
+  createdAt  DateTime            @map("created_at") @db.Timestamptz(3)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, purpose])
+  @@index([expiresAt])
+  @@map("one_time_tokens")
+}

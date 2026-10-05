@@ -1,0 +1,40 @@
+{
+  "name": "@template/notifications-application",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "@template/source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./testing": {
+      "@template/source": "./src/testing/index.ts",
+      "types": "./dist/testing/index.d.ts",
+      "default": "./dist/testing/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "test": "bun --conditions=@template/source test --pass-with-no-tests"
+  },
+  "nx": {
+    "name": "notifications-application",
+    "tags": [
+      "scope:notifications",
+      "layer:application"
+    ]
+  },
+  "dependencies": {
+    "@nestjs/common": "12.1.2",
+    "@nestjs/cqrs": "12.1.0",
+    "@template/ddd": "workspace:*"
+  },
+  "devDependencies": {
+    "reflect-metadata": "0.2.2"
+  }
+}

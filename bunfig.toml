@@ -1,0 +1,5 @@
+[install]
+# Pin exact versions on `bun add`; ranges drift silently across machines.
+exact = true
+# Hoisted layout: Next.js, Prisma and Nest tooling still assume a flat node_modules.
+linker = "hoisted"
