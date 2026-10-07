@@ -1,0 +1,68 @@
+{
+  "name": "@template/storage",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "@template/source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./testing": {
+      "@template/source": "./src/testing/index.ts",
+      "types": "./dist/testing/index.d.ts",
+      "default": "./dist/testing/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "test": "bun --conditions=@template/source test --pass-with-no-tests"
+  },
+  "nx": {
+    "name": "storage",
+    "tags": [
+      "scope:platform",
+      "type:infra"
+    ],
+    "targets": {
+      "provision": {
+        "command": "bun --conditions=@template/source --env-file=../../../.env src/scripts/provision-storage.ts",
+        "options": {
+          "cwd": "{projectRoot}"
+        }
+      },
+      "provision-test": {
+        "command": "bun --conditions=@template/source --env-file=../../../.env src/scripts/provision-storage.ts --test",
+        "options": {
+          "cwd": "{projectRoot}"
+        }
+      },
+      "test:int": {
+        "command": "bun --conditions=@template/source --env-file=../../../.env test --pass-with-no-tests $(find ./src -name '*.int-spec.ts')",
+        "options": {
+          "cwd": "{projectRoot}"
+        },
+        "dependsOn": [
+          "provision-test"
+        ]
+      }
+    }
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "3.1147.0",
+    "@aws-sdk/lib-storage": "3.1147.0",
+    "@aws-sdk/s3-presigned-post": "3.1147.0",
+    "@aws-sdk/s3-request-presigner": "3.1147.0",
+    "@nestjs/common": "12.1.2",
+    "@template/config": "workspace:*",
+    "zod": "4.6.5"
+  },
+  "devDependencies": {
+    "@nestjs/testing": "12.1.2",
+    "reflect-metadata": "0.2.2"
+  }
+}

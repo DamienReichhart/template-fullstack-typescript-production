@@ -7,12 +7,12 @@ every missing or invalid variable in one error.
 
 ## Layout
 
-| Path               | Holds                                                                                                   |
-| ------------------ | ------------------------------------------------------------------------------------------------------- |
-| `config.module.ts` | `ConfigModule.forRoot({ definitions })`: global, one provider per definition                            |
-| `loader/`          | `defineConfig`, `loadConfig`, error formatting                                                          |
-| `decorators/`      | `@InjectConfig(definition)`                                                                             |
-| `schemas/`         | Platform definitions: `appConfig`, `databaseConfig`, `redisConfig`, `httpConfig`, `defineProbeConfig()` |
+| Path               | Holds                                                                                                                    |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------ |
+| `config.module.ts` | `ConfigModule.forRoot({ definitions })`: global, one provider per definition                                             |
+| `loader/`          | `defineConfig`, `loadConfig`, error formatting                                                                           |
+| `decorators/`      | `@InjectConfig(definition)`                                                                                              |
+| `schemas/`         | Platform definitions: `appConfig`, `databaseConfig`, `redisConfig`, `storageConfig`, `httpConfig`, `defineProbeConfig()` |
 
 ## Usage
 

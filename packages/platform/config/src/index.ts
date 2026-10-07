@@ -13,3 +13,4 @@ export { booleanFlag, commaSeparatedList, port, positiveInt } from './schemas/en
 export { httpConfig } from './schemas/http-env.schema.ts';
 export { defineProbeConfig } from './schemas/probe-env.schema.ts';
 export { redisConfig } from './schemas/redis-env.schema.ts';
+export { storageConfig } from './schemas/storage-env.schema.ts';

@@ -31,6 +31,7 @@
     "db:generate": "nx run database:prisma-generate",
     "db:migrate": "nx run database:prisma-migrate",
     "db:deploy": "nx run database:prisma-deploy",
+    "storage:provision": "nx run storage:provision",
     "docker:up": "docker compose up -d --wait",
     "docker:down": "docker compose down",
     "openapi": "nx run api:openapi"
