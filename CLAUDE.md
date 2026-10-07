@@ -5,7 +5,7 @@ Nx + Bun monorepo: a NestJS api, a BullMQ worker and scheduler, a Next.js web ap
 ## Before you change code
 
 - Name things with the glossary: `CONTEXT.md` leads to each context's `GLOSSARY.md`.
-- Adding a context, command, query, job, schedule, web feature or locale: follow its recipe in `docs/guides/`.
+- Adding a context, command, query, job, schedule, web feature, locale or file storage: follow its recipe in `docs/guides/`.
 - Adding a project or a folder an app or context does not have yet: `docs/architecture/conventions.md` (`bun run check:structure` enforces it).
 - An import the boundary rule rejects is a design signal, not a lint nuisance: `docs/architecture/boundaries.md`.
 
@@ -15,7 +15,8 @@ Nx + Bun monorepo: a NestJS api, a BullMQ worker and scheduler, a Next.js web ap
 - Packages run from source in tests and dev (`@template/source` condition): no build step between editing a package and testing its consumer.
 - Nest integration packages can break under Bun (ADR 0001): boot the app and run its tests before keeping one.
 - The web app calls the api; it never holds logic, Server Actions or Route Handlers (ADR 0006). Every user-facing string, attributes included, goes through next-intl in every locale under `packages/shared/i18n/messages/`.
-- `*.int-spec.ts` and the e2e suites need `bun run docker:up`; e2e suites start the api, worker and web themselves unless they already run.
+- `*.int-spec.ts` and the e2e suites need `bun run docker:up`; e2e suites start the api, worker and web themselves unless they already run. The dev bucket needs `bun run storage:provision` once.
+- Files go to object storage through a context port over `ObjectStorage` (`@template/storage`), never to Postgres or disk; browsers upload with presigned forms, never through the api (ADR 0013).
 
 ## Done means
 

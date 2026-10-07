@@ -51,7 +51,7 @@ services:
       RUSTFS_OBS_LOGGER_LEVEL: warn
     ports:
       - '${RUSTFS_PORT:-9000}:9000' # S3 API
-      - '${RUSTFS_CONSOLE_PORT:-9001}:9001' # web console
+      - '${RUSTFS_CONSOLE_PORT:-9001}:9001' # web console at /rustfs/console/
     volumes:
       - rustfs-data:/data
     healthcheck:

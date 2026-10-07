@@ -18,10 +18,11 @@ src/
 | `logger`        | pino, `service=worker`                                                 |
 | `database`      | Prisma + `UnitOfWork`                                                  |
 | `redis`         | Shared client (probe, capture mail transport)                          |
+| `storage`       | Object storage, for jobs that write or delete files                    |
 | `messaging`     | BullMQ consumers, concurrency, graceful drain                          |
 | `cqrs`          | Command bus the processors dispatch to                                 |
 | `health`        | Probe server: `GET :WORKER_HEALTH_PORT/live` and `/ready`              |
-| `identity`      | `identity-maintenance` queue                                           |
+| `identity`      | `identity-maintenance` queue (session purge, avatar file deletion)     |
 | `notifications` | `mail` queue                                                           |
 
 ## Scaling

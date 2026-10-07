@@ -1,6 +1,6 @@
 # Identity context
 
-Registration, sign-in, sessions, email verification and password reset.
+Registration, sign-in, sessions, email verification, password reset and avatars.
 Vocabulary: [`GLOSSARY.md`](./GLOSSARY.md). Map of all contexts: [`/CONTEXT.md`](../../../CONTEXT.md).
 
 ## Layers
@@ -17,11 +17,11 @@ The dependency rules are enforced by `@nx/enforce-module-boundaries` (`eslint.co
 
 ## Where it runs
 
-| Runnable  | Uses                                                                               |
-| --------- | ---------------------------------------------------------------------------------- |
-| api       | application + infrastructure + http (endpoints under `/api/v1/auth`, `/api/v1/me`) |
-| worker    | application + infrastructure + jobs (`identity-maintenance` queue)                 |
-| scheduler | schedules `purge-expired-sessions` nightly                                         |
+| Runnable  | Uses                                                                                             |
+| --------- | ------------------------------------------------------------------------------------------------ |
+| api       | application + infrastructure + http (endpoints under `/api/v1/auth`, `/api/v1/me`)               |
+| worker    | application + infrastructure + jobs (`identity-maintenance` queue: purges, avatar file deletion) |
+| scheduler | schedules `purge-expired-sessions` nightly                                                       |
 
 ## Integration
 
@@ -33,3 +33,8 @@ Identity never calls another context. Emails are requested by enqueuing jobs def
 Tables `users`, `sessions`, `one_time_tokens` in
 `packages/platform/database/prisma/schema/identity.prisma`. Only this context's
 infrastructure layer reads or writes them.
+
+Avatar files live in object storage under `identity/avatars/<userId>/<uploadId>`; `users.avatar_key`
+points to the current one. Uploads go from the browser to the bucket and are checked before being
+kept; a replaced file is deleted by the `delete-avatar-file` job
+([guide](../../../docs/guides/store-files.md)).

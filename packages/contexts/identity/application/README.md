@@ -5,15 +5,15 @@ and on **ports** (abstract classes) that `@template/identity-infrastructure` imp
 
 ## Layout
 
-| Path                      | Holds                                                                                                 |
-| ------------------------- | ----------------------------------------------------------------------------------------------------- |
-| `commands/<name>/`        | `<name>.command.ts` · `<name>.handler.ts` · `<name>.handler.spec.ts`                                  |
-| `queries/<name>/`         | `<name>.query.ts` · `<name>.handler.ts` · `<name>.handler.spec.ts`                                    |
-| `event-handlers/<event>/` | Policies reacting to a domain event (e.g. send onboarding emails)                                     |
-| `ports/<concern>/`        | What this layer needs from the outside: `security/`, `notifications/`, `configuration/`               |
-| `services/`               | Application services shared by several handlers (`SessionIssuer`, `VerificationEmailSender`)          |
-| `views/`                  | Read models returned to presentation layers                                                           |
-| `testing/`                | In-memory repositories, fakes and `createIdentityTestKit()`: `@template/identity-application/testing` |
+| Path                      | Holds                                                                                                               |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| `commands/<name>/`        | `<name>.command.ts` · `<name>.handler.ts` · `<name>.handler.spec.ts`                                                |
+| `queries/<name>/`         | `<name>.query.ts` · `<name>.handler.ts` · `<name>.handler.spec.ts`                                                  |
+| `event-handlers/<event>/` | Policies reacting to a domain event (e.g. send onboarding emails)                                                   |
+| `ports/<concern>/`        | What this layer needs from the outside: `security/`, `notifications/`, `configuration/`, `storage/`, `maintenance/` |
+| `services/`               | Application services shared by several handlers (`SessionIssuer`, `VerificationEmailSender`, `CurrentUserViews`)    |
+| `views/`                  | Read models returned to presentation layers                                                                         |
+| `testing/`                | In-memory repositories, fakes and `createIdentityTestKit()`: `@template/identity-application/testing`               |
 
 ## Use cases
 
@@ -28,7 +28,11 @@ and on **ports** (abstract classes) that `@template/identity-infrastructure` imp
 | `RequestPasswordResetCommand`    | Records `PasswordResetRequested`; the reset email follows (silent for unknown emails) |
 | `ResetPasswordCommand`           | Sets the password, revokes every session                                              |
 | `PurgeExpiredSessionsCommand`    | Deletes sessions and tokens ended more than 7 days ago                                |
-| `GetCurrentUserQuery`            | The signed-in user's view                                                             |
+| `RequestAvatarUploadCommand`     | Checks the announced picture (`AvatarImage`), returns a presigned upload form         |
+| `ChangeAvatarCommand`            | Keeps the checked upload as the Avatar; the replaced file is deleted by a job         |
+| `RemoveAvatarCommand`            | Removes the Avatar (idempotent); its file is deleted by a job                         |
+| `DeleteAvatarFileCommand`        | Deletes an Avatar file (worker, `delete-avatar-file`)                                 |
+| `GetCurrentUserQuery`            | The signed-in user's view, Avatar URL included                                        |
 
 ## Wiring
 

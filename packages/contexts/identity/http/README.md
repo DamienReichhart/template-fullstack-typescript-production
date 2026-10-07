@@ -5,18 +5,21 @@ guards. Controllers only translate HTTP ⇄ commands/queries; no business rule l
 
 ## Endpoints (`/api/v1`)
 
-| Method & path                    | Access    | Effect                        |
-| -------------------------------- | --------- | ----------------------------- |
-| `GET  /auth/csrf`                | public    | Sets the readable CSRF cookie |
-| `POST /auth/register`            | public    | 201 + session cookies         |
-| `POST /auth/verify-email`        | public    | 204                           |
-| `POST /auth/verify-email/resend` | public    | 202 (always)                  |
-| `POST /auth/login`               | public    | 200 + session cookies         |
-| `POST /auth/refresh`             | cookie    | 200 + rotated cookies         |
-| `POST /auth/logout`              | cookie    | 204, cookies cleared          |
-| `POST /auth/password/forgot`     | public    | 202 (always)                  |
-| `POST /auth/password/reset`      | public    | 204, every session revoked    |
-| `GET  /me`                       | signed in | Current user                  |
+| Method & path                    | Access    | Effect                         |
+| -------------------------------- | --------- | ------------------------------ |
+| `GET  /auth/csrf`                | public    | Sets the readable CSRF cookie  |
+| `POST /auth/register`            | public    | 201 + session cookies          |
+| `POST /auth/verify-email`        | public    | 204                            |
+| `POST /auth/verify-email/resend` | public    | 202 (always)                   |
+| `POST /auth/login`               | public    | 200 + session cookies          |
+| `POST /auth/refresh`             | cookie    | 200 + rotated cookies          |
+| `POST /auth/logout`              | cookie    | 204, cookies cleared           |
+| `POST /auth/password/forgot`     | public    | 202 (always)                   |
+| `POST /auth/password/reset`      | public    | 204, every session revoked     |
+| `GET  /me`                       | signed in | Current user                   |
+| `POST /me/avatar/uploads`        | verified  | 201 + presigned upload form    |
+| `PUT  /me/avatar`                | verified  | Keeps the upload; current user |
+| `DELETE /me/avatar`              | signed in | Removes it; current user       |
 
 ## Layout
 

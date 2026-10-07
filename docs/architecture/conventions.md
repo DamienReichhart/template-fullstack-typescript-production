@@ -12,7 +12,7 @@ packages/
 ├── shared/            imported by browser and server: contracts (routes, schemas, error codes), i18n
 ├── frontend/          browser only: ui (design system), api-client
 ├── platform/          technical building blocks, no business rules: config, logger, database, redis,
-│                      queue, messaging, http, health, ddd, testing
+│                      storage, queue, messaging, http, health, ddd, testing
 └── contexts/<context>/<layer>/   business rules, one package per layer (see boundaries.md)
 docs/                  adr/ (system-wide decisions), architecture/, guides/, agents/
 tools/scripts/         repository checks
@@ -37,7 +37,7 @@ tools/scripts/         repository checks
 | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `domain`         | ✔ `aggregates/<aggregate>/` with `<aggregate>.aggregate.ts`, `errors/`, `events/`, `value-objects/`, `repositories/`; `services/` for logic spanning aggregates                                                                            |
 | `application`    | ✔ `commands/<name>/` and `queries/<name>/`, each `<name>.command.ts` (or `.query.ts`), `<name>.handler.ts`, `<name>.handler.spec.ts`; `event-handlers/<event>/`, `ports/<area>/`, `services/`, `views/`, `testing/` (fakes and a test kit) |
-| `infrastructure` | `config/`, `persistence/` (`repositories/`, `mappers/`), one folder per adapter area (`security/`, `messaging/`, `mailers/`)                                                                                                               |
+| `infrastructure` | `config/`, `persistence/` (`repositories/`, `mappers/`), one folder per adapter area (`security/`, `messaging/`, `mailers/`, `storage/`)                                                                                                   |
 | `http`           | `controllers/`, `dto/` (`requests/`, `responses/`), `guards/`, `decorators/`, `errors/`, `testing/`                                                                                                                                        |
 | `jobs`           | `processors/`                                                                                                                                                                                                                              |
 
@@ -66,6 +66,12 @@ import surface.
 
 ✔ E2E folders mirror what they test: api modules for `api-e2e`, web features for `web-e2e`,
 plus `support/`.
+
+## Object keys
+
+`<context>/<area>/<owner id>/<file id>` (`identity/avatars/<userId>/<uploadId>`), built with
+`objectKey()`. The first segment is the owning context; `staging/` belongs to `DirectUploads`. A key
+is written once: new content gets a new key, the old one is deleted by a job.
 
 ## Naming
 
