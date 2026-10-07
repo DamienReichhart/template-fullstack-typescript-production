@@ -2,9 +2,12 @@ import { FixedClock, ImmediateUnitOfWork } from '@template/ddd';
 import { Email, PasswordHash, User } from '@template/identity-domain';
 
 import type { IdentitySettings } from '../ports/configuration/identity-settings.port.ts';
+import { CurrentUserViews } from '../services/current-user-views.service.ts';
 import { SessionIssuer } from '../services/session-issuer.service.ts';
 import { VerificationEmailSender } from '../services/verification-email.sender.ts';
+import { FakeAvatarStorage } from './fakes/fake-avatar-storage.ts';
 import { FakeAccessTokenIssuer } from './fakes/fake-access-token-issuer.ts';
+import { FakeIdentityHousekeeping } from './fakes/fake-identity-housekeeping.ts';
 import { FakeIdentityNotifier } from './fakes/fake-identity-notifier.ts';
 import { FakePasswordHasher } from './fakes/fake-password-hasher.ts';
 import { FakeSecureTokenGenerator } from './fakes/fake-secure-token-generator.ts';
@@ -31,9 +34,19 @@ export function createIdentityTestKit() {
   const accessTokens = new FakeAccessTokenIssuer(clock);
   const secureTokens = new FakeSecureTokenGenerator();
   const notifier = new FakeIdentityNotifier();
+  const avatars = new FakeAvatarStorage();
+  const housekeeping = new FakeIdentityHousekeeping();
+  const views = new CurrentUserViews(avatars);
   const eventBus = new RecordingEventBus();
   const unitOfWork = new ImmediateUnitOfWork();
-  const sessionIssuer = new SessionIssuer(sessions, accessTokens, secureTokens, settings, clock);
+  const sessionIssuer = new SessionIssuer(
+    sessions,
+    accessTokens,
+    secureTokens,
+    settings,
+    clock,
+    views,
+  );
   const verificationSender = new VerificationEmailSender(
     tokens,
     secureTokens,
@@ -72,6 +85,9 @@ export function createIdentityTestKit() {
     accessTokens,
     secureTokens,
     notifier,
+    avatars,
+    housekeeping,
+    views,
     eventBus,
     unitOfWork,
     sessionIssuer,

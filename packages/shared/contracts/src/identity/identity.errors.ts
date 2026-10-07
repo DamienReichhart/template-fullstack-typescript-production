@@ -6,6 +6,8 @@ export const IdentityErrorCode = {
   sessionRevoked: 'SESSION_REVOKED',
   sessionRefreshConflict: 'SESSION_REFRESH_CONFLICT',
   invalidOrExpiredToken: 'INVALID_OR_EXPIRED_TOKEN',
+  avatarInvalid: 'AVATAR_INVALID',
+  avatarUploadNotFound: 'AVATAR_UPLOAD_NOT_FOUND',
 } as const;
 
 export type IdentityErrorCode = (typeof IdentityErrorCode)[keyof typeof IdentityErrorCode];

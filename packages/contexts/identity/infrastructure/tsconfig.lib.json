@@ -10,6 +10,9 @@
   "exclude": ["src/**/*.spec.ts", "src/**/*.int-spec.ts"],
   "references": [
     {
+      "path": "../../../platform/storage/tsconfig.lib.json"
+    },
+    {
       "path": "../../../platform/queue/tsconfig.lib.json"
     },
     {

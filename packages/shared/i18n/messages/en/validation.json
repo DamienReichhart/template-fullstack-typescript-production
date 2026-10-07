@@ -17,6 +17,11 @@
   "token": {
     "required": "Token is required."
   },
+  "avatar": {
+    "contentType": "Choose a PNG, JPEG or WebP picture.",
+    "empty": "This file is empty.",
+    "tooLarge": "Choose a picture of at most 5 MB."
+  },
   "generic": {
     "invalid": "This value is invalid."
   }

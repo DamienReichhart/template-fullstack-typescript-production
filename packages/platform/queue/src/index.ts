@@ -6,7 +6,10 @@ export {
   type ParsedJobPayload,
 } from './core/define-job.ts';
 export { defineQueue, type QueueDefinition } from './core/define-queue.ts';
-export { purgeExpiredSessionsJob } from './queues/identity-maintenance/identity-maintenance.jobs.ts';
+export {
+  deleteAvatarFileJob,
+  purgeExpiredSessionsJob,
+} from './queues/identity-maintenance/identity-maintenance.jobs.ts';
 export { identityMaintenanceQueue } from './queues/identity-maintenance/identity-maintenance.queue.ts';
 export {
   sendEmailVerificationJob,

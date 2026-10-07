@@ -10,7 +10,7 @@ describe('GetCurrentUserHandler', () => {
     const kit = createIdentityTestKit();
     const user = await kit.givenUser({ verified: true });
 
-    const view = await new GetCurrentUserHandler(kit.users).execute(
+    const view = await new GetCurrentUserHandler(kit.users, kit.views).execute(
       new GetCurrentUserQuery(user.id.value),
     );
 
@@ -21,6 +21,7 @@ describe('GetCurrentUserHandler', () => {
       role: 'USER',
       locale: 'en',
       emailVerified: true,
+      avatarUrl: null,
       createdAt: kit.clock.now(),
     });
   });
@@ -28,7 +29,7 @@ describe('GetCurrentUserHandler', () => {
   it('fails for a user that no longer exists', async () => {
     const kit = createIdentityTestKit();
     await expect(
-      new GetCurrentUserHandler(kit.users).execute(
+      new GetCurrentUserHandler(kit.users, kit.views).execute(
         new GetCurrentUserQuery('0199b0a0-0000-7000-8000-000000000001'),
       ),
     ).rejects.toBeInstanceOf(UserNotFoundError);

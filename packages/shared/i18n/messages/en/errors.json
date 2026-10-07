@@ -14,6 +14,9 @@
   "SESSION_REVOKED": "Your session was ended. Please sign in again.",
   "SESSION_REFRESH_CONFLICT": "Your session was refreshed in another tab. Please retry.",
   "INVALID_OR_EXPIRED_TOKEN": "This link is invalid or has expired.",
+  "AVATAR_INVALID": "This file is not a PNG, JPEG or WebP picture of at most 5 MB.",
+  "AVATAR_UPLOAD_NOT_FOUND": "The upload did not arrive or has expired. Please choose the picture again.",
   "NETWORK_ERROR": "Cannot reach the server. Check your connection.",
+  "UPLOAD_FAILED": "The file could not be sent. Please try again.",
   "UNKNOWN": "An unexpected error occurred."
 }

@@ -1,5 +1,6 @@
 import { AggregateRoot } from '@template/ddd';
 
+import { AvatarChangedEvent } from './events/avatar-changed.event.ts';
 import { EmailVerifiedEvent } from './events/email-verified.event.ts';
 import { PasswordChangedEvent } from './events/password-changed.event.ts';
 import { PasswordResetRequestedEvent } from './events/password-reset-requested.event.ts';
@@ -16,6 +17,8 @@ export interface UserProps {
   role: UserRole;
   locale: string;
   emailVerifiedAt: Date | null;
+  /** Where the Avatar is stored; `null` when the User has none. */
+  avatarKey: string | null;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -38,6 +41,7 @@ export class User extends AggregateRoot<UserId, UserProps> {
       role: 'USER',
       locale,
       emailVerifiedAt: null,
+      avatarKey: null,
       createdAt: now,
       updatedAt: now,
     });
@@ -80,6 +84,10 @@ export class User extends AggregateRoot<UserId, UserProps> {
     return this.props.emailVerifiedAt !== null;
   }
 
+  get avatarKey(): string | null {
+    return this.props.avatarKey;
+  }
+
   get createdAt(): Date {
     return this.props.createdAt;
   }
@@ -98,6 +106,18 @@ export class User extends AggregateRoot<UserId, UserProps> {
 
   requestPasswordReset(now: Date): void {
     this.addDomainEvent(new PasswordResetRequestedEvent(this.id.value, now));
+  }
+
+  /**
+   * Shows the picture stored under `avatarKey` (`null` removes it). Records AvatarChanged with
+   * the previous key, whose file is then no longer needed. Setting the same key changes nothing.
+   */
+  changeAvatar(avatarKey: string | null, now: Date): void {
+    const previous = this.props.avatarKey;
+    if (previous === avatarKey) return;
+    this.props.avatarKey = avatarKey;
+    this.props.updatedAt = now;
+    this.addDomainEvent(new AvatarChangedEvent(this.id.value, avatarKey, previous, now));
   }
 
   changePassword(passwordHash: PasswordHash, now: Date): void {

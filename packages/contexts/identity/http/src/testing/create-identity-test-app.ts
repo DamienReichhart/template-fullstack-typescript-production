@@ -4,7 +4,9 @@ import { ConfigModule } from '@template/config';
 import { Clock, UnitOfWork } from '@template/ddd';
 import {
   AccessTokenIssuer,
+  AvatarStorage,
   IdentityApplicationModule,
+  IdentityHousekeeping,
   IdentityNotifier,
   IdentitySettings,
   PasswordHasher,
@@ -33,6 +35,8 @@ class FakeIdentityInfrastructureModule {
       { provide: AccessTokenIssuer, useValue: kit.accessTokens },
       { provide: SecureTokenGenerator, useValue: kit.secureTokens },
       { provide: IdentityNotifier, useValue: kit.notifier },
+      { provide: IdentityHousekeeping, useValue: kit.housekeeping },
+      { provide: AvatarStorage, useValue: kit.avatars },
       { provide: IdentitySettings, useValue: kit.settings },
       { provide: Clock, useValue: kit.clock },
       { provide: UnitOfWork, useValue: kit.unitOfWork },
@@ -72,6 +76,8 @@ export async function createIdentityTestApp() {
   const csrf = await agent.get('/api/v1/auth/csrf');
   const csrfToken = /tpl_csrf=([^;]+)/.exec(String(csrf.headers['set-cookie']))?.[1] ?? '';
   const post = (path: string) => agent.post(path).set('x-csrf-token', csrfToken);
+  const put = (path: string) => agent.put(path).set('x-csrf-token', csrfToken);
+  const del = (path: string) => agent.delete(path).set('x-csrf-token', csrfToken);
 
-  return { app, kit, agent, post, close: () => app.close() };
+  return { app, kit, agent, post, put, del, close: () => app.close() };
 }

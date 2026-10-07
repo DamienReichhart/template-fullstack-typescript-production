@@ -1,6 +1,7 @@
 export type { IdentityConfig } from './config/identity.config.ts';
 export { identityConfig } from './config/identity-env.schema.ts';
 export { IdentityInfrastructureModule } from './identity-infrastructure.module.ts';
+export { BullMqIdentityHousekeeping } from './messaging/bullmq-identity-housekeeping.ts';
 export { BullMqIdentityNotifier } from './messaging/bullmq-identity-notifier.ts';
 export { PrismaOneTimeTokenRepository } from './persistence/repositories/prisma-one-time-token.repository.ts';
 export { PrismaSessionRepository } from './persistence/repositories/prisma-session.repository.ts';
@@ -8,3 +9,4 @@ export { PrismaUserRepository } from './persistence/repositories/prisma-user.rep
 export { Argon2PasswordHasher } from './security/hashing/argon2-password-hasher.ts';
 export { CryptoSecureTokenGenerator } from './security/tokens/crypto-secure-token-generator.ts';
 export { JwtAccessTokenIssuer } from './security/tokens/jwt-access-token-issuer.ts';
+export { ObjectStorageAvatarStorage } from './storage/object-storage-avatar-storage.ts';

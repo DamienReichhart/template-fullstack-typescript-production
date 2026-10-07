@@ -11,6 +11,7 @@ const record: UserRecord = {
   role: 'ADMIN',
   locale: 'fr',
   emailVerifiedAt: new Date('2026-01-02T00:00:00.000Z'),
+  avatarKey: 'identity/avatars/0199b0a0-0000-7000-8000-000000000001/a',
   createdAt: new Date('2026-01-01T00:00:00.000Z'),
   updatedAt: new Date('2026-01-02T00:00:00.000Z'),
 };
