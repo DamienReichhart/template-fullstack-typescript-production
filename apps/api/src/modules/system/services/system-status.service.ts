@@ -21,6 +21,7 @@ export class SystemStatusService {
     const services = {
       database: toServiceStatus(dependencies['database']),
       redis: toServiceStatus(dependencies['redis']),
+      storage: toServiceStatus(dependencies['storage']),
     };
     return {
       status: Object.values(services).every((service) => service.status === 'up')

@@ -21,7 +21,11 @@ const ping = {
   environment: 'test',
   uptimeSeconds: 3,
   timestamp: '2026-01-01T00:00:00.000Z',
-  services: { database: { status: 'up', latencyMs: 1 }, redis: { status: 'up', latencyMs: 1 } },
+  services: {
+    database: { status: 'up', latencyMs: 1 },
+    redis: { status: 'up', latencyMs: 1 },
+    storage: { status: 'up', latencyMs: 2 },
+  },
 };
 
 describe('SystemController', () => {

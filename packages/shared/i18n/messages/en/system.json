@@ -19,7 +19,8 @@
     },
     "services": {
       "database": "Database",
-      "redis": "Redis"
+      "redis": "Redis",
+      "storage": "Object storage"
     }
   }
 }

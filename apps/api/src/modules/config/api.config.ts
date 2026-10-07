@@ -1,4 +1,10 @@
-import { appConfig, databaseConfig, httpConfig, redisConfig } from '@template/config';
+import {
+  appConfig,
+  databaseConfig,
+  httpConfig,
+  redisConfig,
+  storageConfig,
+} from '@template/config';
 import { identityCookieConfig } from '@template/identity-http';
 import { identityConfig } from '@template/identity-infrastructure';
 
@@ -8,6 +14,7 @@ export const apiConfigDefinitions = [
   httpConfig,
   databaseConfig,
   redisConfig,
+  storageConfig,
   identityConfig,
   identityCookieConfig,
 ] as const;

@@ -5,6 +5,7 @@ import {
   defineProbeConfig,
   positiveInt,
   redisConfig,
+  storageConfig,
 } from '@template/config';
 import { identityConfig } from '@template/identity-infrastructure';
 import { notificationsConfig } from '@template/notifications-infrastructure';
@@ -25,6 +26,7 @@ export const workerConfigDefinitions = [
   appConfig,
   databaseConfig,
   redisConfig,
+  storageConfig,
   identityConfig,
   notificationsConfig,
   workerConfig,

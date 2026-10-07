@@ -11,6 +11,7 @@ test.describe('api connection test', () => {
     await expect(page.getByText(copy.status.ok)).toBeVisible();
     await expect(page.getByText(copy.services.database)).toBeVisible();
     await expect(page.getByText(copy.services.redis)).toBeVisible();
+    await expect(page.getByText(copy.services.storage)).toBeVisible();
   });
 
   test('gates the authenticated test on a verified email', async ({ page, mailbox }) => {

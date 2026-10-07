@@ -10,6 +10,7 @@ import { IdentityModule } from './modules/identity/identity.module.ts';
 import { LoggerModule } from './modules/logger/logger.module.ts';
 import { MessagingModule } from './modules/messaging/messaging.module.ts';
 import { RedisModule } from './modules/redis/redis.module.ts';
+import { StorageModule } from './modules/storage/storage.module.ts';
 import { SystemModule } from './modules/system/system.module.ts';
 
 /** Composition root of the api: platform first, then bounded contexts, then app features. */
@@ -19,6 +20,7 @@ import { SystemModule } from './modules/system/system.module.ts';
     LoggerModule,
     DatabaseModule,
     RedisModule,
+    StorageModule,
     MessagingModule,
     CqrsModule,
     HttpModule,

@@ -52,6 +52,7 @@
     "@template/messaging": "workspace:*",
     "@template/queue": "workspace:*",
     "@template/redis": "workspace:*",
+    "@template/storage": "workspace:*",
     "bullmq": "6.3.11",
     "express": "5.2.1",
     "reflect-metadata": "0.2.2",

@@ -9,6 +9,7 @@ import { LoggerModule } from './modules/logger/logger.module.ts';
 import { MessagingModule } from './modules/messaging/messaging.module.ts';
 import { NotificationsModule } from './modules/notifications/notifications.module.ts';
 import { RedisModule } from './modules/redis/redis.module.ts';
+import { StorageModule } from './modules/storage/storage.module.ts';
 
 /** Composition root of the worker: platform first, then one module per consumed context. */
 @Module({
@@ -17,6 +18,7 @@ import { RedisModule } from './modules/redis/redis.module.ts';
     LoggerModule,
     DatabaseModule,
     RedisModule,
+    StorageModule,
     MessagingModule,
     CqrsModule,
     HealthModule,

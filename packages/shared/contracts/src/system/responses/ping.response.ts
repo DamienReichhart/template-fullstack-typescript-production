@@ -14,6 +14,7 @@ export const pingResponseSchema = z.object({
   services: z.object({
     database: serviceStatusSchema,
     redis: serviceStatusSchema,
+    storage: serviceStatusSchema,
   }),
 });
 

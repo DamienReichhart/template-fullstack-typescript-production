@@ -10,6 +10,9 @@
   "exclude": ["src/**/*.spec.ts"],
   "references": [
     {
+      "path": "../../packages/platform/storage/tsconfig.lib.json"
+    },
+    {
       "path": "../../packages/platform/redis/tsconfig.lib.json"
     },
     {
