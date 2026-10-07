@@ -1,0 +1,11 @@
+{
+  "title": "Profile picture",
+  "description": "A PNG, JPEG or WebP picture of at most 5 MB.",
+  "choose": "Choose a picture",
+  "change": "Change picture",
+  "remove": "Remove",
+  "uploading": "Sending your picture…",
+  "alt": "Picture of {name}",
+  "changed": "Your picture was updated.",
+  "removed": "Your picture was removed."
+}

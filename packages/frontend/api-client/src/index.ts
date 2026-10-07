@@ -8,5 +8,10 @@ export {
   type HttpMethod,
   type RequestOptions,
 } from './core/http-client.ts';
+export {
+  uploadToStorage,
+  type StorageUploadOptions,
+  type StorageUploadTicket,
+} from './core/storage-upload.ts';
 export { identityEndpoints, type IdentityEndpoints } from './endpoints/identity.endpoints.ts';
 export { systemEndpoints, type SystemEndpoints } from './endpoints/system.endpoints.ts';

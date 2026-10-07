@@ -1,0 +1,11 @@
+{
+  "title": "Photo de profil",
+  "description": "Une image PNG, JPEG ou WebP de 5 Mo maximum.",
+  "choose": "Choisir une image",
+  "change": "Changer d'image",
+  "remove": "Supprimer",
+  "uploading": "Envoi de votre image…",
+  "alt": "Photo de {name}",
+  "changed": "Votre image a été mise à jour.",
+  "removed": "Votre image a été supprimée."
+}

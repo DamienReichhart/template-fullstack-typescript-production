@@ -1,7 +1,11 @@
 import { apiPath } from '@template/contracts/common';
 import {
+  avatarUploadResponseSchema,
   currentUserResponseSchema,
   IdentityRoutes,
+  type AvatarUploadRequest,
+  type AvatarUploadResponse,
+  type ChangeAvatarRequest,
   type CurrentUserResponse,
   type ForgotPasswordRequest,
   type LoginRequest,
@@ -14,6 +18,7 @@ import {
 import type { HttpClient } from '../core/http-client.ts';
 
 const auth = (route: string) => apiPath(IdentityRoutes.auth.controller, route);
+const me = (route: string) => apiPath(IdentityRoutes.me.controller, route);
 const routes = IdentityRoutes.auth;
 /** A 401 from these endpoints is an answer (bad credentials, dead session), not a cue to refresh. */
 const noRefresh = { refreshOnUnauthorized: false } as const;
@@ -36,6 +41,15 @@ export function identityEndpoints(client: HttpClient) {
       client.post(auth(routes.forgotPassword), body, noRefresh),
     resetPassword: (body: ResetPasswordRequest): Promise<void> =>
       client.post(auth(routes.resetPassword), body, noRefresh),
+    /** Step 1 of changing the avatar; send the file with `uploadToStorage`, then `changeAvatar`. */
+    requestAvatarUpload: (body: AvatarUploadRequest): Promise<AvatarUploadResponse> =>
+      client.post(me(IdentityRoutes.me.avatarUploads), body, {
+        schema: avatarUploadResponseSchema,
+      }),
+    changeAvatar: (body: ChangeAvatarRequest): Promise<CurrentUserResponse> =>
+      client.put(me(IdentityRoutes.me.avatar), body, { schema: currentUserResponseSchema }),
+    removeAvatar: (): Promise<CurrentUserResponse> =>
+      client.delete(me(IdentityRoutes.me.avatar), { schema: currentUserResponseSchema }),
   };
 }
 

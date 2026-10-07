@@ -72,6 +72,18 @@ export class HttpClient {
     return this.request(path, { ...options, method: 'POST', body });
   }
 
+  put<T>(
+    path: string,
+    body?: unknown,
+    options: Omit<RequestOptions<T>, 'method' | 'body'> = {},
+  ): Promise<T> {
+    return this.request(path, { ...options, method: 'PUT', body });
+  }
+
+  delete<T>(path: string, options: Omit<RequestOptions<T>, 'method' | 'body'> = {}): Promise<T> {
+    return this.request(path, { ...options, method: 'DELETE' });
+  }
+
   /** Rotates the session now (e.g. right after an email verification changed its claims). */
   refreshSession(): Promise<boolean> {
     return this.refreshes.refresh();

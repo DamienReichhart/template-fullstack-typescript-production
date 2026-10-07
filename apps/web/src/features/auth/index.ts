@@ -7,6 +7,7 @@ export { AuthGuard } from './components/guards/auth-guard';
 export { GuestGuard } from './components/guards/guest-guard';
 export { EmailVerificationBanner } from './components/status/email-verification-banner';
 export { useCurrentUser } from './hooks/use-current-user';
+export { useSetCurrentUser } from './hooks/use-set-current-user';
 export { ForgotPasswordView } from './views/forgot-password-view';
 export { LoginView } from './views/login-view';
 export { RegisterView } from './views/register-view';
