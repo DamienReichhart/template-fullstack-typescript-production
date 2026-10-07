@@ -36,6 +36,31 @@ services:
       timeout: 5s
       retries: 10
 
+  # S3-compatible object storage. Buckets, CORS and lifecycle rules are not created here:
+  # `bun run storage:provision` applies them from the app's own configuration.
+  rustfs:
+    image: rustfs/rustfs:1.0.1
+    restart: unless-stopped
+    environment:
+      RUSTFS_ACCESS_KEY: ${S3_ACCESS_KEY_ID:-template}
+      RUSTFS_SECRET_KEY: ${S3_SECRET_ACCESS_KEY:-template-secret}
+      RUSTFS_CONSOLE_ENABLE: 'true'
+      # No phone-home at boot; logs to stdout, like every other service.
+      RUSTFS_CHECK_UPDATES: 'false'
+      RUSTFS_OBS_LOG_DIRECTORY: ''
+      RUSTFS_OBS_LOGGER_LEVEL: warn
+    ports:
+      - '${RUSTFS_PORT:-9000}:9000' # S3 API
+      - '${RUSTFS_CONSOLE_PORT:-9001}:9001' # web console
+    volumes:
+      - rustfs-data:/data
+    healthcheck:
+      test: ['CMD', 'curl', '-fsS', 'http://localhost:9000/health']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
 volumes:
   postgres-data:
   redis-data:
+  rustfs-data:
