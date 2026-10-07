@@ -17,7 +17,7 @@ export class ProbeServerLifecycle implements OnApplicationBootstrap, OnApplicati
   private readonly server: ProbeServer;
 
   constructor(@Inject(PROBE_PORT) port: number, readiness: ReadinessService) {
-    this.server = new ProbeServer({ port, dependencies: () => readiness.dependencies() });
+    this.server = new ProbeServer({ port, dependencies: () => readiness.required() });
   }
 
   async onApplicationBootstrap(): Promise<void> {
