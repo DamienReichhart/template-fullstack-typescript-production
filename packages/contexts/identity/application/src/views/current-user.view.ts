@@ -7,10 +7,13 @@ export interface CurrentUserView {
   role: UserRole;
   locale: string;
   emailVerified: boolean;
+  /** Where the browser displays the Avatar from; `null` when the User has none. */
+  avatarUrl: string | null;
   createdAt: Date;
 }
 
-export function toCurrentUserView(user: User): CurrentUserView {
+/** Prefer `CurrentUserViews.of(user)`, which resolves the avatar URL. */
+export function toCurrentUserView(user: User, avatarUrl: string | null): CurrentUserView {
   return {
     id: user.id.value,
     email: user.email.value,
@@ -18,6 +21,7 @@ export function toCurrentUserView(user: User): CurrentUserView {
     role: user.role,
     locale: user.locale,
     emailVerified: user.isEmailVerified,
+    avatarUrl,
     createdAt: user.createdAt,
   };
 }

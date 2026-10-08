@@ -17,6 +17,11 @@
   "token": {
     "required": "Le jeton est requis."
   },
+  "avatar": {
+    "contentType": "Choisissez une image PNG, JPEG ou WebP.",
+    "empty": "Ce fichier est vide.",
+    "tooLarge": "Choisissez une image de 5 Mo maximum."
+  },
   "generic": {
     "invalid": "Cette valeur est invalide."
   }

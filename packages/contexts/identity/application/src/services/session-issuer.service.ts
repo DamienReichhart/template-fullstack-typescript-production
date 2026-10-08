@@ -7,7 +7,7 @@ import { AccessTokenIssuer } from '../ports/security/access-token-issuer.port.ts
 import { SecureTokenGenerator } from '../ports/security/secure-token-generator.port.ts';
 import type { AuthSessionView } from '../views/auth-session.view.ts';
 import type { ClientInfo } from '../views/client-info.ts';
-import { toCurrentUserView } from '../views/current-user.view.ts';
+import { CurrentUserViews } from './current-user-views.service.ts';
 
 /** Opens sessions and turns a (user, session, refresh token) triple into a signed-in view. */
 @Injectable()
@@ -18,6 +18,7 @@ export class SessionIssuer {
     private readonly secureTokens: SecureTokenGenerator,
     private readonly settings: IdentitySettings,
     private readonly clock: Clock,
+    private readonly views: CurrentUserViews,
   ) {}
 
   async open(user: User, client: ClientInfo = {}): Promise<AuthSessionView> {
@@ -42,7 +43,7 @@ export class SessionIssuer {
       emailVerified: user.isEmailVerified,
     });
     return {
-      user: toCurrentUserView(user),
+      user: await this.views.of(user),
       accessToken: access.token,
       accessTokenExpiresAt: access.expiresAt,
       refreshToken,

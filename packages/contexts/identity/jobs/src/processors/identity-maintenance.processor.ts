@@ -1,7 +1,14 @@
 import { CommandBus } from '@nestjs/cqrs';
-import { PurgeExpiredSessionsCommand } from '@template/identity-application';
+import {
+  DeleteAvatarFileCommand,
+  PurgeExpiredSessionsCommand,
+} from '@template/identity-application';
 import { onJob, Processor, TypedProcessor } from '@template/messaging';
-import { identityMaintenanceQueue, purgeExpiredSessionsJob } from '@template/queue';
+import {
+  deleteAvatarFileJob,
+  identityMaintenanceQueue,
+  purgeExpiredSessionsJob,
+} from '@template/queue';
 
 /** Consumes `identity-maintenance`: each job is translated into an application command. */
 @Processor(identityMaintenanceQueue.name)
@@ -17,6 +24,9 @@ export class IdentityMaintenanceProcessor extends TypedProcessor {
         this.logger.log(purged, 'Purged ended sessions and one-time tokens');
         return purged;
       }),
+      onJob(deleteAvatarFileJob, ({ avatarKey }) =>
+        this.commands.execute(new DeleteAvatarFileCommand(avatarKey)),
+      ),
     ];
   }
 }

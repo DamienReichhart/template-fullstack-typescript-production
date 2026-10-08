@@ -3,8 +3,10 @@ import { CommonErrorCode } from '@template/contracts/common';
 import { IdentityErrorCode } from '@template/contracts/identity';
 import { DomainErrorMapper, type MappedError } from '@template/http';
 import {
+  AvatarUploadNotFoundError,
   EmailAlreadyTakenError,
   EmailNotVerifiedError,
+  InvalidAvatarError,
   InvalidCredentialsError,
   InvalidEmailError,
   InvalidOrExpiredTokenError,
@@ -47,6 +49,11 @@ const MAPPINGS: [new (...args: never[]) => Error, MappedError][] = [
   [
     InvalidOrExpiredTokenError,
     { status: HttpStatus.BAD_REQUEST, code: IdentityErrorCode.invalidOrExpiredToken },
+  ],
+  [InvalidAvatarError, { status: HttpStatus.BAD_REQUEST, code: IdentityErrorCode.avatarInvalid }],
+  [
+    AvatarUploadNotFoundError,
+    { status: HttpStatus.BAD_REQUEST, code: IdentityErrorCode.avatarUploadNotFound },
   ],
   [UserNotFoundError, { status: HttpStatus.UNAUTHORIZED, code: CommonErrorCode.unauthenticated }],
   [InvalidEmailError, { status: HttpStatus.BAD_REQUEST, code: CommonErrorCode.validationFailed }],

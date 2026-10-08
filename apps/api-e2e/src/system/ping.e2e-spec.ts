@@ -21,7 +21,7 @@ describe('ping', () => {
     expect(response.status).toBe(200);
     expect(pingResponseSchema.parse(response.body)).toMatchObject({
       status: 'ok',
-      services: { database: { status: 'up' }, redis: { status: 'up' } },
+      services: { database: { status: 'up' }, redis: { status: 'up' }, storage: { status: 'up' } },
     });
   });
 

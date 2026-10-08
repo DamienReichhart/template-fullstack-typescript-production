@@ -1,4 +1,5 @@
 import type auth from '../../messages/en/auth.json';
+import type avatar from '../../messages/en/avatar.json';
 import type common from '../../messages/en/common.json';
 import type dashboard from '../../messages/en/dashboard.json';
 import type emails from '../../messages/en/emails.json';
@@ -12,6 +13,7 @@ import type validation from '../../messages/en/validation.json';
 export interface Messages {
   common: typeof common;
   auth: typeof auth;
+  avatar: typeof avatar;
   dashboard: typeof dashboard;
   marketing: typeof marketing;
   system: typeof system;

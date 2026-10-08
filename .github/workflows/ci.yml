@@ -41,7 +41,7 @@ jobs:
       - run: bunx nx affected -t lint typecheck test build
 
   integration:
-    name: Integration tests (Postgres, Redis)
+    name: Integration tests (Postgres, Redis, RustFS)
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
@@ -51,7 +51,7 @@ jobs:
       - uses: ./.github/actions/setup
       - uses: nrwl/nx-set-shas@afb73a62d26e41464e9254689e1fd6122ee683c1 # v5.0.1
       - run: docker compose up -d --wait
-      # Suites share one test database: serial, as locally.
+      # Suites share one test database and one test bucket: serial, as locally.
       - run: bunx nx affected -t test:int --parallel=1
 
   e2e:
@@ -65,6 +65,8 @@ jobs:
       - uses: ./.github/actions/setup
       - uses: nrwl/nx-set-shas@afb73a62d26e41464e9254689e1fd6122ee683c1 # v5.0.1
       - run: docker compose up -d --wait
+      # The bucket, its CORS and lifecycle rules: what `bun run storage:provision` does locally.
+      - run: bun run storage:provision
       - name: Install Chromium
         working-directory: apps/web-e2e
         run: bunx playwright install --with-deps chromium

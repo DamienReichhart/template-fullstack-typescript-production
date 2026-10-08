@@ -57,6 +57,7 @@ describe('LoginForm', () => {
           name: 'Ada',
           role: 'USER',
           emailVerified: true,
+          avatarUrl: null,
           locale: 'en',
           createdAt: '2026-01-01T00:00:00.000Z',
         },

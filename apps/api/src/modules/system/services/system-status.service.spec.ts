@@ -8,6 +8,7 @@ const readiness = (database: 'up' | 'down') =>
     dependencies: async () => ({
       database: { status: database, latencyMs: 2 },
       redis: { status: 'up', latencyMs: 1 },
+      storage: { status: 'up', latencyMs: 4 },
     }),
   }) as unknown as ReadinessService;
 
@@ -21,7 +22,11 @@ describe('SystemStatusService', () => {
     expect(ping).toMatchObject({
       status: 'ok',
       environment: 'test',
-      services: { database: { status: 'up', latencyMs: 2 }, redis: { status: 'up', latencyMs: 1 } },
+      services: {
+        database: { status: 'up', latencyMs: 2 },
+        redis: { status: 'up', latencyMs: 1 },
+        storage: { status: 'up', latencyMs: 4 },
+      },
     });
     expect(ping.version).toMatch(/^\d+\.\d+\.\d+/);
   });

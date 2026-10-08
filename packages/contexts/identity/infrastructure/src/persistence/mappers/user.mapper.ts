@@ -10,6 +10,7 @@ export const UserMapper = {
       role: record.role,
       locale: record.locale,
       emailVerifiedAt: record.emailVerifiedAt,
+      avatarKey: record.avatarKey,
       createdAt: record.createdAt,
       updatedAt: record.updatedAt,
     });
@@ -24,6 +25,7 @@ export const UserMapper = {
       role: user.role,
       locale: user.locale,
       emailVerifiedAt: user.emailVerifiedAt,
+      avatarKey: user.avatarKey,
       createdAt: user.createdAt,
       updatedAt: user.updatedAt,
     };

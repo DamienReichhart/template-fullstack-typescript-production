@@ -28,7 +28,22 @@
         "command": "bun --conditions=@template/source --env-file=../../../../.env test --pass-with-no-tests $(find ./src -name '*.int-spec.ts')",
         "options": {
           "cwd": "{projectRoot}"
-        }
+        },
+        "dependsOn": [
+          "^prisma-generate",
+          {
+            "projects": [
+              "database"
+            ],
+            "target": "prisma-deploy-test"
+          },
+          {
+            "projects": [
+              "storage"
+            ],
+            "target": "provision-test"
+          }
+        ]
       }
     }
   },
@@ -42,6 +57,7 @@
     "@template/identity-domain": "workspace:*",
     "@template/messaging": "workspace:*",
     "@template/queue": "workspace:*",
+    "@template/storage": "workspace:*",
     "jose": "6.2.12",
     "zod": "4.6.5"
   },

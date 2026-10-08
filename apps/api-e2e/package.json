@@ -28,6 +28,12 @@
               "database"
             ],
             "target": "prisma-deploy"
+          },
+          {
+            "projects": [
+              "storage"
+            ],
+            "target": "provision"
           }
         ],
         "cache": false,

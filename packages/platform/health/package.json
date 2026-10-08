@@ -31,7 +31,8 @@
     "@template/config": "workspace:*",
     "@template/database": "workspace:*",
     "@template/http": "workspace:*",
-    "@template/redis": "workspace:*"
+    "@template/redis": "workspace:*",
+    "@template/storage": "workspace:*"
   },
   "devDependencies": {
     "@nestjs/testing": "12.1.2",

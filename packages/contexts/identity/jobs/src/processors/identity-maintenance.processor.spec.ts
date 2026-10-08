@@ -2,7 +2,10 @@ import 'reflect-metadata';
 
 import { describe, expect, it, mock } from 'bun:test';
 import type { CommandBus } from '@nestjs/cqrs';
-import { PurgeExpiredSessionsCommand } from '@template/identity-application';
+import {
+  DeleteAvatarFileCommand,
+  PurgeExpiredSessionsCommand,
+} from '@template/identity-application';
 import type { Job } from 'bullmq';
 
 import { IdentityMaintenanceProcessor } from './identity-maintenance.processor.ts';
@@ -24,5 +27,23 @@ describe('IdentityMaintenanceProcessor', () => {
       oneTimeTokens: 1,
     });
     expect((execute.mock.calls[0] as unknown[])[0]).toBeInstanceOf(PurgeExpiredSessionsCommand);
+  });
+
+  it('deletes the file of a replaced avatar for delete-avatar-file jobs', async () => {
+    const execute = mock(async () => undefined);
+    const processor = new IdentityMaintenanceProcessor({ execute } as unknown as CommandBus);
+    const job = {
+      name: 'delete-avatar-file',
+      data: { avatarKey: 'identity/avatars/u/1' },
+      id: '2',
+      queueName: 'identity-maintenance',
+      attemptsMade: 0,
+    };
+
+    await processor.process(job as unknown as Job);
+
+    expect((execute.mock.calls[0] as unknown[])[0]).toEqual(
+      new DeleteAvatarFileCommand('identity/avatars/u/1'),
+    );
   });
 });

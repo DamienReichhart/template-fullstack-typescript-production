@@ -2,7 +2,7 @@
 
 ## Contexts
 
-- [Identity](./packages/contexts/identity/GLOSSARY.md): who a person is to the system and how they prove it: Users, Sessions, Email verification and Password reset
+- [Identity](./packages/contexts/identity/GLOSSARY.md): who a person is to the system and how they prove it: Users, Sessions, Email verification, Password reset and Avatars
 - [Notifications](./packages/contexts/notifications/GLOSSARY.md): telling people things outside the app in their Preferred language: Rendering Transactional emails and handing them to a Transport
 
 ## Relationships

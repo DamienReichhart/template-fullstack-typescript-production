@@ -34,6 +34,8 @@ imported by `application`: `XApplicationModule.register({ infrastructure })` rec
 The error names the two tags that may not meet. Ask which way the dependency should point:
 
 - **Domain needs a library**: model the need as a port in `application`, implement it in `infrastructure`.
+- **Application needs files**: a port named after the domain (`AvatarStorage`), implemented over
+  `ObjectStorage` in `infrastructure`; the application layer never imports `@template/storage`.
 - **Two contexts need each other**: one enqueues a job the other consumes; define it in `@template/queue`.
 - **The web app needs a backend type**: put the shape in `@template/contracts`, which both sides import.
 - **A platform package needs a context**: the code belongs in the context, or the context passes it in.

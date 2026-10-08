@@ -27,6 +27,7 @@ src/
 | Feature     | Owns                                                                |
 | ----------- | ------------------------------------------------------------------- |
 | `auth`      | Login, register, email verification, password reset, session guards |
+| `avatar`    | The user's picture: display, upload straight to storage, removal    |
 | `system`    | The "test connection to API" card (public and authenticated pings)  |
 | `marketing` | Landing page and its JSON-LD                                        |
 | `dashboard` | The authenticated home                                              |

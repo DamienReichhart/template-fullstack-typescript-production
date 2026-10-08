@@ -8,6 +8,8 @@ import {
 /** Errors raised by the client itself, never by the API. */
 export const ClientErrorCode = {
   network: 'NETWORK_ERROR',
+  /** Object storage refused or never received a direct upload. */
+  uploadFailed: 'UPLOAD_FAILED',
   unknown: 'UNKNOWN',
 } as const;
 

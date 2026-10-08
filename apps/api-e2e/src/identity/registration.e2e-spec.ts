@@ -18,7 +18,11 @@ describe('registration', () => {
   it('signs the new user in and sends the welcome and verification emails', async () => {
     const { session, email, user } = await registerUser();
 
-    expect(currentUserResponseSchema.parse(user)).toMatchObject({ email, emailVerified: false });
+    expect(currentUserResponseSchema.parse(user)).toMatchObject({
+      email,
+      emailVerified: false,
+      avatarUrl: null,
+    });
     expect(session.cookie(AuthCookies.accessToken)).toBeDefined();
     expect(session.cookie(AuthCookies.refreshToken)).toBeDefined();
     expect(session.cookie(AuthCookies.sessionHint)).toBeDefined();

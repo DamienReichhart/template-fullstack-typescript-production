@@ -23,6 +23,15 @@ _Avoid_: Sign-up, onboarding, account creation
 A User's email address once its owner has proven they receive mail sent to it.
 _Avoid_: Confirmed email, activated account
 
+**Avatar**:
+The picture a User shows to say who they are: a PNG, JPEG or WebP image of at most 5 MB, or none.
+_Avoid_: Photo, profile image, image (alone)
+
+**Avatar upload**:
+A picture a User sent for their Avatar and the system has not kept yet. Checked before it is kept;
+forgotten after a day if never used.
+_Avoid_: Pending avatar, temp file
+
 **Preferred language**:
 The language every email to a User is written in, chosen at Registration.
 _Avoid_: Locale (in conversation), language setting

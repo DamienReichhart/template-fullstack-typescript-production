@@ -9,6 +9,8 @@ export const currentUserResponseSchema = z.object({
   role: userRoleSchema,
   emailVerified: z.boolean(),
   locale: z.string(),
+  /** Display URL of the avatar, valid at least an hour; null without one. */
+  avatarUrl: z.url().nullable(),
   createdAt: z.iso.datetime(),
 });
 

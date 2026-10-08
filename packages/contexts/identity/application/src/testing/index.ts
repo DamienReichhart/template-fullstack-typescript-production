@@ -1,4 +1,6 @@
 export { FakeAccessTokenIssuer } from './fakes/fake-access-token-issuer.ts';
+export { FakeAvatarStorage } from './fakes/fake-avatar-storage.ts';
+export { FakeIdentityHousekeeping } from './fakes/fake-identity-housekeeping.ts';
 export { FakeIdentityNotifier, type SentNotification } from './fakes/fake-identity-notifier.ts';
 export { FakePasswordHasher } from './fakes/fake-password-hasher.ts';
 export { FakeSecureTokenGenerator } from './fakes/fake-secure-token-generator.ts';

@@ -17,5 +17,7 @@ export const IdentityRoutes = {
   },
   me: {
     controller: 'me',
+    avatar: 'avatar',
+    avatarUploads: 'avatar/uploads',
   },
 } as const;

@@ -24,7 +24,11 @@ beforeEach(() => {
           environment: 'test',
           uptimeSeconds: 42,
           timestamp: '2026-01-01T00:00:00.000Z',
-          services: { database: { status: 'up', latencyMs: 3 }, redis: { status: 'down' } },
+          services: {
+            database: { status: 'up', latencyMs: 3 },
+            redis: { status: 'down' },
+            storage: { status: 'up', latencyMs: 5 },
+          },
         }),
   );
   globalThis.fetch = fetchMock as unknown as typeof fetch;
