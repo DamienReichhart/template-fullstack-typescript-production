@@ -53,8 +53,8 @@
     "husky": "9.1.7",
     "lint-staged": "17.6.0",
     "nx": "23.2.1",
-    "prettier": "3.9.9",
+    "prettier": "3.9.10",
     "typescript": "6.0.3",
-    "typescript-eslint": "8.71.0"
+    "typescript-eslint": "8.71.2"
   }
 }
