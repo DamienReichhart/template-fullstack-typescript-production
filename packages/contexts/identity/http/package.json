@@ -34,7 +34,7 @@
     "@template/http": "workspace:*",
     "@template/identity-application": "workspace:*",
     "@template/identity-domain": "workspace:*",
-    "express": "5.2.1",
+    "express": "5.3.0",
     "zod": "4.6.5"
   },
   "devDependencies": {
