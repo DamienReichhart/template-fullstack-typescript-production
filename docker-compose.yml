@@ -22,7 +22,7 @@ services:
       retries: 10
 
   redis:
-    image: redis:7-alpine
+    image: redis:8-alpine
     restart: unless-stopped
     # BullMQ requires `noeviction`: an evicted job key is a silently lost job.
     command: ['redis-server', '--appendonly', 'yes', '--maxmemory-policy', 'noeviction']
