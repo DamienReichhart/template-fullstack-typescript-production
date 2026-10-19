@@ -105,8 +105,8 @@
   "dependencies": {
     "@nestjs/common": "12.1.2",
     "@nestjs/core": "12.1.2",
-    "@prisma/adapter-pg": "7.10.0",
-    "@prisma/client": "7.10.0",
+    "@prisma/adapter-pg": "7.10.1",
+    "@prisma/client": "7.10.1",
     "@template/config": "workspace:*",
     "@template/ddd": "workspace:*",
     "pg": "8.23.1"
@@ -114,7 +114,7 @@
   "devDependencies": {
     "@nestjs/platform-express": "12.1.2",
     "@nestjs/testing": "12.1.2",
-    "prisma": "7.10.0",
+    "prisma": "7.10.1",
     "reflect-metadata": "0.2.2"
   }
 }
