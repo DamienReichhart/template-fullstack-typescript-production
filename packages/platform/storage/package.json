@@ -57,12 +57,12 @@
     "@aws-sdk/lib-storage": "3.1147.0",
     "@aws-sdk/s3-presigned-post": "3.1147.0",
     "@aws-sdk/s3-request-presigner": "3.1147.0",
-    "@nestjs/common": "12.1.2",
+    "@nestjs/common": "12.1.3",
     "@template/config": "workspace:*",
     "zod": "4.6.5"
   },
   "devDependencies": {
-    "@nestjs/testing": "12.1.2",
+    "@nestjs/testing": "12.1.3",
     "reflect-metadata": "0.2.2"
   }
 }
