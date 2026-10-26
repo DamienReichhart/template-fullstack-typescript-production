@@ -30,7 +30,7 @@
     ]
   },
   "dependencies": {
-    "@nestjs/common": "12.1.2",
+    "@nestjs/common": "12.2.0",
     "@react-email/components": "1.0.12",
     "@react-email/render": "2.1.0",
     "@template/config": "workspace:*",
