@@ -39,7 +39,7 @@ services:
   # S3-compatible object storage. Buckets, CORS and lifecycle rules are not created here:
   # `bun run storage:provision` applies them from the app's own configuration.
   rustfs:
-    image: rustfs/rustfs:1.0.1
+    image: rustfs/rustfs:1.0.3
     restart: unless-stopped
     environment:
       RUSTFS_ACCESS_KEY: ${S3_ACCESS_KEY_ID:-template}
