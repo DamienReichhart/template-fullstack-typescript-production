@@ -42,6 +42,8 @@ Swagger UI: `http://localhost:4000/docs` when `SWAGGER_ENABLED=true`.
 ## Docker
 
 ```bash
-docker build -f apps/api/Dockerfile -t template-api .                       # runtime image
-docker build -f apps/api/Dockerfile --target migrator -t template-migrator .  # prisma migrate deploy
+docker build -f docker/prod/images/api.prod.dockerfile -t template-api .            # runtime image
+docker build -f docker/prod/images/migrator.prod.dockerfile -t template-migrator .  # migrations, bucket
 ```
+
+Both compose files run it too: [`docs/guides/run-with-docker.md`](../../docs/guides/run-with-docker.md).

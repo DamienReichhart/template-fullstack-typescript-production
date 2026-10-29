@@ -62,8 +62,8 @@ Docker image.
 `bunx nx dev web` · `bunx nx build web` · `bunx nx test web`
 
 ```sh
-docker build -f apps/web/Dockerfile \
+docker build -f docker/prod/images/web.prod.dockerfile \
   --build-arg NEXT_PUBLIC_API_URL=https://api.example.com \
-  --build-arg NEXT_PUBLIC_SITE_URL=https://www.example.com \
+  --build-arg NEXT_PUBLIC_SITE_URL=https://example.com \
   -t template-web .
 ```

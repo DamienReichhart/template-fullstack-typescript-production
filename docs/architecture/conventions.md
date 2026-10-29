@@ -14,8 +14,9 @@ packages/
 ├── platform/          technical building blocks, no business rules: config, logger, database, redis,
 │                      storage, queue, messaging, http, health, ddd, testing
 └── contexts/<context>/<layer>/   business rules, one package per layer (see boundaries.md)
+docker/<env>/          dev and prod: images/<service>.<env>.dockerfile, config/<service>/ (its config files)
 docs/                  adr/ (system-wide decisions), architecture/, guides/, agents/
-tools/scripts/         repository checks
+tools/scripts/         repository checks and image smoke tests
 ```
 
 ## Nest runnables (`apps/api`, `apps/worker`, `apps/scheduler`)

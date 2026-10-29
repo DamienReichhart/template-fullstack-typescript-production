@@ -27,11 +27,14 @@ the OpenAPI document) and used to tag every image. Why the pipeline works this w
    Release workflow: it bumps `package.json` and the OpenAPI version, and writes `CHANGELOG.md`.
    Edit the changelog in that pull request if a line needs rewording.
 3. **Merge it** — the workflow tags `vX.Y.Z`, creates the GitHub release and publishes
-   `ghcr.io/<owner>/<repo>/{api,migrator,worker,scheduler,web}` tagged `X.Y.Z`, `X.Y` and
-   `sha-<commit>`, each with an SBOM and a signed build provenance.
-4. **Deploy** — run the `migrator` image to completion, then roll out the api, worker, scheduler
-   and web. Check an image came from this repository first:
-   `gh attestation verify oci://ghcr.io/<owner>/<repo>/api:X.Y.Z --repo <owner>/<repo>`.
+   `ghcr.io/<owner>/<repo>/<service>` for every service of `docker-compose.prod.yaml` (api,
+   migrator, worker, scheduler, web, database, redis, s3, nginx, cloudflared) tagged `X.Y.Z`,
+   `X.Y` and `sha-<commit>`, each with an SBOM and a signed build provenance.
+4. **Deploy** — set `IMAGE_TAG=X.Y.Z` in the host's `.env`, then
+   `docker compose -f docker-compose.prod.yaml pull` and `up -d --wait`: the migrator runs to
+   completion before the api and worker start
+   ([run with Docker](./run-with-docker.md#production)). Check an image came from this
+   repository first: `gh attestation verify oci://ghcr.io/<owner>/<repo>/api:X.Y.Z --repo <owner>/<repo>`.
 
 To publish a release's images again (a registry purge, a new web URL), run the Release workflow
 from the Actions tab with its tag.

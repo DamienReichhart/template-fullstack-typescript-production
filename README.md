@@ -36,6 +36,11 @@ bun run storage:provision   # create the bucket, its CORS and lifecycle rules
 bun run dev                 # api :4000, worker, scheduler, web :3000
 ```
 
+Or everything in containers, sources synced in as you edit: `bun run docker:dev`
+([run with Docker](./docs/guides/run-with-docker.md)). Every service has a fixed address on
+192.168.250.0/24, which the server-side URLs of `.env` use: from the host they are reachable on
+Linux only, so on Docker Desktop point host-run tools at the localhost ports instead.
+
 Open http://localhost:3000. The api serves Swagger at http://localhost:4000/docs and, for ADMIN
 users, Bull Board at http://localhost:4000/admin/queues. The RustFS console is at
 http://localhost:9001/rustfs/console/ (`S3_ACCESS_KEY_ID` / `S3_SECRET_ACCESS_KEY` from `.env`).
@@ -51,7 +56,9 @@ http://localhost:9001/rustfs/console/ (`S3_ACCESS_KEY_ID` / `S3_SECRET_ACCESS_KE
 | New migration               | `bun run db:migrate`                                          |
 | OpenAPI document            | `bun run openapi`                                             |
 | Migrations match the schema | `bunx nx run database:prisma-check-drift` (needs `docker:up`) |
+| Everything in containers    | `bun run docker:dev` (stop with `bun run docker:down`)        |
 | Boot a production image     | `bun tools/scripts/smoke-test-image.ts api <image>`           |
+| Boot the production stack   | `bun tools/scripts/smoke-test-stack.ts` (Linux host)          |
 | Repository checks           | `bun run check:structure`, `bun run check:server-logic`       |
 | Dependency graph            | `bunx nx graph`                                               |
 
@@ -68,6 +75,7 @@ packages/shared/       contracts (routes, schemas, error codes) · i18n (en, fr)
 packages/frontend/     ui (design system) · api-client
 packages/platform/     config · logger · database · redis · storage · queue · messaging · http · health · ddd · testing
 packages/contexts/     identity · notifications, one package per layer
+docker/                dev/ and prod/: one image per service (images/), its config (config/)
 docs/                  adr · architecture · guides · agents
 ```
 
@@ -77,7 +85,7 @@ Each app and context has a README saying what it owns. Start with:
 - [`docs/architecture/boundaries.md`](./docs/architecture/boundaries.md): who may import whom, and why.
 - [`docs/architecture/conventions.md`](./docs/architecture/conventions.md): where each kind of file goes.
 - [`docs/guides/`](./docs/guides/): recipes to add a context, a command or query, a job or schedule,
-  a frontend feature, a locale, to store files, and to cut a release.
+  a frontend feature, a locale, to store files, to run with Docker, and to cut a release.
 - [`docs/adr/`](./docs/adr/): the decisions a newcomer would otherwise question.
 
 ## Deploying
@@ -86,11 +94,15 @@ Merging the release pull request that release-please keeps open publishes every 
 versioned from the Conventional Commits and attested: see
 [`docs/guides/cut-a-release.md`](./docs/guides/cut-a-release.md).
 
-Each app ships as an image built from the repository root (`apps/<app>/Dockerfile`); the api
-Dockerfile's `migrator` target runs `prisma migrate deploy` as a one-shot job before a release.
-The api and worker need an S3-compatible bucket (`S3_*` variables), provisioned once per
-environment: credentials, CORS and lifecycle in
-[`docs/guides/store-files.md`](./docs/guides/store-files.md#production).
-The web image takes `NEXT_PUBLIC_API_URL` and `NEXT_PUBLIC_SITE_URL` as build args. Probes:
+`docker-compose.prod.yaml` runs the whole stack on one host behind a Cloudflare Tunnel:
+cloudflared → nginx → web, api and object storage, with Postgres, Redis and RustFS beside them and
+no published port. Images are distroless (the database aside), run as non-root with a read-only
+root filesystem and no Linux capability, and get only the `.env` keys they read. The `migrator`
+runs `prisma migrate deploy` and provisions the bucket before the api and worker start, on every
+release. See [run with Docker](./docs/guides/run-with-docker.md#production) and
+[ADR 0015](./docs/adr/0015-docker-runs-every-service-on-fixed-addresses.md).
+
+Each image builds from the repository root (`docker/prod/images/<service>.prod.dockerfile`). The
+web image takes `NEXT_PUBLIC_API_URL` and `NEXT_PUBLIC_SITE_URL` as build args. Probes:
 `/health/live` and `/health/ready` on the api, `:WORKER_HEALTH_PORT` and `:SCHEDULER_HEALTH_PORT`
 for the worker and scheduler.

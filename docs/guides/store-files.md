@@ -12,6 +12,9 @@ bun run docker:up            # RustFS: S3 API on :9000, console on :9001 (keys f
 bun run storage:provision    # bucket, CORS for CORS_ORIGINS, lifecycle rules; idempotent
 ```
 
+`bun run docker:dev` (everything in containers) needs neither: its migrator provisions the
+bucket, as the production one does on every release.
+
 `bunx nx run storage:test:int` provisions `S3_TEST_BUCKET` itself. The console
 (http://localhost:9001/rustfs/console/, `S3_ACCESS_KEY_ID` / `S3_SECRET_ACCESS_KEY`) shows every object.
 
@@ -71,15 +74,15 @@ succeeds, so retries are safe.
 
 ## Production
 
-| Concern     | Do                                                                                                                                                                                                     |
-| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Bucket      | Private. Created and configured once per environment by `bun run storage:provision` with admin credentials, or by your infrastructure code reproducing what it does.                                   |
-| CORS        | The web origins (`CORS_ORIGINS`) may `GET`, `HEAD` and `POST`: provisioning sets it.                                                                                                                   |
-| Lifecycle   | `staging/` expires after 1 day; incomplete multipart uploads are aborted after 1 day. Provisioning keeps lifecycle rules it does not own.                                                              |
-| Credentials | The app's key may only `s3:GetObject`, `s3:PutObject`, `s3:DeleteObject` on `arn:aws:s3:::<bucket>/*` and `s3:ListBucket` on the bucket. Leave both keys empty on AWS to use the instance or pod role. |
-| Endpoints   | `S3_ENDPOINT` is what the servers reach (a private address is fine); `S3_PUBLIC_ENDPOINT` is what browsers reach, over HTTPS. Presigned URLs are signed for the latter.                                |
-| RustFS      | Run a cluster (erasure coding, several drives) with non-default root credentials and a scoped user for the app; set `RUSTFS_SERVER_DOMAINS` to use virtual-hosted URLs.                                |
-| Health      | Storage is _reported_ by `/health/ready` and the system ping, never _required_: its outage degrades file features only. Alert on the ping's `storage: down`.                                           |
+| Concern     | Do                                                                                                                                                                                                                                                                                                               |
+| ----------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Bucket      | Private. Created and configured once per environment by `bun run storage:provision` with admin credentials, or by your infrastructure code reproducing what it does.                                                                                                                                             |
+| CORS        | The web origins (`CORS_ORIGINS`) may `GET`, `HEAD` and `POST`: provisioning sets it.                                                                                                                                                                                                                             |
+| Lifecycle   | `staging/` expires after 1 day; incomplete multipart uploads are aborted after 1 day. Provisioning keeps lifecycle rules it does not own.                                                                                                                                                                        |
+| Credentials | The app's key may only `s3:GetObject`, `s3:PutObject`, `s3:DeleteObject` on `arn:aws:s3:::<bucket>/*` and `s3:ListBucket` on the bucket. Leave both keys empty on AWS to use the instance or pod role.                                                                                                           |
+| Endpoints   | `S3_ENDPOINT` is what the servers reach (a private address is fine); `S3_PUBLIC_ENDPOINT` is what browsers reach, over HTTPS. Presigned URLs are signed for the latter.                                                                                                                                          |
+| RustFS      | `docker-compose.prod.yaml` runs a single node, provisioned by the migrator on every release, with the root credentials as the app's: use long random keys. Past one host, run a cluster (erasure coding, several drives) with a scoped user for the app; set `RUSTFS_SERVER_DOMAINS` to use virtual-hosted URLs. |
+| Health      | Storage is _reported_ by `/health/ready` and the system ping, never _required_: its outage degrades file features only. Alert on the ping's `storage: down`.                                                                                                                                                     |
 
 ## Not built in
 

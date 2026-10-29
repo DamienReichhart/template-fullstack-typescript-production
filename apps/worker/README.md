@@ -33,4 +33,4 @@ active jobs before the process exits.
 
 ## Commands
 
-`bunx nx dev worker` · `bunx nx build worker` · `docker build -f apps/worker/Dockerfile -t template-worker .`
+`bunx nx dev worker` · `bunx nx build worker` · `docker build -f docker/prod/images/worker.prod.dockerfile -t template-worker .`
