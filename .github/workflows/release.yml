@@ -1,0 +1,126 @@
+name: Release
+
+# release-please keeps a release pull request open on main, its version and CHANGELOG.md derived
+# from the Conventional Commits merged since the last release. Merging it tags vX.Y.Z, creates the
+# GitHub release, and publishes every image to GHCR, signed with a build provenance attestation.
+# See docs/guides/cut-a-release.md.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing release tag to publish the images of again (e.g. v1.2.0)
+        required: true
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  release-please:
+    name: Release pull request
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+      pull-requests: write
+    outputs:
+      created: ${{ steps.release.outputs.release_created }}
+      tag: ${{ steps.release.outputs.tag_name }}
+    steps:
+      # A pull request opened with the workflow token starts no workflow, so CI would never report
+      # on the release pull request: RELEASE_PLEASE_TOKEN (a fine-grained token or GitHub App token
+      # with contents and pull-requests write) avoids that.
+      - uses: googleapis/release-please-action@45996ed1f6d02564a971a2fa1b5860e934307cf7 # v5.0.0
+        id: release
+        with:
+          token: ${{ secrets.RELEASE_PLEASE_TOKEN || github.token }}
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json
+
+  publish:
+    name: Publish ${{ matrix.image }}
+    needs: release-please
+    if: ${{ !cancelled() && (needs.release-please.outputs.created == 'true' || github.event_name == 'workflow_dispatch') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+      attestations: write
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { image: api, app: api, target: runtime }
+          - { image: migrator, app: api, target: migrator }
+          - { image: worker, app: worker, target: runtime }
+          - { image: scheduler, app: scheduler, target: runtime }
+          - { image: web, app: web, target: runtime }
+    env:
+      TAG: ${{ needs.release-please.outputs.tag || inputs.tag }}
+      IMAGE: ${{ matrix.image }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ env.TAG }}
+          persist-credentials: false
+      # `NEXT_PUBLIC_*` are inlined at build time: the web image is built for one environment, from
+      # the repository variables (Settings → Secrets and variables → Actions → Variables).
+      - if: matrix.image == 'web'
+        name: Web build variables are set
+        env:
+          API_URL: ${{ vars.NEXT_PUBLIC_API_URL }}
+          SITE_URL: ${{ vars.NEXT_PUBLIC_SITE_URL }}
+        run: |
+          if [[ -z "$API_URL" || -z "$SITE_URL" ]]; then
+            echo "::error::Set the NEXT_PUBLIC_API_URL and NEXT_PUBLIC_SITE_URL repository variables."
+            exit 1
+          fi
+      # Registry paths must be lowercase; the repository's owner may not be.
+      - name: Image name
+        id: name
+        run: echo "image=ghcr.io/${GITHUB_REPOSITORY,,}/$IMAGE" >> "$GITHUB_OUTPUT"
+      - uses: docker/metadata-action@dc802804100637a589fabce1cb79ff13a1411302 # v6.2.0
+        id: meta
+        with:
+          images: ${{ steps.name.outputs.image }}
+          tags: |
+            type=semver,pattern={{version}},value=${{ env.TAG }}
+            type=semver,pattern={{major}}.{{minor}},value=${{ env.TAG }}
+            type=sha
+      - uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069 # v4.4.1
+      - uses: docker/login-action@81c6f93d4bc991e510b342a00b419b3bb4efc5c6 # v4.7.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ github.token }}
+      - uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
+        id: build
+        with:
+          context: .
+          file: apps/${{ matrix.app }}/Dockerfile
+          target: ${{ matrix.target }}
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          build-args: |
+            NEXT_PUBLIC_API_URL=${{ vars.NEXT_PUBLIC_API_URL }}
+            NEXT_PUBLIC_SITE_URL=${{ vars.NEXT_PUBLIC_SITE_URL }}
+          # An SBOM and the full build provenance travel with the image as OCI attestations.
+          sbom: true
+          provenance: mode=max
+          cache-from: type=gha,scope=${{ matrix.image }}
+      # Signed (Sigstore) proof of which workflow and commit built the image:
+      #   gh attestation verify oci://<image>:<version> --repo <owner>/<repo>
+      - uses: actions/attest-build-provenance@4d101475d8b20a2381f78447822ac1eab6504dd8 # v4.2.2
+        with:
+          subject-name: ${{ steps.name.outputs.image }}
+          subject-digest: ${{ steps.build.outputs.digest }}
+          push-to-registry: true
