@@ -25,7 +25,7 @@ flowchart LR
 
 ## Quickstart
 
-Requires Bun 1.4.2, Node 24 and Docker.
+Requires Bun 1.4.4, Node 24 and Docker.
 
 ```sh
 bun install

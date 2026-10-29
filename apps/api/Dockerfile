@@ -2,7 +2,7 @@
 # Build from the repository root: docker build -f apps/api/Dockerfile -t template-api .
 # Migrations image:                docker build -f apps/api/Dockerfile --target migrator -t template-migrator .
 
-ARG BUN_VERSION=1.4.2
+ARG BUN_VERSION=1.4.4
 
 FROM oven/bun:${BUN_VERSION}-slim AS base
 WORKDIR /repo

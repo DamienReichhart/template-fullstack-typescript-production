@@ -8,7 +8,7 @@
 # `NEXT_PUBLIC_*` values are inlined into the bundle and the prerendered pages at build
 # time: one image per environment. The build fails fast when they are missing.
 
-ARG BUN_VERSION=1.4.2
+ARG BUN_VERSION=1.4.4
 
 FROM oven/bun:${BUN_VERSION}-slim AS base
 WORKDIR /repo

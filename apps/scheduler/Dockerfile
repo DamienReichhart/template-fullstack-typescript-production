@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1.7
 # Build from the repository root: docker build -f apps/scheduler/Dockerfile -t template-scheduler .
 
-ARG BUN_VERSION=1.4.2
+ARG BUN_VERSION=1.4.4
 
 FROM oven/bun:${BUN_VERSION}-slim AS base
 WORKDIR /repo
