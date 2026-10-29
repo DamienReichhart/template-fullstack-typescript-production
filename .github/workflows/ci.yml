@@ -193,9 +193,8 @@ jobs:
       - uses: ./.github/actions/setup
         with:
           nx-cache: e2e
+      # The e2e target migrates the database and provisions the bucket before the suite runs.
       - run: docker compose up -d --wait
-      # The bucket, its CORS and lifecycle rules: what `bun run storage:provision` does locally.
-      - run: bun run storage:provision
       - if: matrix.project == 'web-e2e'
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:

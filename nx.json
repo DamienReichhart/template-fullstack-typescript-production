@@ -88,7 +88,17 @@
     },
     "e2e": {
       "cache": false,
-      "dependsOn": ["^build"]
+      "dependsOn": [
+        "^build",
+        {
+          "projects": ["database"],
+          "target": "prisma-deploy"
+        },
+        {
+          "projects": ["storage"],
+          "target": "provision"
+        }
+      ]
     },
     "dev": {
       "cache": false,
