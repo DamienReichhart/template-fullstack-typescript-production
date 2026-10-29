@@ -26,12 +26,12 @@ Nx + Bun monorepo: a NestJS api, a BullMQ worker and scheduler, a Next.js web ap
 
 ### Issue tracker
 
-Issues live in GitHub Issues for this repo. See `docs/agents/issue-tracker.md`.
+GitHub Issues via `gh`; sub-issues and blockers go through `gh api`. See `docs/agents/issue-tracker.md`.
 
 ### Triage labels
 
-The five canonical triage labels, unchanged. See `docs/agents/triage-labels.md`.
+The five canonical triage labels, unchanged and created on GitHub, plus `wayfinder:*`. See `docs/agents/triage-labels.md`.
 
 ### Domain docs
 
-Multi-context: `CONTEXT.md` at the root (`GLOSSARY-MAP.md` is a symlink to it), one `GLOSSARY.md` per context. See `docs/agents/domain.md`.
+Multi-context: `CONTEXT.md` maps one `GLOSSARY.md` per context; ADRs in `docs/adr/` and `packages/contexts/<context>/docs/adr/`. See `docs/agents/domain.md`.
