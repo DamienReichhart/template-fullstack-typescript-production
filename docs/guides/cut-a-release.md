@@ -21,7 +21,8 @@ the OpenAPI document) and used to tag every image. Why the pipeline works this w
 
 1. **Merge into `main`** — commits (or squashed pull request titles) follow Conventional Commits:
    `fix:` makes a patch, `feat:` a minor, `feat!:` or a `BREAKING CHANGE:` footer a major (a minor
-   before 1.0.0). CI rejects a pull request whose title or commits do not.
+   before 1.0.0). CI rejects a pull request whose commits do not; it does not check the title, so
+   word it as a Conventional Commit before a squash merge, or the release skips the change.
 2. **Review the release pull request** — `chore(main): release X.Y.Z`, kept up to date by the
    Release workflow: it bumps `package.json` and the OpenAPI version, and writes `CHANGELOG.md`.
    Edit the changelog in that pull request if a line needs rewording.

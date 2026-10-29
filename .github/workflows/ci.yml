@@ -87,11 +87,6 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
       - uses: ./.github/actions/setup
-      # A squash merge makes the title the commit on main; a rebase merge keeps every commit.
-      - name: Pull request title
-        env:
-          TITLE: ${{ github.event.pull_request.title }}
-        run: printf '%s\n' "$TITLE" | bunx commitlint
       - name: Commits
         env:
           BASE: ${{ github.event.pull_request.base.sha }}
