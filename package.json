@@ -32,8 +32,9 @@
     "db:migrate": "nx run database:prisma-migrate",
     "db:deploy": "nx run database:prisma-deploy",
     "storage:provision": "nx run storage:provision",
-    "docker:up": "docker compose up -d --wait",
-    "docker:down": "docker compose down",
+    "docker:up": "docker compose -f docker-compose.dev.yaml up -d --wait database redis s3",
+    "docker:dev": "docker compose -f docker-compose.dev.yaml up --build --watch",
+    "docker:down": "docker compose -f docker-compose.dev.yaml down",
     "openapi": "nx run api:openapi"
   },
   "devDependencies": {

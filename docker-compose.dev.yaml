@@ -1,0 +1,261 @@
+# Development stack: every service of production minus the edge (nginx, cloudflared).
+#
+#   bun run docker:dev   everything in containers, sources synced in (`up --watch`)
+#   bun run docker:up    database, redis and s3 only, for `bun run dev` and the test suites
+#
+# Each service has the fixed address of .env (*_IP) on 192.168.250.0/24, the same as in
+# production, and only the .env keys it reads (`environment:`, never env_file). Published ports
+# listen on 127.0.0.1 only: Docker's port rules bypass the host firewall.
+name: template-dev
+
+x-build: &build
+  context: .
+  secrets: [ca]
+
+# Keys every app validates (packages/platform/config). NODE_ENV is fixed per compose file.
+x-app-env: &app-env
+  NODE_ENV: development
+  LOG_LEVEL: ${LOG_LEVEL:-debug}
+
+x-storage-env: &storage-env
+  S3_ENDPOINT: ${S3_ENDPOINT}
+  S3_PUBLIC_ENDPOINT: ${S3_PUBLIC_ENDPOINT}
+  S3_REGION: ${S3_REGION}
+  S3_ACCESS_KEY_ID: ${S3_ACCESS_KEY_ID}
+  S3_SECRET_ACCESS_KEY: ${S3_SECRET_ACCESS_KEY}
+  S3_FORCE_PATH_STYLE: ${S3_FORCE_PATH_STYLE}
+  S3_BUCKET: ${S3_BUCKET}
+
+x-identity-env: &identity-env
+  JWT_ACCESS_SECRET: ${JWT_ACCESS_SECRET}
+  JWT_ISSUER: ${JWT_ISSUER}
+  JWT_ACCESS_TTL_SECONDS: ${JWT_ACCESS_TTL_SECONDS}
+  REFRESH_TOKEN_TTL_DAYS: ${REFRESH_TOKEN_TTL_DAYS}
+  EMAIL_VERIFICATION_TTL_HOURS: ${EMAIL_VERIFICATION_TTL_HOURS}
+  PASSWORD_RESET_TTL_MINUTES: ${PASSWORD_RESET_TTL_MINUTES}
+
+# Sources the Bun apps run from; dependencies and the Prisma client stay the image's own.
+x-sync-packages: &sync-packages
+  action: sync
+  path: ./packages
+  target: /repo/packages
+  ignore: [node_modules/, dist/, platform/database/src/generated/]
+
+x-rebuild-on-dependencies: &rebuild-on-dependencies
+  action: rebuild
+  path: ./bun.lock
+
+x-rebuild-on-schema: &rebuild-on-schema
+  action: rebuild
+  path: ./packages/platform/database/prisma
+
+services:
+  database:
+    build:
+      <<: *build
+      dockerfile: docker/dev/images/database.dev.dockerfile
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - '127.0.0.1:${POSTGRES_PORT:-5432}:5432'
+    volumes:
+      - database-data:/var/lib/postgresql/data
+    shm_size: 128m
+    networks:
+      template:
+        ipv4_address: ${DATABASE_IP:?}
+
+  redis:
+    build:
+      <<: *build
+      dockerfile: docker/dev/images/redis.dev.dockerfile
+    restart: unless-stopped
+    ports:
+      - '127.0.0.1:${REDIS_PORT:-6379}:6379'
+    volumes:
+      - redis-data:/data
+    networks:
+      template:
+        ipv4_address: ${REDIS_IP:?}
+
+  s3:
+    build:
+      <<: *build
+      dockerfile: docker/dev/images/s3.dev.dockerfile
+    restart: unless-stopped
+    environment:
+      RUSTFS_ACCESS_KEY: ${S3_ACCESS_KEY_ID}
+      RUSTFS_SECRET_KEY: ${S3_SECRET_ACCESS_KEY}
+    ports:
+      - '127.0.0.1:${RUSTFS_PORT:-9000}:9000' # S3 API
+      - '127.0.0.1:${RUSTFS_CONSOLE_PORT:-9001}:9001' # web console at /rustfs/console/
+    volumes:
+      - s3-data:/data
+    networks:
+      template:
+        ipv4_address: ${S3_IP}
+
+  # Applies the migrations and provisions the bucket, then exits; the api and worker wait for it.
+  migrator:
+    build:
+      <<: *build
+      dockerfile: docker/dev/images/migrator.dev.dockerfile
+    restart: 'no'
+    environment:
+      <<: *storage-env
+      DATABASE_URL: ${DATABASE_URL}
+      CORS_ORIGINS: ${CORS_ORIGINS}
+    depends_on:
+      database: { condition: service_healthy }
+      s3: { condition: service_healthy }
+    networks:
+      template:
+        ipv4_address: ${MIGRATOR_IP:?}
+    develop:
+      watch:
+        - *rebuild-on-schema
+
+  api:
+    build:
+      <<: *build
+      dockerfile: docker/dev/images/api.dev.dockerfile
+    restart: unless-stopped
+    environment:
+      <<: [*app-env, *storage-env, *identity-env]
+      DATABASE_URL: ${DATABASE_URL}
+      REDIS_URL: ${REDIS_URL}
+      API_PORT: ${API_PORT}
+      API_PUBLIC_URL: ${API_PUBLIC_URL}
+      CORS_ORIGINS: ${CORS_ORIGINS}
+      SWAGGER_ENABLED: ${SWAGGER_ENABLED}
+      THROTTLE_TTL_SECONDS: ${THROTTLE_TTL_SECONDS}
+      THROTTLE_LIMIT: ${THROTTLE_LIMIT}
+      TRUST_PROXY: ${TRUST_PROXY}
+      COOKIE_DOMAIN: ${COOKIE_DOMAIN}
+      COOKIE_SECURE: ${COOKIE_SECURE}
+    ports:
+      - '127.0.0.1:${API_PORT:-4000}:${API_PORT:-4000}'
+    depends_on:
+      migrator: { condition: service_completed_successfully }
+      redis: { condition: service_healthy }
+    networks:
+      template:
+        ipv4_address: ${API_IP:?}
+    develop:
+      watch:
+        - action: sync
+          path: ./apps/api
+          target: /repo/apps/api
+          ignore: [node_modules/, dist/]
+        - *sync-packages
+        - *rebuild-on-dependencies
+        - *rebuild-on-schema
+
+  worker:
+    build:
+      <<: *build
+      dockerfile: docker/dev/images/worker.dev.dockerfile
+    restart: unless-stopped
+    environment:
+      <<: [*app-env, *storage-env, *identity-env]
+      DATABASE_URL: ${DATABASE_URL}
+      REDIS_URL: ${REDIS_URL}
+      WORKER_HEALTH_PORT: ${WORKER_HEALTH_PORT}
+      WORKER_CONCURRENCY: ${WORKER_CONCURRENCY}
+      MAIL_TRANSPORT: ${MAIL_TRANSPORT}
+      RESEND_API_KEY: ${RESEND_API_KEY}
+      MAIL_FROM: ${MAIL_FROM}
+      WEB_APP_URL: ${WEB_APP_URL}
+    ports:
+      - '127.0.0.1:${WORKER_HEALTH_PORT:-4100}:${WORKER_HEALTH_PORT:-4100}'
+    depends_on:
+      migrator: { condition: service_completed_successfully }
+      redis: { condition: service_healthy }
+    networks:
+      template:
+        ipv4_address: ${WORKER_IP:?}
+    develop:
+      watch:
+        - action: sync
+          path: ./apps/worker
+          target: /repo/apps/worker
+          ignore: [node_modules/, dist/]
+        - *sync-packages
+        - *rebuild-on-dependencies
+        - *rebuild-on-schema
+
+  scheduler:
+    build:
+      <<: *build
+      dockerfile: docker/dev/images/scheduler.dev.dockerfile
+    restart: unless-stopped
+    environment:
+      <<: *app-env
+      REDIS_URL: ${REDIS_URL}
+      SCHEDULER_HEALTH_PORT: ${SCHEDULER_HEALTH_PORT}
+    ports:
+      - '127.0.0.1:${SCHEDULER_HEALTH_PORT:-4200}:${SCHEDULER_HEALTH_PORT:-4200}'
+    depends_on:
+      redis: { condition: service_healthy }
+    networks:
+      template:
+        ipv4_address: ${SCHEDULER_IP:?}
+    develop:
+      watch:
+        - action: sync
+          path: ./apps/scheduler
+          target: /repo/apps/scheduler
+          ignore: [node_modules/, dist/]
+        - *sync-packages
+        - *rebuild-on-dependencies
+
+  # Next dev server. The browser calls the api on its published port (NEXT_PUBLIC_API_URL).
+  web:
+    build:
+      <<: *build
+      dockerfile: docker/dev/images/web.dev.dockerfile
+    restart: unless-stopped
+    environment:
+      NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL}
+      NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL}
+    ports:
+      - '127.0.0.1:${WEB_PORT:-3000}:3000'
+    depends_on:
+      api: { condition: service_started }
+    networks:
+      template:
+        ipv4_address: ${WEB_IP:?}
+    develop:
+      watch:
+        - action: sync
+          path: ./apps/web
+          target: /repo/apps/web
+          ignore: [node_modules/, .next/]
+        - action: sync
+          path: ./packages
+          target: /repo/packages
+          ignore: [node_modules/, dist/]
+        - *rebuild-on-dependencies
+
+networks:
+  template:
+    name: template-dev
+    driver: bridge
+    ipam:
+      config:
+        - subnet: ${DOCKER_SUBNET:?}
+          gateway: ${DOCKER_GATEWAY:?}
+
+volumes:
+  database-data:
+  redis-data:
+  s3-data:
+
+secrets:
+  # Optional CA certificate (PEM) for TLS-intercepting proxies, from the shell: unset means none.
+  #   export BUILD_CA="$(cat corporate-ca.crt)"
+  ca:
+    environment: BUILD_CA

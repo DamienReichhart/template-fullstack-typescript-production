@@ -1,0 +1,273 @@
+# Production stack on one host, published through a Cloudflare Tunnel:
+#
+#   visitor → Cloudflare → cloudflared → nginx ─┬─ web        (example.com)
+#                                               ├─ api        (api.example.com)
+#                                               └─ s3         (s3.example.com, presigned)
+#   api, worker, scheduler → database, redis, s3;   migrator: once per release, first
+#
+# No port is published: cloudflared dials out, nothing dials in. Each service has the fixed
+# address of .env (*_IP) on 192.168.250.0/24, the same as in development, and only the .env keys
+# it reads (`environment:`, never env_file). Every container runs as a non-root user, with a
+# read-only root filesystem, every Linux capability dropped and no privilege escalation: none of
+# them needs one. Images are distroless except the database (see its Dockerfile).
+#
+#   docker compose -f docker-compose.prod.yaml pull      # IMAGE_TAG from GHCR, or:
+#   docker compose -f docker-compose.prod.yaml build     # build them on this host
+#   docker compose -f docker-compose.prod.yaml up -d --wait
+#
+# See docs/guides/run-with-docker.md.
+name: template
+
+x-build: &build
+  context: .
+  secrets: [ca]
+
+x-hardened: &hardened
+  restart: unless-stopped
+  read_only: true
+  cap_drop: [ALL]
+  security_opt: ['no-new-privileges:true']
+  tmpfs: ['/tmp:size=64m,mode=1777']
+  logging:
+    driver: json-file
+    options: { max-size: 10m, max-file: '5' }
+
+# Bun apps: tini as PID 1 forwards signals and reaps children; a graceful stop gets time.
+x-app: &app
+  <<: *hardened
+  init: true
+  stop_grace_period: 30s
+
+# Keys every app validates (packages/platform/config). NODE_ENV is fixed per compose file.
+x-app-env: &app-env
+  NODE_ENV: production
+  LOG_LEVEL: ${LOG_LEVEL:-info}
+
+x-storage-env: &storage-env
+  S3_ENDPOINT: ${S3_ENDPOINT:?}
+  S3_PUBLIC_ENDPOINT: ${S3_PUBLIC_ENDPOINT:?}
+  S3_REGION: ${S3_REGION:?}
+  S3_ACCESS_KEY_ID: ${S3_ACCESS_KEY_ID:?}
+  S3_SECRET_ACCESS_KEY: ${S3_SECRET_ACCESS_KEY:?}
+  S3_FORCE_PATH_STYLE: ${S3_FORCE_PATH_STYLE:-true}
+  S3_BUCKET: ${S3_BUCKET:?}
+
+x-identity-env: &identity-env
+  JWT_ACCESS_SECRET: ${JWT_ACCESS_SECRET:?}
+  JWT_ISSUER: ${JWT_ISSUER}
+  JWT_ACCESS_TTL_SECONDS: ${JWT_ACCESS_TTL_SECONDS}
+  REFRESH_TOKEN_TTL_DAYS: ${REFRESH_TOKEN_TTL_DAYS}
+  EMAIL_VERIFICATION_TTL_HOURS: ${EMAIL_VERIFICATION_TTL_HOURS}
+  PASSWORD_RESET_TTL_MINUTES: ${PASSWORD_RESET_TTL_MINUTES}
+
+services:
+  database:
+    <<: *hardened
+    image: ${IMAGE_REGISTRY:?}/database:${IMAGE_TAG:?}
+    build:
+      <<: *build
+      dockerfile: docker/prod/images/database.prod.dockerfile
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:?}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?}
+      POSTGRES_DB: ${POSTGRES_DB:?}
+    tmpfs:
+      - /tmp:size=64m,mode=1777
+      - /var/run/postgresql:size=1m,mode=1777
+    volumes:
+      - database-data:/var/lib/postgresql/data
+    shm_size: 256m
+    stop_grace_period: 60s
+    networks:
+      template:
+        ipv4_address: ${DATABASE_IP:?}
+
+  redis:
+    <<: *hardened
+    image: ${IMAGE_REGISTRY:?}/redis:${IMAGE_TAG:?}
+    build:
+      <<: *build
+      dockerfile: docker/prod/images/redis.prod.dockerfile
+    command: ['/etc/redis/redis.conf', '--requirepass', '${REDIS_PASSWORD:?}']
+    environment:
+      # Read by redis-cli: the healthcheck authenticates without the password in its arguments.
+      REDISCLI_AUTH: ${REDIS_PASSWORD:?}
+    volumes:
+      - redis-data:/data
+    networks:
+      template:
+        ipv4_address: ${REDIS_IP:?}
+
+  s3:
+    <<: *hardened
+    image: ${IMAGE_REGISTRY:?}/s3:${IMAGE_TAG:?}
+    build:
+      <<: *build
+      dockerfile: docker/prod/images/s3.prod.dockerfile
+    environment:
+      RUSTFS_ACCESS_KEY: ${S3_ACCESS_KEY_ID:?}
+      RUSTFS_SECRET_KEY: ${S3_SECRET_ACCESS_KEY:?}
+    volumes:
+      - s3-data:/data
+    networks:
+      template:
+        ipv4_address: ${S3_IP:?}
+
+  # Once per release, before the apps: migrations, then the bucket (create, CORS, lifecycle).
+  migrator:
+    <<: *app
+    restart: 'no'
+    image: ${IMAGE_REGISTRY:?}/migrator:${IMAGE_TAG:?}
+    build:
+      <<: *build
+      dockerfile: docker/prod/images/migrator.prod.dockerfile
+    environment:
+      <<: *storage-env
+      NODE_ENV: production
+      DATABASE_URL: ${DATABASE_URL:?}
+      CORS_ORIGINS: ${CORS_ORIGINS:?}
+    depends_on:
+      database: { condition: service_healthy }
+      s3: { condition: service_healthy }
+    networks:
+      template:
+        ipv4_address: ${MIGRATOR_IP:?}
+
+  api:
+    <<: *app
+    image: ${IMAGE_REGISTRY:?}/api:${IMAGE_TAG:?}
+    build:
+      <<: *build
+      dockerfile: docker/prod/images/api.prod.dockerfile
+    environment:
+      <<: [*app-env, *storage-env, *identity-env]
+      DATABASE_URL: ${DATABASE_URL:?}
+      REDIS_URL: ${REDIS_URL:?}
+      API_PORT: ${API_PORT:-4000}
+      API_PUBLIC_URL: ${API_PUBLIC_URL:?}
+      CORS_ORIGINS: ${CORS_ORIGINS:?}
+      SWAGGER_ENABLED: ${SWAGGER_ENABLED:-false}
+      THROTTLE_TTL_SECONDS: ${THROTTLE_TTL_SECONDS}
+      THROTTLE_LIMIT: ${THROTTLE_LIMIT}
+      COOKIE_DOMAIN: ${COOKIE_DOMAIN:?}
+      # Fixed by the topology, not by .env: nginx is always the one hop in front of the api, and
+      # Cloudflare always serves HTTPS. A development .env must not turn either off.
+      TRUST_PROXY: 'true'
+      COOKIE_SECURE: 'true'
+    depends_on:
+      migrator: { condition: service_completed_successfully }
+      redis: { condition: service_healthy }
+    networks:
+      template:
+        ipv4_address: ${API_IP:?}
+
+  worker:
+    <<: *app
+    image: ${IMAGE_REGISTRY:?}/worker:${IMAGE_TAG:?}
+    build:
+      <<: *build
+      dockerfile: docker/prod/images/worker.prod.dockerfile
+    environment:
+      <<: [*app-env, *storage-env, *identity-env]
+      DATABASE_URL: ${DATABASE_URL:?}
+      REDIS_URL: ${REDIS_URL:?}
+      WORKER_HEALTH_PORT: ${WORKER_HEALTH_PORT:-4100}
+      WORKER_CONCURRENCY: ${WORKER_CONCURRENCY}
+      MAIL_TRANSPORT: ${MAIL_TRANSPORT:-resend}
+      RESEND_API_KEY: ${RESEND_API_KEY}
+      MAIL_FROM: ${MAIL_FROM:?}
+      WEB_APP_URL: ${WEB_APP_URL:?}
+    # In-flight jobs finish before the worker stops.
+    stop_grace_period: 60s
+    depends_on:
+      migrator: { condition: service_completed_successfully }
+      redis: { condition: service_healthy }
+    networks:
+      template:
+        ipv4_address: ${WORKER_IP:?}
+
+  scheduler:
+    <<: *app
+    image: ${IMAGE_REGISTRY:?}/scheduler:${IMAGE_TAG:?}
+    build:
+      <<: *build
+      dockerfile: docker/prod/images/scheduler.prod.dockerfile
+    environment:
+      <<: *app-env
+      REDIS_URL: ${REDIS_URL:?}
+      SCHEDULER_HEALTH_PORT: ${SCHEDULER_HEALTH_PORT:-4200}
+    depends_on:
+      redis: { condition: service_healthy }
+    networks:
+      template:
+        ipv4_address: ${SCHEDULER_IP:?}
+
+  # NEXT_PUBLIC_* are inlined at build time: the image is built for this environment's URLs.
+  web:
+    <<: *app
+    image: ${IMAGE_REGISTRY:?}/web:${IMAGE_TAG:?}
+    build:
+      <<: *build
+      dockerfile: docker/prod/images/web.prod.dockerfile
+      args:
+        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:?}
+        NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:?}
+    environment:
+      HOSTNAME: 0.0.0.0
+      PORT: 3000
+    tmpfs:
+      - /tmp:size=64m,mode=1777
+      # Next's image optimisation and fetch caches: the only place the server writes.
+      - /app/apps/web/.next/cache:size=256m,uid=65532,gid=65532,mode=0700
+    networks:
+      template:
+        ipv4_address: ${WEB_IP:?}
+
+  nginx:
+    <<: *hardened
+    image: ${IMAGE_REGISTRY:?}/nginx:${IMAGE_TAG:?}
+    build:
+      <<: *build
+      dockerfile: docker/prod/images/nginx.prod.dockerfile
+    depends_on:
+      web: { condition: service_healthy }
+      api: { condition: service_healthy }
+      s3: { condition: service_healthy }
+    networks:
+      template:
+        ipv4_address: ${NGINX_IP:?}
+
+  # In the Cloudflare dashboard, every public hostname of the tunnel points at http://<NGINX_IP>:8080.
+  cloudflared:
+    <<: *hardened
+    image: ${IMAGE_REGISTRY:?}/cloudflared:${IMAGE_TAG:?}
+    build:
+      <<: *build
+      dockerfile: docker/prod/images/cloudflared.prod.dockerfile
+    environment:
+      TUNNEL_TOKEN: ${CLOUDFLARE_TUNNEL_TOKEN:?}
+    depends_on:
+      nginx: { condition: service_healthy }
+    networks:
+      template:
+        ipv4_address: ${CLOUDFLARED_IP:?}
+
+networks:
+  template:
+    name: template
+    driver: bridge
+    ipam:
+      config:
+        - subnet: ${DOCKER_SUBNET:?}
+          gateway: ${DOCKER_GATEWAY:?}
+
+volumes:
+  database-data:
+  redis-data:
+  s3-data:
+
+secrets:
+  # Optional CA certificate (PEM) for TLS-intercepting proxies, from the shell: unset means none.
+  #   export BUILD_CA="$(cat corporate-ca.crt)"
+  ca:
+    environment: BUILD_CA

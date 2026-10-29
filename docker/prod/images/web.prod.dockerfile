@@ -1,8 +1,8 @@
 # syntax=docker/dockerfile:1.7
 # Build from the repository root:
-#   docker build -f apps/web/Dockerfile \
+#   docker build -f docker/prod/images/web.prod.dockerfile \
 #     --build-arg NEXT_PUBLIC_API_URL=https://api.example.com \
-#     --build-arg NEXT_PUBLIC_SITE_URL=https://www.example.com \
+#     --build-arg NEXT_PUBLIC_SITE_URL=https://example.com \
 #     -t template-web .
 #
 # `NEXT_PUBLIC_*` values are inlined into the bundle and the prerendered pages at build
@@ -27,24 +27,26 @@ COPY . .
 # Optional `ca` secret: extra CA bundle for TLS-intercepting corporate proxies.
 #   docker build --secret id=ca,src=/path/to/ca.crt ...
 RUN --mount=type=secret,id=ca,required=false \
-    if [ -f /run/secrets/ca ]; then export NODE_EXTRA_CA_CERTS=/run/secrets/ca; fi; \
+    --mount=type=cache,target=/root/.bun/install/cache \
+    if [ -s /run/secrets/ca ]; then export NODE_EXTRA_CA_CERTS=/run/secrets/ca; fi; \
     bun install --frozen-lockfile
 # Through Nx: the workspace packages' declarations are built first, which Next's type check
 # reads through project references. The build script pins NODE_ENV=production.
 RUN bunx nx run web:build --output-style=static
 
-# ── Runtime: the standalone server traces only the files it needs ───────────────
-FROM oven/bun:${BUN_VERSION}-slim AS runtime
+# ── Runtime: distroless; the standalone server traces only the files it needs ───
+# Files stay owned by root. Next writes only to .next/cache, a tmpfs in docker-compose.prod.yaml.
+FROM oven/bun:${BUN_VERSION}-distroless AS runtime
 WORKDIR /app
 ENV NODE_ENV=production \
     NEXT_TELEMETRY_DISABLED=1 \
     HOSTNAME=0.0.0.0 \
     PORT=3000
 # `outputFileTracingRoot` is the monorepo root, so the server lives at apps/web/server.js.
-COPY --from=build --chown=bun:bun /repo/apps/web/.next/standalone ./
-COPY --from=build --chown=bun:bun /repo/apps/web/.next/static ./apps/web/.next/static
-USER bun
+COPY --from=build /repo/apps/web/.next/standalone ./
+COPY --from=build /repo/apps/web/.next/static ./apps/web/.next/static
+USER 65532:65532
 EXPOSE 3000
 HEALTHCHECK --interval=15s --timeout=3s --start-period=15s --retries=3 \
-  CMD bun -e "fetch('http://localhost:' + (process.env.PORT ?? 3000) + '/robots.txt').then((r) => process.exit(r.ok ? 0 : 1)).catch(() => process.exit(1))"
-CMD ["bun", "apps/web/server.js"]
+  CMD ["bun", "-e", "fetch('http://127.0.0.1:' + (process.env.PORT ?? 3000) + '/robots.txt').then((r) => process.exit(r.ok ? 0 : 1)).catch(() => process.exit(1))"]
+CMD ["apps/web/server.js"]
