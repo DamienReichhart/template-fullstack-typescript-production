@@ -42,19 +42,23 @@ http://localhost:9001/rustfs/console/ (`S3_ACCESS_KEY_ID` / `S3_SECRET_ACCESS_KE
 
 ## Everyday commands
 
-| Task                        | Command                                                 |
-| --------------------------- | ------------------------------------------------------- |
-| Unit tests, lint, typecheck | `bunx nx affected -t lint typecheck test`               |
-| Integration tests           | `bun run test:int` (needs `docker:up`)                  |
-| Bucket, CORS, lifecycle     | `bun run storage:provision` (idempotent)                |
-| End-to-end suites           | `bunx nx e2e api-e2e`, `bunx nx e2e web-e2e`            |
-| New migration               | `bun run db:migrate`                                    |
-| OpenAPI document            | `bun run openapi`                                       |
-| Repository checks           | `bun run check:structure`, `bun run check:server-logic` |
-| Dependency graph            | `bunx nx graph`                                         |
+| Task                        | Command                                                       |
+| --------------------------- | ------------------------------------------------------------- |
+| Unit tests, lint, typecheck | `bunx nx affected -t lint typecheck test`                     |
+| Integration tests           | `bun run test:int` (needs `docker:up`)                        |
+| Bucket, CORS, lifecycle     | `bun run storage:provision` (idempotent)                      |
+| End-to-end suites           | `bunx nx e2e api-e2e`, `bunx nx e2e web-e2e`                  |
+| New migration               | `bun run db:migrate`                                          |
+| OpenAPI document            | `bun run openapi`                                             |
+| Migrations match the schema | `bunx nx run database:prisma-check-drift` (needs `docker:up`) |
+| Boot a production image     | `bun tools/scripts/smoke-test-image.ts api <image>`           |
+| Repository checks           | `bun run check:structure`, `bun run check:server-logic`       |
+| Dependency graph            | `bunx nx graph`                                               |
 
 The pre-commit hook formats, checks the structure and runs the affected typechecks and tests;
-commit messages follow Conventional Commits.
+commit messages follow Conventional Commits. CI runs the same checks on what a pull request
+affects, plus the integration and e2e suites, and boots and scans every affected image; one check,
+`CI OK`, gates the merge ([ADR 0014](./docs/adr/0014-ci-checks-what-changed-and-boots-the-images-that-ship.md)).
 
 ## Layout
 
@@ -73,10 +77,14 @@ Each app and context has a README saying what it owns. Start with:
 - [`docs/architecture/boundaries.md`](./docs/architecture/boundaries.md): who may import whom, and why.
 - [`docs/architecture/conventions.md`](./docs/architecture/conventions.md): where each kind of file goes.
 - [`docs/guides/`](./docs/guides/): recipes to add a context, a command or query, a job or schedule,
-  a frontend feature, a locale, and to store files.
+  a frontend feature, a locale, to store files, and to cut a release.
 - [`docs/adr/`](./docs/adr/): the decisions a newcomer would otherwise question.
 
 ## Deploying
+
+Merging the release pull request that release-please keeps open publishes every image to GHCR,
+versioned from the Conventional Commits and attested: see
+[`docs/guides/cut-a-release.md`](./docs/guides/cut-a-release.md).
 
 Each app ships as an image built from the repository root (`apps/<app>/Dockerfile`); the api
 Dockerfile's `migrator` target runs `prisma migrate deploy` as a one-shot job before a release.
