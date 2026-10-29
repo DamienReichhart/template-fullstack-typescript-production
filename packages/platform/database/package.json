@@ -90,6 +90,18 @@
           }
         }
       },
+      "prisma-check-drift": {
+        "command": "prisma migrate diff --from-config-datasource --to-schema prisma/schema --exit-code",
+        "options": {
+          "cwd": "{projectRoot}",
+          "env": {
+            "PRISMA_TARGET": "test"
+          }
+        },
+        "dependsOn": [
+          "prisma-deploy-test"
+        ]
+      },
       "test:int": {
         "command": "bun --conditions=@template/source --env-file=../../../.env test --pass-with-no-tests $(find ./src -name '*.int-spec.ts')",
         "options": {
