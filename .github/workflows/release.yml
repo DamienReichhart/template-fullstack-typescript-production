@@ -57,12 +57,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        include:
-          - { image: api, app: api, target: runtime }
-          - { image: migrator, app: api, target: migrator }
-          - { image: worker, app: worker, target: runtime }
-          - { image: scheduler, app: scheduler, target: runtime }
-          - { image: web, app: web, target: runtime }
+        # Every service of docker-compose.prod.yaml, so a host can `docker compose pull` a release.
+        image: [api, migrator, worker, scheduler, web, database, redis, s3, nginx, cloudflared]
     env:
       TAG: ${{ needs.release-please.outputs.tag || inputs.tag }}
       IMAGE: ${{ matrix.image }}
@@ -105,8 +101,7 @@ jobs:
         id: build
         with:
           context: .
-          file: apps/${{ matrix.app }}/Dockerfile
-          target: ${{ matrix.target }}
+          file: docker/prod/images/${{ matrix.image }}.prod.dockerfile
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}

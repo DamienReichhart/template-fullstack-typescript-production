@@ -41,7 +41,7 @@ updates:
         patterns: ['*']
 
   - package-ecosystem: docker
-    directories: ['/apps/api', '/apps/worker', '/apps/scheduler', '/apps/web']
+    directories: ['/docker/dev/images', '/docker/prod/images']
     schedule:
       interval: weekly
       day: monday
@@ -50,11 +50,3 @@ updates:
     groups:
       base-images:
         patterns: ['*']
-
-  - package-ecosystem: docker-compose
-    directory: /
-    schedule:
-      interval: weekly
-      day: monday
-    cooldown:
-      default-days: 7

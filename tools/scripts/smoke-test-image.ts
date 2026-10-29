@@ -6,10 +6,13 @@
  * config the production schema rejects, a probe that never answers.
  *  - api, worker, scheduler: `/ready` (Postgres, Redis, storage reachable) answers 200;
  *  - web: the home page renders;
- *  - migrator: `prisma migrate deploy` exits 0 against the database.
+ *  - migrator: `prisma migrate deploy` and the bucket's provisioning exit 0.
+ *
+ * One image at a time; `smoke-test-stack.ts` boots them all together, behind nginx.
  *
  * Needs `bun run docker:up` and the root `.env`. The container shares the host network, so the
- * `.env` addresses (localhost) work unchanged; stop `bun run dev` first, it holds the same ports.
+ * `.env` addresses (the compose network's, reachable from a Linux host) work unchanged; stop
+ * `bun run dev` and `bun run docker:dev` first, they hold the same ports.
  *
  * Run: bun tools/scripts/smoke-test-image.ts <api|worker|scheduler|web|migrator> <image>
  */

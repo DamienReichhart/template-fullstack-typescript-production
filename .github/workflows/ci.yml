@@ -43,6 +43,7 @@ jobs:
       integration: ${{ steps.plan.outputs.integration }}
       e2e: ${{ steps.plan.outputs.e2e }}
       images: ${{ steps.plan.outputs.images }}
+      stack: ${{ steps.plan.outputs.stack }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -51,18 +52,26 @@ jobs:
       - uses: ./.github/actions/setup
       - uses: nrwl/nx-set-shas@afb73a62d26e41464e9254689e1fd6122ee683c1 # v5.0.1
         id: shas
-      # Files outside every project (this pipeline, the compose stack) can break any suite: a change
-      # to one, or a manual run, tests everything.
+      # Files outside every project (this pipeline, the Docker setup) can break any suite: a change
+      # to one, or a manual run, tests everything. A change to the Docker setup also boots the whole
+      # production stack.
       - name: Choose the projects to check
         id: plan
         env:
           EVENT: ${{ github.event_name }}
         run: |
+          changed=$(git diff --name-only "$NX_BASE" "$NX_HEAD")
           if [[ "$EVENT" == workflow_dispatch ]] ||
-            git diff --name-only "$NX_BASE" "$NX_HEAD" | grep -qE '^(\.github/|docker/|docker-compose\.yml$|\.env\.example$)'; then
+            grep -qE '^(\.github/|docker/|docker-compose\.(dev|prod)\.yaml$|\.env\.example$)' <<< "$changed"; then
             nx=run-many; scope=()
           else
             nx=affected; scope=(--affected)
+          fi
+          if [[ "$EVENT" == workflow_dispatch ]] ||
+            grep -qE '^(docker/|docker-compose\.prod\.yaml$|\.env\.example$|tools/scripts/smoke-test-stack\.ts$)' <<< "$changed"; then
+            stack=true
+          else
+            stack=false
           fi
           projects() { bunx nx show projects "${scope[@]}" "$@" --json; }
           {
@@ -70,10 +79,12 @@ jobs:
             echo "projects=$(projects)"
             echo "integration=$(projects --withTarget test:int)"
             echo "e2e=$(projects --withTarget e2e)"
-            # The api Dockerfile also builds the migrator, which ships the api's database schema.
-            echo "images=$(projects --projects api,worker,scheduler,web | jq -c '[.[] |
-              if . == "api" then {image: "api", app: "api", target: "runtime"}, {image: "migrator", app: "api", target: "migrator"}
-              else {image: ., app: ., target: "runtime"} end]')"
+            # The migrator ships the api's database schema and bucket provisioning: it follows the api.
+            # The infrastructure images change with the Docker setup only.
+            echo "images=$(projects --projects api,worker,scheduler,web | jq -c --argjson stack "$stack" '[.[] |
+              if . == "api" then "api", "migrator" else . end]
+              + if $stack then ["database", "redis", "s3", "nginx", "cloudflared"] else [] end')"
+            echo "stack=$stack"
           } | tee -a "$GITHUB_OUTPUT"
 
   commits:
@@ -157,7 +168,7 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
       - uses: ./.github/actions/setup
-      - run: docker compose up -d --wait
+      - run: bun run docker:up
       # A schema edited without `bun run db:migrate` would deploy a database the code does not expect.
       - name: Migrations match the Prisma schema
         run: bunx nx run database:prisma-check-drift --output-style=static
@@ -166,7 +177,7 @@ jobs:
           NX_COMMAND: ${{ needs.plan.outputs.nx }}
         run: bunx nx "$NX_COMMAND" -t test:int --parallel=1 --output-style=static
       - if: failure()
-        run: docker compose logs --no-color --tail=200
+        run: docker compose -f docker-compose.dev.yaml logs --no-color --tail=200
 
   e2e:
     name: E2E ${{ matrix.project }}
@@ -189,7 +200,7 @@ jobs:
         with:
           nx-cache: e2e
       # The e2e target migrates the database and provisions the bucket before the suite runs.
-      - run: docker compose up -d --wait
+      - run: bun run docker:up
       - if: matrix.project == 'web-e2e'
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
@@ -201,7 +212,7 @@ jobs:
         run: bunx playwright install --with-deps chromium
       - run: bunx nx run "$PROJECT:e2e" --output-style=static
       - if: failure()
-        run: docker compose logs --no-color --tail=200
+        run: docker compose -f docker-compose.dev.yaml logs --no-color --tail=200
       - if: failure() && matrix.project == 'web-e2e'
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
@@ -220,10 +231,12 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        include: ${{ fromJSON(needs.plan.outputs.images) }}
+        image: ${{ fromJSON(needs.plan.outputs.images) }}
     env:
       IMAGE: ${{ matrix.image }}
       TAG: ci/${{ matrix.image }}:${{ github.sha }}
+      # Infrastructure images boot in the Production stack job, behind nginx.
+      APP: ${{ contains(fromJSON('["api", "migrator", "worker", "scheduler", "web"]'), matrix.image) }}
     # The image that ships, built, booted against real infrastructure and scanned: e2e suites run
     # the apps from source, so only this job sees a dependency pruned from an image.
     steps:
@@ -234,8 +247,7 @@ jobs:
       - uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
         with:
           context: .
-          file: apps/${{ matrix.app }}/Dockerfile
-          target: ${{ matrix.target }}
+          file: docker/prod/images/${{ matrix.image }}.prod.dockerfile
           load: true
           push: false
           tags: ${{ env.TAG }}
@@ -244,14 +256,17 @@ jobs:
             NEXT_PUBLIC_SITE_URL=http://localhost:3000
           cache-from: type=gha,scope=${{ matrix.image }}
           cache-to: type=gha,mode=max,scope=${{ matrix.image }}
-      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
+      - if: env.APP == 'true'
+        uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
         with:
           bun-version-file: package.json
-      - name: Start infrastructure
+      - if: env.APP == 'true'
+        name: Start infrastructure
         run: |
           cp .env.example .env
-          docker compose up -d --wait
-      - name: Boot the image
+          bun run docker:up
+      - if: env.APP == 'true'
+        name: Boot the image
         run: bun tools/scripts/smoke-test-image.ts "$IMAGE" "$TAG"
       - name: Scan for vulnerabilities
         uses: anchore/scan-action@27805bf3b4e84b4a5c980df22ed233c00390a439 # v7.4.2
@@ -262,10 +277,30 @@ jobs:
           only-fixed: true
           output-format: table
 
+  # Every production image together, as docker-compose.prod.yaml runs them: hardened, on their
+  # fixed addresses, behind nginx. Only when the Docker setup changed: the apps' own images are
+  # booted by the job above on every change.
+  stack:
+    name: Production stack
+    needs: plan
+    if: needs.plan.outputs.stack == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
+        with:
+          bun-version-file: package.json
+      - run: cp .env.example .env
+      - name: Build and boot the production stack, check every route through nginx
+        run: bun tools/scripts/smoke-test-stack.ts
+
   ci-ok:
     name: CI OK
     if: always()
-    needs: [plan, commits, static, verify, integration, e2e, images]
+    needs: [plan, commits, static, verify, integration, e2e, images, stack]
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
