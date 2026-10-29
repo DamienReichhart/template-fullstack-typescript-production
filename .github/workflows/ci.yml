@@ -1,78 +1,214 @@
 name: CI
 
+# One required check guards main: `CI OK`. Every other job runs only when what it covers changed
+# (Nx affected), and reports skipped otherwise; CI OK fails if any job failed or was cancelled.
 on:
+  pull_request:
   push:
     branches: [main]
-  pull_request:
+  merge_group:
+  workflow_dispatch:
 
 concurrency:
-  group: ci-${{ github.ref }}
+  group: ci-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 
 permissions:
   contents: read
-  # nx-set-shas reads the last successful run on main to set the affected base on push.
-  actions: read
 
 env:
   NX_NO_CLOUD: true
   NX_DAEMON: false
+  # A fixed path, so the cache can be saved and restored (see .github/actions/setup).
+  NX_CACHE_DIRECTORY: .nx/cache
   # Emails land in the Redis capture outbox, where the e2e suites read them.
   MAIL_TRANSPORT: capture
   JWT_ACCESS_SECRET: ci-only-secret-that-is-long-enough-for-hs256-signing
 
 # Actions are pinned to commit SHAs (tags can be moved); Dependabot keeps them current.
 jobs:
-  checks:
-    name: Lint, typecheck, unit tests, build
+  plan:
+    name: Plan
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      # nx-set-shas reads the last successful run on main to set the affected base on push.
+      actions: read
+    outputs:
+      base: ${{ steps.shas.outputs.base }}
+      head: ${{ steps.shas.outputs.head }}
+      nx: ${{ steps.plan.outputs.nx }}
+      projects: ${{ steps.plan.outputs.projects }}
+      integration: ${{ steps.plan.outputs.integration }}
+      e2e: ${{ steps.plan.outputs.e2e }}
+      images: ${{ steps.plan.outputs.images }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
+          persist-credentials: false
       - uses: ./.github/actions/setup
       - uses: nrwl/nx-set-shas@afb73a62d26e41464e9254689e1fd6122ee683c1 # v5.0.1
+        id: shas
+      # Files outside every project (this pipeline, the compose stack) can break any suite: a change
+      # to one, or a manual run, tests everything.
+      - name: Choose the projects to check
+        id: plan
+        env:
+          EVENT: ${{ github.event_name }}
+        run: |
+          if [[ "$EVENT" == workflow_dispatch ]] ||
+            git diff --name-only "$NX_BASE" "$NX_HEAD" | grep -qE '^(\.github/|docker/|docker-compose\.yml$|\.env\.example$)'; then
+            nx=run-many; scope=()
+          else
+            nx=affected; scope=(--affected)
+          fi
+          projects() { bunx nx show projects "${scope[@]}" "$@" --json; }
+          {
+            echo "nx=$nx"
+            echo "projects=$(projects)"
+            echo "integration=$(projects --withTarget test:int)"
+            echo "e2e=$(projects --withTarget e2e)"
+            # The api Dockerfile also builds the migrator, which ships the api's database schema.
+            echo "images=$(projects --projects api,worker,scheduler,web | jq -c '[.[] |
+              if . == "api" then {image: "api", app: "api", target: "runtime"}, {image: "migrator", app: "api", target: "migrator"}
+              else {image: ., app: ., target: "runtime"} end]')"
+          } | tee -a "$GITHUB_OUTPUT"
 
+  commits:
+    name: Commit messages
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: ./.github/actions/setup
+      # A squash merge makes the title the commit on main; a rebase merge keeps every commit.
+      - name: Pull request title
+        env:
+          TITLE: ${{ github.event.pull_request.title }}
+        run: printf '%s\n' "$TITLE" | bunx commitlint
+      - name: Commits
+        env:
+          BASE: ${{ github.event.pull_request.base.sha }}
+          HEAD: ${{ github.event.pull_request.head.sha }}
+        run: bunx commitlint --from "$BASE" --to "$HEAD"
+
+  static:
+    name: Format, structure, generated files, workflows
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup
       - run: bun run format:check
       - run: bun run check:structure
       - run: bun run check:server-logic
       - run: bunx nx sync:check
-      - run: bunx nx affected -t lint typecheck test build
+      - name: OpenAPI document is current
+        run: |
+          bun run openapi --output-style=static
+          if ! git diff --exit-code -- apps/api/openapi.json; then
+            echo "::error file=apps/api/openapi.json::Stale: run 'bun run openapi' and commit the result."
+            exit 1
+          fi
+      - name: Workflows (actionlint, shellcheck)
+        run: docker run --rm -v "$PWD:/repo" -w /repo rhysd/actionlint:1.7.12@sha256:b1934ee5f1c509618f2508e6eb47ee0d3520686341fec936f3b79331f9315667 -color
 
-  integration:
-    name: Integration tests (Postgres, Redis, RustFS)
+  verify:
+    name: ${{ matrix.target }}
+    needs: plan
+    if: needs.plan.outputs.projects != '[]'
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        target: [lint, typecheck, test, build]
+    env:
+      NX_BASE: ${{ needs.plan.outputs.base }}
+      NX_HEAD: ${{ needs.plan.outputs.head }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
+          persist-credentials: false
       - uses: ./.github/actions/setup
-      - uses: nrwl/nx-set-shas@afb73a62d26e41464e9254689e1fd6122ee683c1 # v5.0.1
+        with:
+          nx-cache: ${{ matrix.target }}
+      - env:
+          NX_COMMAND: ${{ needs.plan.outputs.nx }}
+          TARGET: ${{ matrix.target }}
+        run: bunx nx "$NX_COMMAND" -t "$TARGET" --output-style=static
+
+  integration:
+    name: Integration (Postgres, Redis, RustFS)
+    needs: plan
+    if: needs.plan.outputs.integration != '[]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      NX_BASE: ${{ needs.plan.outputs.base }}
+      NX_HEAD: ${{ needs.plan.outputs.head }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: ./.github/actions/setup
       - run: docker compose up -d --wait
+      # A schema edited without `bun run db:migrate` would deploy a database the code does not expect.
+      - name: Migrations match the Prisma schema
+        run: bunx nx run database:prisma-check-drift --output-style=static
       # Suites share one test database and one test bucket: serial, as locally.
-      - run: bunx nx affected -t test:int --parallel=1
+      - env:
+          NX_COMMAND: ${{ needs.plan.outputs.nx }}
+        run: bunx nx "$NX_COMMAND" -t test:int --parallel=1 --output-style=static
+      - if: failure()
+        run: docker compose logs --no-color --tail=200
 
   e2e:
-    name: End-to-end (api, worker, web)
+    name: E2E ${{ matrix.project }}
+    needs: plan
+    if: needs.plan.outputs.e2e != '[]'
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      # One runner per suite: each starts the stack on the same ports, so they cannot share one.
+      matrix:
+        project: ${{ fromJSON(needs.plan.outputs.e2e) }}
+    env:
+      PROJECT: ${{ matrix.project }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          fetch-depth: 0
+          persist-credentials: false
       - uses: ./.github/actions/setup
-      - uses: nrwl/nx-set-shas@afb73a62d26e41464e9254689e1fd6122ee683c1 # v5.0.1
+        with:
+          nx-cache: e2e
       - run: docker compose up -d --wait
       # The bucket, its CORS and lifecycle rules: what `bun run storage:provision` does locally.
       - run: bun run storage:provision
-      - name: Install Chromium
+      - if: matrix.project == 'web-e2e'
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('bun.lock') }}
+      - if: matrix.project == 'web-e2e'
+        name: Install Chromium
         working-directory: apps/web-e2e
         run: bunx playwright install --with-deps chromium
-      # Both suites start the stack on the same ports: one at a time.
-      - run: bunx nx affected -t e2e --parallel=1
+      - run: bunx nx run "$PROJECT:e2e" --output-style=static
       - if: failure()
+        run: docker compose logs --no-color --tail=200
+      - if: failure() && matrix.project == 'web-e2e'
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: playwright-report
@@ -83,29 +219,69 @@ jobs:
 
   images:
     name: Image ${{ matrix.image }}
+    needs: plan
+    if: needs.plan.outputs.images != '[]'
     runs-on: ubuntu-latest
     timeout-minutes: 30
     strategy:
       fail-fast: false
       matrix:
-        include:
-          - { image: api, dockerfile: apps/api/Dockerfile, target: runtime }
-          - { image: migrator, dockerfile: apps/api/Dockerfile, target: migrator }
-          - { image: worker, dockerfile: apps/worker/Dockerfile, target: runtime }
-          - { image: scheduler, dockerfile: apps/scheduler/Dockerfile, target: runtime }
-          - { image: web, dockerfile: apps/web/Dockerfile, target: runtime }
-    # Builds only: a Dockerfile that breaks is caught here, not at release time.
+        include: ${{ fromJSON(needs.plan.outputs.images) }}
+    env:
+      IMAGE: ${{ matrix.image }}
+      TAG: ci/${{ matrix.image }}:${{ github.sha }}
+    # The image that ships, built, booted against real infrastructure and scanned: e2e suites run
+    # the apps from source, so only this job sees a dependency pruned from an image.
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
       - uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069 # v4.4.1
       - uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
         with:
           context: .
-          file: ${{ matrix.dockerfile }}
+          file: apps/${{ matrix.app }}/Dockerfile
           target: ${{ matrix.target }}
+          load: true
           push: false
+          tags: ${{ env.TAG }}
           build-args: |
-            NEXT_PUBLIC_API_URL=https://api.example.com
-            NEXT_PUBLIC_SITE_URL=https://www.example.com
+            NEXT_PUBLIC_API_URL=http://localhost:4000
+            NEXT_PUBLIC_SITE_URL=http://localhost:3000
           cache-from: type=gha,scope=${{ matrix.image }}
           cache-to: type=gha,mode=max,scope=${{ matrix.image }}
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
+        with:
+          bun-version-file: package.json
+      - name: Start infrastructure
+        run: |
+          cp .env.example .env
+          docker compose up -d --wait
+      - name: Boot the image
+        run: bun tools/scripts/smoke-test-image.ts "$IMAGE" "$TAG"
+      - name: Scan for vulnerabilities
+        uses: anchore/scan-action@27805bf3b4e84b4a5c980df22ed233c00390a439 # v7.4.2
+        with:
+          image: ${{ env.TAG }}
+          # Block on what a rebuild or a bump can fix now; base images move with Dependabot.
+          severity-cutoff: critical
+          only-fixed: true
+          output-format: table
+
+  ci-ok:
+    name: CI OK
+    if: always()
+    needs: [plan, commits, static, verify, integration, e2e, images]
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Every job passed or had nothing to check
+        env:
+          RESULTS: ${{ join(needs.*.result, ' ') }}
+        run: |
+          for result in $RESULTS; do
+            if [[ "$result" != success && "$result" != skipped ]]; then
+              echo "::error::A job ended with '$result': $RESULTS"
+              exit 1
+            fi
+          done
