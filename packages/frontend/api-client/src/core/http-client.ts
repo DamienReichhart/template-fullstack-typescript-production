@@ -1,4 +1,10 @@
-import { apiPath, AuthCookies, CommonErrorCode, HttpHeaders } from '@template/contracts/common';
+import {
+  apiPath,
+  AuthCookies,
+  CommonErrorCode,
+  HttpHeaders,
+  withoutTrailingSlashes,
+} from '@template/contracts/common';
 import { IdentityErrorCode, IdentityRoutes } from '@template/contracts/identity';
 import type { z } from 'zod';
 
@@ -41,12 +47,14 @@ const CONCURRENT_REFRESH_SETTLE_MS = 250;
  * failure into an `ApiError`.
  */
 export class HttpClient {
+  private readonly baseUrl: string;
   private readonly fetchImpl: FetchLike;
   private readonly cookies: () => string;
   private readonly csrf: CsrfTokenProvider;
   private readonly refreshes: RefreshCoordinator;
 
   constructor(private readonly options: HttpClientOptions) {
+    this.baseUrl = withoutTrailingSlashes(options.baseUrl);
     this.fetchImpl = options.fetch ?? ((input, init) => fetch(input, init));
     this.cookies = options.cookies ?? browserCookies;
     this.csrf = new CsrfTokenProvider(this.cookies, async () => {
@@ -176,7 +184,7 @@ export class HttpClient {
   }
 
   private url(path: string): string {
-    return `${this.options.baseUrl.replace(/\/+$/, '')}${path}`;
+    return `${this.baseUrl}${path}`;
   }
 }
 

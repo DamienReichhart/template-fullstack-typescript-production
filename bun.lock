@@ -350,6 +350,7 @@
         "@react-email/components": "1.0.12",
         "@react-email/render": "2.1.0",
         "@template/config": "workspace:*",
+        "@template/contracts": "workspace:*",
         "@template/ddd": "workspace:*",
         "@template/i18n": "workspace:*",
         "@template/notifications-application": "workspace:*",
