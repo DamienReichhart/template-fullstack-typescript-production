@@ -8,6 +8,7 @@ import {
   storageConfig,
 } from '@template/config';
 import { identityConfig } from '@template/identity-infrastructure';
+import { mediaConfig } from '@template/media-infrastructure';
 import { notificationsConfig } from '@template/notifications-infrastructure';
 import { z } from 'zod';
 
@@ -28,6 +29,7 @@ export const workerConfigDefinitions = [
   redisConfig,
   storageConfig,
   identityConfig,
+  mediaConfig,
   notificationsConfig,
   workerConfig,
   workerProbeConfig,

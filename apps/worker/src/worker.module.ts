@@ -6,6 +6,7 @@ import { DatabaseModule } from './modules/database/database.module.ts';
 import { HealthModule } from './modules/health/health.module.ts';
 import { IdentityModule } from './modules/identity/identity.module.ts';
 import { LoggerModule } from './modules/logger/logger.module.ts';
+import { MediaModule } from './modules/media/media.module.ts';
 import { MessagingModule } from './modules/messaging/messaging.module.ts';
 import { NotificationsModule } from './modules/notifications/notifications.module.ts';
 import { RedisModule } from './modules/redis/redis.module.ts';
@@ -23,6 +24,7 @@ import { StorageModule } from './modules/storage/storage.module.ts';
     CqrsModule,
     HealthModule,
     IdentityModule,
+    MediaModule,
     NotificationsModule,
   ],
 })

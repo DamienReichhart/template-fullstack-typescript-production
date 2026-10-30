@@ -8,6 +8,7 @@ import { HealthModule } from './modules/health/health.module.ts';
 import { HttpModule } from './modules/http/http.module.ts';
 import { IdentityModule } from './modules/identity/identity.module.ts';
 import { LoggerModule } from './modules/logger/logger.module.ts';
+import { MediaModule } from './modules/media/media.module.ts';
 import { MessagingModule } from './modules/messaging/messaging.module.ts';
 import { RedisModule } from './modules/redis/redis.module.ts';
 import { StorageModule } from './modules/storage/storage.module.ts';
@@ -26,6 +27,7 @@ import { SystemModule } from './modules/system/system.module.ts';
     HttpModule,
     HealthModule,
     IdentityModule,
+    MediaModule,
     SystemModule,
     AdminModule,
   ],
