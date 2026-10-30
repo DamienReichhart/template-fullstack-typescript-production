@@ -30,20 +30,20 @@
     ]
   },
   "dependencies": {
-    "@nestjs/common": "12.1.2",
+    "@nestjs/common": "12.3.2",
     "@react-email/components": "1.0.12",
-    "@react-email/render": "2.1.0",
+    "@react-email/render": "2.2.0",
     "@template/config": "workspace:*",
     "@template/contracts": "workspace:*",
     "@template/ddd": "workspace:*",
     "@template/i18n": "workspace:*",
     "@template/notifications-application": "workspace:*",
     "@template/redis": "workspace:*",
-    "react": "19.3.0",
-    "react-dom": "19.3.0",
-    "resend": "6.32.0",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "resend": "6.35.0",
     "use-intl": "4.14.9",
-    "zod": "4.6.6"
+    "zod": "4.6.7"
   },
   "devDependencies": {
     "@types/react": "19.3.0",

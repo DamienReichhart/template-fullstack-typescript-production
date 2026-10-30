@@ -20,8 +20,8 @@
     }
   },
   "dependencies": {
-    "@nestjs/common": "12.1.2",
-    "@nestjs/core": "12.1.2",
+    "@nestjs/common": "12.3.2",
+    "@nestjs/core": "12.3.2",
     "@template/config": "workspace:*",
     "@template/health": "workspace:*",
     "@template/logger": "workspace:*",
