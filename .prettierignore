@@ -10,3 +10,4 @@ packages/platform/database/src/generated
 packages/platform/database/prisma/migrations
 apps/api/openapi.json
 CHANGELOG.md
+.claude/skills

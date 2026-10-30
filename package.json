@@ -28,6 +28,7 @@
     "format:check": "prettier --check .",
     "check:structure": "bun tools/scripts/check-structure.ts",
     "check:server-logic": "bun tools/scripts/check-no-server-logic.ts",
+    "skills:sync": "bun tools/scripts/sync-agent-skills.ts",
     "db:generate": "nx run database:prisma-generate",
     "db:migrate": "nx run database:prisma-migrate",
     "db:deploy": "nx run database:prisma-deploy",
