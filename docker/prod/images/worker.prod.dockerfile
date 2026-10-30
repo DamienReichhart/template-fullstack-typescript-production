@@ -2,7 +2,7 @@
 # Build from the repository root: docker build -f docker/prod/images/worker.prod.dockerfile -t template-worker .
 
 ARG BUN_VERSION=1.4.4
-ARG FFMPEG_VERSION=7.1.1
+ARG FFMPEG_VERSION=9.0.2-1
 
 # ── ffmpeg: static binaries built with libx264 and zimg, for video transcoding ────
 FROM mwader/static-ffmpeg:${FFMPEG_VERSION} AS ffmpeg
