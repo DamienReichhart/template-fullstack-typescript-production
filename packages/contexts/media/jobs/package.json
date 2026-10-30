@@ -1,0 +1,38 @@
+{
+  "name": "@template/media-jobs",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "@template/source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "test": "bun --conditions=@template/source test --pass-with-no-tests"
+  },
+  "nx": {
+    "name": "media-jobs",
+    "tags": [
+      "scope:media",
+      "layer:jobs"
+    ]
+  },
+  "dependencies": {
+    "@nestjs/common": "12.1.2",
+    "@nestjs/cqrs": "12.1.0",
+    "@template/media-application": "workspace:*",
+    "@template/messaging": "workspace:*",
+    "@template/queue": "workspace:*"
+  },
+  "devDependencies": {
+    "bullmq": "6.3.11",
+    "reflect-metadata": "0.2.2"
+  }
+}

@@ -44,6 +44,9 @@
         "@template/identity-http": "workspace:*",
         "@template/identity-infrastructure": "workspace:*",
         "@template/logger": "workspace:*",
+        "@template/media-application": "workspace:*",
+        "@template/media-http": "workspace:*",
+        "@template/media-infrastructure": "workspace:*",
         "@template/messaging": "workspace:*",
         "@template/queue": "workspace:*",
         "@template/redis": "workspace:*",
@@ -148,6 +151,9 @@
         "@template/identity-infrastructure": "workspace:*",
         "@template/identity-jobs": "workspace:*",
         "@template/logger": "workspace:*",
+        "@template/media-application": "workspace:*",
+        "@template/media-infrastructure": "workspace:*",
+        "@template/media-jobs": "workspace:*",
         "@template/messaging": "workspace:*",
         "@template/notifications-application": "workspace:*",
         "@template/notifications-infrastructure": "workspace:*",
@@ -235,6 +241,87 @@
         "@nestjs/common": "12.1.2",
         "@nestjs/cqrs": "12.1.0",
         "@template/identity-application": "workspace:*",
+        "@template/messaging": "workspace:*",
+        "@template/queue": "workspace:*",
+      },
+      "devDependencies": {
+        "bullmq": "6.3.11",
+        "reflect-metadata": "0.2.2",
+      },
+    },
+    "packages/contexts/media/application": {
+      "name": "@template/media-application",
+      "version": "0.0.1",
+      "dependencies": {
+        "@nestjs/common": "12.1.2",
+        "@nestjs/core": "12.1.2",
+        "@nestjs/cqrs": "12.1.0",
+        "@template/ddd": "workspace:*",
+        "@template/media-domain": "workspace:*",
+      },
+      "devDependencies": {
+        "reflect-metadata": "0.2.2",
+      },
+    },
+    "packages/contexts/media/domain": {
+      "name": "@template/media-domain",
+      "version": "0.0.1",
+      "dependencies": {
+        "@template/ddd": "workspace:*",
+      },
+    },
+    "packages/contexts/media/http": {
+      "name": "@template/media-http",
+      "version": "0.0.1",
+      "dependencies": {
+        "@nestjs/common": "12.1.2",
+        "@nestjs/core": "12.1.2",
+        "@nestjs/cqrs": "12.1.0",
+        "@nestjs/swagger": "12.0.2",
+        "@template/contracts": "workspace:*",
+        "@template/http": "workspace:*",
+        "@template/media-application": "workspace:*",
+        "@template/media-domain": "workspace:*",
+        "express": "5.2.1",
+        "zod": "4.6.6",
+      },
+      "devDependencies": {
+        "@nestjs/testing": "12.1.2",
+        "@template/ddd": "workspace:*",
+        "@template/testing": "workspace:*",
+        "@types/express": "5.0.6",
+        "@types/supertest": "7.2.1",
+        "reflect-metadata": "0.2.2",
+        "supertest": "7.3.1",
+      },
+    },
+    "packages/contexts/media/infrastructure": {
+      "name": "@template/media-infrastructure",
+      "version": "0.0.1",
+      "dependencies": {
+        "@nestjs/common": "12.1.2",
+        "@template/config": "workspace:*",
+        "@template/database": "workspace:*",
+        "@template/ddd": "workspace:*",
+        "@template/media-application": "workspace:*",
+        "@template/media-domain": "workspace:*",
+        "@template/messaging": "workspace:*",
+        "@template/queue": "workspace:*",
+        "@template/storage": "workspace:*",
+        "zod": "4.6.6",
+      },
+      "devDependencies": {
+        "@nestjs/testing": "12.1.2",
+        "reflect-metadata": "0.2.2",
+      },
+    },
+    "packages/contexts/media/jobs": {
+      "name": "@template/media-jobs",
+      "version": "0.0.1",
+      "dependencies": {
+        "@nestjs/common": "12.1.2",
+        "@nestjs/cqrs": "12.1.0",
+        "@template/media-application": "workspace:*",
         "@template/messaging": "workspace:*",
         "@template/queue": "workspace:*",
       },
@@ -1417,6 +1504,16 @@
     "@template/identity-jobs": ["@template/identity-jobs@workspace:packages/contexts/identity/jobs"],
 
     "@template/logger": ["@template/logger@workspace:packages/platform/logger"],
+
+    "@template/media-application": ["@template/media-application@workspace:packages/contexts/media/application"],
+
+    "@template/media-domain": ["@template/media-domain@workspace:packages/contexts/media/domain"],
+
+    "@template/media-http": ["@template/media-http@workspace:packages/contexts/media/http"],
+
+    "@template/media-infrastructure": ["@template/media-infrastructure@workspace:packages/contexts/media/infrastructure"],
+
+    "@template/media-jobs": ["@template/media-jobs@workspace:packages/contexts/media/jobs"],
 
     "@template/messaging": ["@template/messaging@workspace:packages/platform/messaging"],
 

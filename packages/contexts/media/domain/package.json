@@ -1,0 +1,30 @@
+{
+  "name": "@template/media-domain",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "@template/source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "test": "bun --conditions=@template/source test --pass-with-no-tests"
+  },
+  "nx": {
+    "name": "media-domain",
+    "tags": [
+      "scope:media",
+      "layer:domain"
+    ]
+  },
+  "dependencies": {
+    "@template/ddd": "workspace:*"
+  }
+}

@@ -16,6 +16,10 @@ const depConstraints = [
     onlyDependOnLibsWithTags: ['scope:identity', 'scope:platform', 'scope:shared'],
   },
   {
+    sourceTag: 'scope:media',
+    onlyDependOnLibsWithTags: ['scope:media', 'scope:platform', 'scope:shared'],
+  },
+  {
     sourceTag: 'scope:notifications',
     onlyDependOnLibsWithTags: ['scope:notifications', 'scope:platform', 'scope:shared'],
   },
