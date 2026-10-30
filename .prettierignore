@@ -11,3 +11,4 @@ packages/platform/database/prisma/migrations
 apps/api/openapi.json
 CHANGELOG.md
 .claude/skills
+.release-please-manifest.json
