@@ -59,7 +59,7 @@
     "@aws-sdk/s3-request-presigner": "3.1147.0",
     "@nestjs/common": "12.1.2",
     "@template/config": "workspace:*",
-    "zod": "4.6.6"
+    "zod": "4.6.7"
   },
   "devDependencies": {
     "@nestjs/testing": "12.1.2",
