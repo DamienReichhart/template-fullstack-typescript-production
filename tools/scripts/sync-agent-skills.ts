@@ -46,9 +46,17 @@ const args = process.argv.slice(2);
 const pinned = args[0] === '--tag' ? args[1] : undefined;
 if (args.length > 0 && (!pinned || !RELEASE.test(pinned) || args.length > 2)) usage();
 
-const previous: Lock | undefined = existsSync(LOCK_FILE)
-  ? (JSON.parse(readFileSync(LOCK_FILE, 'utf8')) as Lock)
-  : undefined;
+// Read, not checked then read: a missing lock means a first sync, any other failure stops the run.
+function readLock(): Lock | undefined {
+  try {
+    return JSON.parse(readFileSync(LOCK_FILE, 'utf8')) as Lock;
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code === 'ENOENT') return undefined;
+    throw error;
+  }
+}
+
+const previous = readLock();
 
 // Trees only: the blobs of the one release we check out are fetched on demand.
 const clone = mkdtempSync(join(tmpdir(), 'agent-skills-'));
