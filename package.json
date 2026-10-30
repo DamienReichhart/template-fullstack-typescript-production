@@ -48,7 +48,7 @@
     "@nx/js": "24.0.2",
     "@nx/playwright": "24.0.2",
     "@types/bun": "1.4.4",
-    "@types/node": "24",
+    "@types/node": "26",
     "eslint": "10.13.0",
     "eslint-config-prettier": "10.1.8",
     "globals": "17.13.0",
