@@ -168,6 +168,9 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
       - uses: ./.github/actions/setup
+      # The worker transcodes videos with ffmpeg (libx264, zimg), run from source in these suites.
+      - name: Install ffmpeg
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends ffmpeg
       - run: bun run docker:up
       # A schema edited without `bun run db:migrate` would deploy a database the code does not expect.
       - name: Migrations match the Prisma schema
@@ -199,6 +202,9 @@ jobs:
       - uses: ./.github/actions/setup
         with:
           nx-cache: e2e
+      # The worker transcodes videos with ffmpeg (libx264, zimg), run from source in these suites.
+      - name: Install ffmpeg
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends ffmpeg
       # The e2e target migrates the database and provisions the bucket before the suite runs.
       - run: bun run docker:up
       - if: matrix.project == 'web-e2e'
