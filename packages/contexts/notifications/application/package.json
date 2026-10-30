@@ -30,8 +30,8 @@
     ]
   },
   "dependencies": {
-    "@nestjs/common": "12.1.2",
-    "@nestjs/cqrs": "12.1.0",
+    "@nestjs/common": "12.2.0",
+    "@nestjs/cqrs": "12.1.1",
     "@template/ddd": "workspace:*"
   },
   "devDependencies": {

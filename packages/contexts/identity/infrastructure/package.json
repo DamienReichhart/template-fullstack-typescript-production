@@ -48,7 +48,7 @@
     }
   },
   "dependencies": {
-    "@nestjs/common": "12.1.2",
+    "@nestjs/common": "12.2.0",
     "@node-rs/argon2": "2.2.1",
     "@template/config": "workspace:*",
     "@template/database": "workspace:*",
@@ -62,7 +62,7 @@
     "zod": "4.6.6"
   },
   "devDependencies": {
-    "@nestjs/testing": "12.1.2",
+    "@nestjs/testing": "12.2.0",
     "reflect-metadata": "0.2.2"
   }
 }
