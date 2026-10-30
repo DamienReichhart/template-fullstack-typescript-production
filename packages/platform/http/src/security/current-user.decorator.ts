@@ -1,11 +1,14 @@
 import { createParamDecorator, type ExecutionContext } from '@nestjs/common';
-import type { UserRole } from '@template/identity-domain';
 import type { Request } from 'express';
 
-/** Who is calling, as proven by the access token. Set by `AccessTokenGuard`. */
+/**
+ * Who is calling, as proven by the authentication guard the app installs (identity's
+ * `AccessTokenGuard`). Lives here so every context can read the caller without importing
+ * the context that authenticates them.
+ */
 export interface AuthenticatedUser {
   id: string;
-  role: UserRole;
+  role: string;
   emailVerified: boolean;
 }
 

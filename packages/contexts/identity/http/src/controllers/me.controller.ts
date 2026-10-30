@@ -6,7 +6,13 @@ import {
   type AvatarUploadResponse,
   type CurrentUserResponse,
 } from '@template/contracts/identity';
-import { RateLimit, ZodResponse } from '@template/http';
+import {
+  CurrentUser,
+  RateLimit,
+  RequireVerifiedEmail,
+  ZodResponse,
+  type AuthenticatedUser,
+} from '@template/http';
 import {
   ChangeAvatarCommand,
   GetCurrentUserQuery,
@@ -14,8 +20,6 @@ import {
   RequestAvatarUploadCommand,
 } from '@template/identity-application';
 
-import { CurrentUser, type AuthenticatedUser } from '../decorators/current-user.decorator.ts';
-import { RequireVerifiedEmail } from '../decorators/require-verified-email.decorator.ts';
 import { AvatarUploadDto } from '../dto/requests/avatar-upload.dto.ts';
 import { ChangeAvatarDto } from '../dto/requests/change-avatar.dto.ts';
 import {

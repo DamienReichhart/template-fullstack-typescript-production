@@ -23,15 +23,15 @@ guards. Controllers only translate HTTP ⇄ commands/queries; no business rule l
 
 ## Layout
 
-| Path           | Holds                                                                                       |
-| -------------- | ------------------------------------------------------------------------------------------- |
-| `controllers/` | Registration, session, password, me                                                         |
-| `dto/`         | `requests/` and `responses/`: `createZodDto()` over `@template/contracts` schemas           |
-| `guards/`      | `CsrfGuard`, `AccessTokenGuard`, `RolesGuard`, `EmailVerifiedGuard` (global, in this order) |
-| `decorators/`  | `@Public()`, `@Roles()`, `@RequireVerifiedEmail()`, `@CurrentUser()`, `@Client()`           |
-| `cookies/`     | `AuthCookiesService` and cookie options (`COOKIE_DOMAIN`, `COOKIE_SECURE`)                  |
-| `errors/`      | `IdentityErrorMapper`: domain errors → RFC 9457 codes                                       |
-| `testing/`     | In-process app over in-memory adapters, for this package's specs                            |
+| Path           | Holds                                                                                                                                           |
+| -------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| `controllers/` | Registration, session, password, me                                                                                                             |
+| `dto/`         | `requests/` and `responses/`: `createZodDto()` over `@template/contracts` schemas                                                               |
+| `guards/`      | `CsrfGuard`, `AccessTokenGuard`, `RolesGuard`, `EmailVerifiedGuard` (global, in this order)                                                     |
+| `decorators/`  | `@Roles()`, `@Client()`; `@Public()`, `@CurrentUser()` and `@RequireVerifiedEmail()` come from `@template/http`, so other contexts use them too |
+| `cookies/`     | `AuthCookiesService` and cookie options (`COOKIE_DOMAIN`, `COOKIE_SECURE`)                                                                      |
+| `errors/`      | `IdentityErrorMapper`: domain errors → RFC 9457 codes                                                                                           |
+| `testing/`     | In-process app over in-memory adapters, for this package's specs                                                                                |
 
 ## Security model
 

@@ -12,6 +12,11 @@ export { HttpModule } from './http.module.ts';
 export { createOpenApiDocument, type OpenApiMetadata } from './openapi/create-openapi-document.ts';
 export { DOCS_PATH, setupSwagger } from './openapi/setup-swagger.ts';
 export { createCorsOptions } from './security/cors.options.ts';
+export {
+  CurrentUser,
+  type AuthenticatedRequest,
+  type AuthenticatedUser,
+} from './security/current-user.decorator.ts';
 export { createHelmetMiddleware } from './security/helmet.options.ts';
 export { IS_PUBLIC_KEY, Public } from './security/public.decorator.ts';
 export {
@@ -20,6 +25,10 @@ export {
   type RateLimitOptions,
 } from './security/rate-limit.decorators.ts';
 export { RateLimitGuard } from './security/rate-limit.guard.ts';
+export {
+  REQUIRE_VERIFIED_EMAIL_KEY,
+  RequireVerifiedEmail,
+} from './security/require-verified-email.decorator.ts';
 export {
   RATE_LIMIT_KEY_PREFIX,
   RedisRateLimiter,
