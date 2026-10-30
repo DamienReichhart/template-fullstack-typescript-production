@@ -22,6 +22,10 @@ const SIGNATURES: readonly Signature[] = [
     bytes: [...ascii('RIFF'), undefined, undefined, undefined, undefined, ...ascii('WEBP')],
   },
   { contentType: 'application/pdf', extension: 'pdf', bytes: ascii('%PDF-') },
+  // ISO base media files open with an `ftyp` box after its 4-byte size. QuickTime's brand is
+  // `qt  `; every other brand (`isom`, `mp42`, `avc1`, …) is MP4. The QuickTime entry first.
+  { contentType: 'video/quicktime', extension: 'mov', bytes: ascii('ftypqt  '), offset: 4 },
+  { contentType: 'video/mp4', extension: 'mp4', bytes: ascii('ftyp'), offset: 4 },
 ];
 
 /** Bytes to read from the start of an object to recognise any known signature. */
