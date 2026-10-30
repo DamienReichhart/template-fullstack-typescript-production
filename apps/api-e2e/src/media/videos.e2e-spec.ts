@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'bun:test';
-import { mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
+import { mkdtemp, readFile, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
@@ -97,10 +97,10 @@ describe('videos', () => {
 
       const playable = await fetch(ready.url ?? '');
       expect(playable.headers.get('content-type')).toBe('video/mp4');
-      const output = join(directory, 'playable.mp4');
-      await writeFile(output, new Uint8Array(await playable.arrayBuffer()));
+      // Piped to ffprobe: what the bucket serves is never written to disk.
+      const bytes = new Uint8Array(await playable.arrayBuffer());
       const probe = JSON.parse(
-        await $`ffprobe -v error -print_format json -show_streams -show_format ${output}`.text(),
+        await $`ffprobe -v error -print_format json -show_streams -show_format -i pipe:0 < ${bytes}`.text(),
       ) as { streams: Record<string, unknown>[]; format: { tags?: Record<string, string> } };
       expect(probe.streams[0]).toMatchObject({
         codec_name: 'h264',
