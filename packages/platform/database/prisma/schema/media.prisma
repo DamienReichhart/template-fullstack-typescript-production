@@ -1,0 +1,31 @@
+// ─── Media context ───────────────────────────────────────────────────────────
+// Owned by packages/contexts/media. Owners are identity's users, referenced by id only.
+
+enum VideoStatus {
+  PROCESSING
+  READY
+  FAILED
+}
+
+/// A recording a user uploaded. Its files live in the bucket: the Source (media/sources/...)
+/// only while PROCESSING, then the Playable file (media/videos/...) once READY.
+model Video {
+  id              String      @id @db.Uuid
+  ownerId         String      @map("owner_id") @db.Uuid
+  status          VideoStatus
+  /// Where the Source was stored; the object itself is deleted once the video is settled.
+  sourceKey       String      @map("source_key")
+  /// The Playable file: set once READY.
+  fileKey         String?     @map("file_key")
+  fileSize        BigInt?     @map("file_size")
+  width           Int?
+  height          Int?
+  durationSeconds Float?      @map("duration_seconds")
+  /// unreadable, too-long or processing-failed: set once FAILED.
+  failureReason   String?     @map("failure_reason")
+  createdAt       DateTime    @map("created_at") @db.Timestamptz(3)
+  updatedAt       DateTime    @map("updated_at") @db.Timestamptz(3)
+
+  @@index([ownerId, createdAt])
+  @@map("videos")
+}

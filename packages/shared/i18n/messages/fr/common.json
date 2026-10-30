@@ -9,6 +9,7 @@
   "navigation": {
     "home": "Accueil",
     "dashboard": "Tableau de bord",
+    "videos": "Vidéos",
     "login": "Se connecter",
     "register": "Créer un compte",
     "mainLabel": "Navigation principale"

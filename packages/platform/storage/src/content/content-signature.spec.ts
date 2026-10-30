@@ -12,6 +12,9 @@ describe('detectContentType', () => {
     ['image/gif', text('GIF89a')],
     ['image/webp', text('RIFF\u0010\u0000\u0000\u0000WEBPVP8 ')],
     ['application/pdf', text('%PDF-1.7')],
+    ['video/mp4', bytes(0, 0, 0, 0x20, ...text('ftypisom'))],
+    ['video/mp4', bytes(0, 0, 0, 0x1c, ...text('ftypmp42'))],
+    ['video/quicktime', bytes(0, 0, 0, 0x14, ...text('ftypqt  '))],
   ])('recognises %s', (contentType, head) => {
     expect(detectContentType(head)).toBe(contentType);
   });
@@ -20,6 +23,7 @@ describe('detectContentType', () => {
     expect(detectContentType(text('<svg xmlns="http://www.w3.org/2000/svg">'))).toBeUndefined();
     expect(detectContentType(bytes(0x89, 0x50))).toBeUndefined();
     expect(detectContentType(text('RIFF\u0010\u0000\u0000\u0000WAVE'))).toBeUndefined();
+    expect(detectContentType(text('ftypisom'))).toBeUndefined();
   });
 });
 
@@ -28,6 +32,7 @@ describe('signature metadata', () => {
     expect(hasKnownSignature('image/jpeg')).toBe(true);
     expect(hasKnownSignature('text/plain')).toBe(false);
     expect(extensionFor('image/jpeg')).toBe('jpg');
+    expect(extensionFor('video/quicktime')).toBe('mov');
     expect(extensionFor('text/plain')).toBeUndefined();
   });
 });

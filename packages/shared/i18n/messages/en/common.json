@@ -9,6 +9,7 @@
   "navigation": {
     "home": "Home",
     "dashboard": "Dashboard",
+    "videos": "Videos",
     "login": "Sign in",
     "register": "Create account",
     "mainLabel": "Main navigation"

@@ -4,14 +4,14 @@ Everything HTTP-specific that is not business logic, shared by every HTTP runnab
 
 ## Layout
 
-| Path             | Holds                                                                                           |
-| ---------------- | ----------------------------------------------------------------------------------------------- |
-| `http.module.ts` | `HttpModule.forRoot()`: global error filter, Zod pipe/serializer, rate limiter                  |
-| `bootstrap/`     | `configureHttpApp(app, meta)`: proxy, helmet, cookies, CORS, `/api/v1`, shutdown hooks, Swagger |
-| `errors/`        | RFC 9457 `ProblemDetailsFilter`, `DomainErrorMapper` (one per context), `ApiProblemException`   |
-| `security/`      | helmet, CORS, and the Redis-backed `RateLimitGuard` (`@RateLimit()`, `@SkipRateLimit()`)        |
-| `validation/`    | Global `ZodValidationPipe` and `ZodSerializerInterceptor` (nestjs-zod)                          |
-| `openapi/`       | OpenAPI document generation and Swagger UI at `/docs` (when `SWAGGER_ENABLED=true`)             |
+| Path             | Holds                                                                                                                                                                                          |
+| ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `http.module.ts` | `HttpModule.forRoot()`: global error filter, Zod pipe/serializer, rate limiter                                                                                                                 |
+| `bootstrap/`     | `configureHttpApp(app, meta)`: proxy, helmet, cookies, CORS, `/api/v1`, shutdown hooks, Swagger                                                                                                |
+| `errors/`        | RFC 9457 `ProblemDetailsFilter`, `DomainErrorMapper` (one per context), `ApiProblemException`                                                                                                  |
+| `security/`      | helmet, CORS, the Redis-backed `RateLimitGuard` (`@RateLimit()`, `@SkipRateLimit()`), and the caller: `@Public()`, `@CurrentUser()`, `@RequireVerifiedEmail()` (enforced by identity's guards) |
+| `validation/`    | Global `ZodValidationPipe` and `ZodSerializerInterceptor` (nestjs-zod)                                                                                                                         |
+| `openapi/`       | OpenAPI document generation and Swagger UI at `/docs` (when `SWAGGER_ENABLED=true`)                                                                                                            |
 
 ## Rules
 

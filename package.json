@@ -1,9 +1,9 @@
 {
   "name": "@template/source",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "private": true,
   "type": "module",
-  "packageManager": "bun@1.4.2",
+  "packageManager": "bun@1.4.4",
   "engines": {
     "node": ">=24.0.0",
     "bun": ">=1.4.0"
@@ -28,12 +28,14 @@
     "format:check": "prettier --check .",
     "check:structure": "bun tools/scripts/check-structure.ts",
     "check:server-logic": "bun tools/scripts/check-no-server-logic.ts",
+    "skills:sync": "bun tools/scripts/sync-agent-skills.ts",
     "db:generate": "nx run database:prisma-generate",
     "db:migrate": "nx run database:prisma-migrate",
     "db:deploy": "nx run database:prisma-deploy",
     "storage:provision": "nx run storage:provision",
-    "docker:up": "docker compose up -d --wait",
-    "docker:down": "docker compose down",
+    "docker:up": "docker compose -f docker-compose.dev.yaml up -d --wait database redis s3",
+    "docker:dev": "docker compose -f docker-compose.dev.yaml up --build --watch",
+    "docker:down": "docker compose -f docker-compose.dev.yaml down",
     "openapi": "nx run api:openapi"
   },
   "devDependencies": {
@@ -45,7 +47,7 @@
     "@nx/eslint-plugin": "23.2.1",
     "@nx/js": "23.2.1",
     "@nx/playwright": "23.2.1",
-    "@types/bun": "1.4.2",
+    "@types/bun": "1.4.4",
     "@types/node": "24",
     "eslint": "10.12.0",
     "eslint-config-prettier": "10.1.8",
@@ -56,5 +58,11 @@
     "prettier": "3.9.9",
     "typescript": "6.0.3",
     "typescript-eslint": "8.71.0"
+  },
+  "overrides": {
+    "body-parser": "2.4.0",
+    "fast-uri": "3.1.9",
+    "multer": "2.5.0",
+    "qs": "6.16.1"
   }
 }

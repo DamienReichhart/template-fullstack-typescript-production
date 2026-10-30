@@ -1,0 +1,21 @@
+{
+  "title": "Vidéos",
+  "description": "Envoyez une vidéo MP4 ou MOV de 2 Go et 10 minutes maximum. Elle est convertie pour être lue sur tous les téléphones, en pleine qualité.",
+  "choose": "Envoyer une vidéo",
+  "uploading": "Envoi de votre vidéo…",
+  "uploaded": "Votre vidéo a été envoyée. Elle sera prête dans quelques minutes.",
+  "empty": "Vous n'avez encore envoyé aucune vidéo.",
+  "listLabel": "Vos vidéos",
+  "sentOn": "Envoyée le {date}",
+  "player": "Vidéo envoyée le {date}",
+  "status": {
+    "PROCESSING": "Conversion…",
+    "READY": "Prête",
+    "FAILED": "Échec"
+  },
+  "failure": {
+    "unreadable": "Ce fichier ne contient pas de vidéo lisible.",
+    "too-long": "Cette vidéo dure plus de 10 minutes.",
+    "processing-failed": "Cette vidéo n'a pas pu être convertie. Veuillez l'envoyer à nouveau."
+  }
+}

@@ -22,3 +22,5 @@ PostgreSQL access through Prisma 7 (driver adapter `@prisma/adapter-pg`, no Rust
   surrounding `UnitOfWork.run()` transaction.
 - A context's tables are touched only by that context's infrastructure layer.
 - Commands: `bun run db:generate`, `bun run db:migrate` (dev), `bun run db:deploy` (CI/prod).
+- `nx run database:prisma-check-drift` fails when the schema has changes no migration holds
+  (CI runs it): edit a `.prisma` file, then `bun run db:migrate`.

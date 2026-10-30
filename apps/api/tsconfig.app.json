@@ -22,6 +22,15 @@
       "path": "../../packages/platform/messaging/tsconfig.lib.json"
     },
     {
+      "path": "../../packages/contexts/media/infrastructure/tsconfig.lib.json"
+    },
+    {
+      "path": "../../packages/contexts/media/http/tsconfig.lib.json"
+    },
+    {
+      "path": "../../packages/contexts/media/application/tsconfig.lib.json"
+    },
+    {
       "path": "../../packages/platform/logger/tsconfig.lib.json"
     },
     {

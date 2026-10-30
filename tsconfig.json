@@ -80,6 +80,21 @@
     },
     {
       "path": "./packages/platform/storage"
+    },
+    {
+      "path": "./packages/contexts/media/infrastructure"
+    },
+    {
+      "path": "./packages/contexts/media/application"
+    },
+    {
+      "path": "./packages/contexts/media/domain"
+    },
+    {
+      "path": "./packages/contexts/media/http"
+    },
+    {
+      "path": "./packages/contexts/media/jobs"
     }
   ]
 }

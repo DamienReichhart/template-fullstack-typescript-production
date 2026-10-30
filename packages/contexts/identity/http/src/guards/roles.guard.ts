@@ -1,10 +1,9 @@
 import { HttpStatus, Injectable, type CanActivate, type ExecutionContext } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { CommonErrorCode } from '@template/contracts/common';
-import { ApiProblemException } from '@template/http';
+import { ApiProblemException, type AuthenticatedRequest } from '@template/http';
 import type { UserRole } from '@template/identity-domain';
 
-import type { AuthenticatedRequest } from '../decorators/current-user.decorator.ts';
 import { ROLES_KEY } from '../decorators/roles.decorator.ts';
 
 @Injectable()
@@ -21,7 +20,7 @@ export class RolesGuard implements CanActivate {
     const { user } = context.switchToHttp().getRequest<AuthenticatedRequest>();
     if (!user)
       throw new ApiProblemException(HttpStatus.UNAUTHORIZED, CommonErrorCode.unauthenticated);
-    if (!roles.includes(user.role))
+    if (!(roles as readonly string[]).includes(user.role))
       throw new ApiProblemException(HttpStatus.FORBIDDEN, CommonErrorCode.forbidden);
     return true;
   }

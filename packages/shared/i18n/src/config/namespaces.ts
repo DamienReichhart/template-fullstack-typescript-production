@@ -1,5 +1,5 @@
 /**
- * One namespace per web feature (auth, avatar, dashboard, marketing, system) plus cross-cutting
+ * One namespace per web feature (auth, avatar, dashboard, marketing, system, videos) plus cross-cutting
  * catalogs. Adding a namespace means adding `<namespace>.json` to every locale folder.
  */
 export const namespaces = [
@@ -9,6 +9,7 @@ export const namespaces = [
   'dashboard',
   'marketing',
   'system',
+  'videos',
   'validation',
   'errors',
   'emails',

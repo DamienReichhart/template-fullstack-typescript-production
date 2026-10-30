@@ -1,0 +1,4 @@
+rules:
+  # `$/` for local actions is newer than the actionlint CI runs, which rejects it.
+  self-repository:
+    disable: true

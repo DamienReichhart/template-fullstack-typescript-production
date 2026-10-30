@@ -2,10 +2,11 @@ import { HttpStatus, Injectable, type CanActivate, type ExecutionContext } from 
 import { Reflector } from '@nestjs/core';
 import { CommonErrorCode } from '@template/contracts/common';
 import { IdentityErrorCode } from '@template/contracts/identity';
-import { ApiProblemException } from '@template/http';
-
-import type { AuthenticatedRequest } from '../decorators/current-user.decorator.ts';
-import { REQUIRE_VERIFIED_EMAIL_KEY } from '../decorators/require-verified-email.decorator.ts';
+import {
+  ApiProblemException,
+  REQUIRE_VERIFIED_EMAIL_KEY,
+  type AuthenticatedRequest,
+} from '@template/http';
 
 /**
  * Reads the `emailVerified` claim of the access token. Clients refresh their session right

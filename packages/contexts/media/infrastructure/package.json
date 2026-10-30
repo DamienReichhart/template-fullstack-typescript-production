@@ -1,0 +1,66 @@
+{
+  "name": "@template/media-infrastructure",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "@template/source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "test": "bun --conditions=@template/source test --pass-with-no-tests"
+  },
+  "nx": {
+    "name": "media-infrastructure",
+    "tags": [
+      "scope:media",
+      "layer:infrastructure"
+    ],
+    "targets": {
+      "test:int": {
+        "command": "bun --conditions=@template/source --env-file=../../../../.env test --pass-with-no-tests $(find ./src -name '*.int-spec.ts')",
+        "options": {
+          "cwd": "{projectRoot}"
+        },
+        "dependsOn": [
+          "^prisma-generate",
+          {
+            "projects": [
+              "database"
+            ],
+            "target": "prisma-deploy-test"
+          },
+          {
+            "projects": [
+              "storage"
+            ],
+            "target": "provision-test"
+          }
+        ]
+      }
+    }
+  },
+  "dependencies": {
+    "@nestjs/common": "12.1.2",
+    "@template/config": "workspace:*",
+    "@template/database": "workspace:*",
+    "@template/ddd": "workspace:*",
+    "@template/media-application": "workspace:*",
+    "@template/media-domain": "workspace:*",
+    "@template/messaging": "workspace:*",
+    "@template/queue": "workspace:*",
+    "@template/storage": "workspace:*",
+    "zod": "4.6.6"
+  },
+  "devDependencies": {
+    "@nestjs/testing": "12.1.2",
+    "reflect-metadata": "0.2.2"
+  }
+}

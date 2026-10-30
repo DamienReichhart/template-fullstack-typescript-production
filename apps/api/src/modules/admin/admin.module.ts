@@ -1,7 +1,12 @@
 import { Module, type OnModuleInit } from '@nestjs/common';
 import { HttpAdapterHost, ModuleRef } from '@nestjs/core';
 import { createBullBoardRouter, getQueueToken, MessagingModule } from '@template/messaging';
-import { identityMaintenanceQueue, mailQueue, type QueueDefinition } from '@template/queue';
+import {
+  identityMaintenanceQueue,
+  mailQueue,
+  mediaQueue,
+  type QueueDefinition,
+} from '@template/queue';
 import type { Queue } from 'bullmq';
 import type { Express } from 'express';
 
@@ -9,7 +14,7 @@ import { IdentityModule } from '../identity/identity.module.ts';
 import { BullBoardAuthMiddleware } from './middleware/bull-board-auth.middleware.ts';
 
 export const BULL_BOARD_PATH = '/admin/queues';
-const BOARD_QUEUES: QueueDefinition[] = [mailQueue, identityMaintenanceQueue];
+const BOARD_QUEUES: QueueDefinition[] = [mailQueue, identityMaintenanceQueue, mediaQueue];
 
 /**
  * Operational UI for the queues at `/admin/queues`, ADMIN only. Mounted on Express during

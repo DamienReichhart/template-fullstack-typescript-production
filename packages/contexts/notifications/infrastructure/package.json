@@ -34,6 +34,7 @@
     "@react-email/components": "1.0.12",
     "@react-email/render": "2.1.0",
     "@template/config": "workspace:*",
+    "@template/contracts": "workspace:*",
     "@template/ddd": "workspace:*",
     "@template/i18n": "workspace:*",
     "@template/notifications-application": "workspace:*",
@@ -42,7 +43,7 @@
     "react-dom": "19.3.0",
     "resend": "6.32.0",
     "use-intl": "4.14.9",
-    "zod": "4.6.5"
+    "zod": "4.6.6"
   },
   "devDependencies": {
     "@types/react": "19.3.0",

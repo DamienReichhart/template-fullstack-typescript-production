@@ -11,6 +11,8 @@ export {
   purgeExpiredSessionsJob,
 } from './queues/identity-maintenance/identity-maintenance.jobs.ts';
 export { identityMaintenanceQueue } from './queues/identity-maintenance/identity-maintenance.queue.ts';
+export { transcodeVideoJob } from './queues/media/media.jobs.ts';
+export { mediaQueue } from './queues/media/media.queue.ts';
 export {
   sendEmailVerificationJob,
   sendPasswordResetEmailJob,

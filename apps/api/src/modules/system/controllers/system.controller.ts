@@ -6,9 +6,14 @@ import {
   type AuthenticatedPingResponse,
   type PingResponse,
 } from '@template/contracts/system';
-import { Public, ZodResponse } from '@template/http';
+import {
+  CurrentUser,
+  Public,
+  RequireVerifiedEmail,
+  ZodResponse,
+  type AuthenticatedUser,
+} from '@template/http';
 import { GetCurrentUserQuery } from '@template/identity-application';
-import { CurrentUser, RequireVerifiedEmail, type AuthenticatedUser } from '@template/identity-http';
 
 import { AuthenticatedPingDto, PingDto } from '../dto/ping.dto.ts';
 import { SystemStatusService } from '../services/system-status.service.ts';

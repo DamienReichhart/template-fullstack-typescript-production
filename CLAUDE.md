@@ -16,6 +16,7 @@ Nx + Bun monorepo: a NestJS api, a BullMQ worker and scheduler, a Next.js web ap
 - Nest integration packages can break under Bun (ADR 0001): boot the app and run its tests before keeping one.
 - The web app calls the api; it never holds logic, Server Actions or Route Handlers (ADR 0006). Every user-facing string, attributes included, goes through next-intl in every locale under `packages/shared/i18n/messages/`.
 - `*.int-spec.ts` and the e2e suites need `bun run docker:up`; e2e suites start the api, worker and web themselves unless they already run. The dev bucket needs `bun run storage:provision` once.
+- Docker lives in `docker-compose.{dev,prod}.yaml` and `docker/{dev,prod}/{images,config}/`. Every service has a fixed address (`*_IP` in `.env`, 192.168.250.0/24), the same in both: nginx.conf and pg_hba.conf repeat some, so change them together. A service gets only the `.env` keys it reads, listed under its `environment:` (never env_file). Prod images are distroless: no shell in a healthcheck or a command.
 - Files go to object storage through a context port over `ObjectStorage` (`@template/storage`), never to Postgres or disk; browsers upload with presigned forms, never through the api (ADR 0013).
 
 ## Done means
@@ -24,14 +25,16 @@ Nx + Bun monorepo: a NestJS api, a BullMQ worker and scheduler, a Next.js web ap
 
 ## Agent skills
 
+Matt Pocock's skills are vendored in `.claude/skills/`, pinned in `.claude/skills.lock.json`. Don't edit them: `bun run skills:sync` (weekly, as a pull request) overwrites them. Adapt them through `docs/agents/`.
+
 ### Issue tracker
 
-Issues live in GitHub Issues for this repo. See `docs/agents/issue-tracker.md`.
+GitHub Issues via `gh`; sub-issues and blockers go through `gh api`. See `docs/agents/issue-tracker.md`.
 
 ### Triage labels
 
-The five canonical triage labels, unchanged. See `docs/agents/triage-labels.md`.
+The five canonical triage labels, unchanged and created on GitHub, plus `wayfinder:*`. See `docs/agents/triage-labels.md`.
 
 ### Domain docs
 
-Multi-context: `CONTEXT.md` at the root (`GLOSSARY-MAP.md` is a symlink to it), one `GLOSSARY.md` per context. See `docs/agents/domain.md`.
+Multi-context: `CONTEXT.md` maps one `GLOSSARY.md` per context; ADRs in `docs/adr/` and `packages/contexts/<context>/docs/adr/`. See `docs/agents/domain.md`.

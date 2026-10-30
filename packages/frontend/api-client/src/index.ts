@@ -14,4 +14,5 @@ export {
   type StorageUploadTicket,
 } from './core/storage-upload.ts';
 export { identityEndpoints, type IdentityEndpoints } from './endpoints/identity.endpoints.ts';
+export { mediaEndpoints, type MediaEndpoints } from './endpoints/media.endpoints.ts';
 export { systemEndpoints, type SystemEndpoints } from './endpoints/system.endpoints.ts';

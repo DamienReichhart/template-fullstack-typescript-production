@@ -1,10 +1,8 @@
 import { HttpStatus, Injectable, type CanActivate, type ExecutionContext } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { AuthCookies, CommonErrorCode } from '@template/contracts/common';
-import { ApiProblemException, IS_PUBLIC_KEY } from '@template/http';
+import { ApiProblemException, IS_PUBLIC_KEY, type AuthenticatedRequest } from '@template/http';
 import { AccessTokenIssuer } from '@template/identity-application';
-
-import type { AuthenticatedRequest } from '../decorators/current-user.decorator.ts';
 
 /** Authenticates every non-`@Public()` route from the httpOnly access-token cookie. */
 @Injectable()

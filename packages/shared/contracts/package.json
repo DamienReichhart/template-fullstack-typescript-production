@@ -19,6 +19,11 @@
       "types": "./dist/identity/index.d.ts",
       "default": "./dist/identity/index.js"
     },
+    "./media": {
+      "@template/source": "./src/media/index.ts",
+      "types": "./dist/media/index.d.ts",
+      "default": "./dist/media/index.js"
+    },
     "./system": {
       "@template/source": "./src/system/index.ts",
       "types": "./dist/system/index.d.ts",
@@ -41,6 +46,6 @@
   },
   "dependencies": {
     "@template/i18n": "workspace:*",
-    "zod": "4.6.5"
+    "zod": "4.6.6"
   }
 }

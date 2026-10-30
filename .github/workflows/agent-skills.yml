@@ -1,0 +1,100 @@
+name: Agent skills
+
+# .claude/skills/ vendors Matt Pocock's skills (tools/scripts/sync-agent-skills.ts): committed
+# skills reach cloud sessions, which never install a plugin. Every Monday this takes the newest
+# release out of its week of cooldown and opens, or refreshes, one pull request with it. A skill is
+# a prompt the agent follows with this repository's permissions: it lands reviewed, like any other
+# dependency.
+#
+# Work lands on dev; main only takes release pull requests from dev. So the sync starts from dev
+# and proposes to dev, whichever branch triggered it. GitHub only runs a schedule, and offers a
+# manual run, for a workflow that is on the default branch: this one starts once a release
+# carries it to main.
+on:
+  schedule:
+    - cron: '41 4 * * 1'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Release to vendor instead of the newest out of cooldown (e.g. v1.3.2)
+        required: false
+
+concurrency:
+  group: agent-skills
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  sync:
+    name: Sync the vendored skills
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+      pull-requests: write
+    env:
+      BRANCH: chore/agent-skills
+      BASE: dev
+      TAG: ${{ inputs.tag }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ env.BASE }}
+          persist-credentials: false
+      # The script needs Bun and git only: no dependency install.
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
+        with:
+          bun-version-file: package.json
+      - name: Vendor the release
+        id: sync
+        run: |
+          before=$(jq -r '.tag // empty' .claude/skills.lock.json 2>/dev/null || true)
+          bun tools/scripts/sync-agent-skills.ts ${TAG:+--tag "$TAG"}
+          {
+            echo "before=$before"
+            echo "after=$(jq -r .tag .claude/skills.lock.json)"
+          } >> "$GITHUB_OUTPUT"
+      # A pull request opened with the workflow token starts no workflow, so CI would never report
+      # on it: AGENT_SKILLS_TOKEN (a fine-grained token or GitHub App token with contents and
+      # pull-requests write) avoids that. The workflow token also needs "Allow GitHub Actions to
+      # create and approve pull requests" (Settings → Actions → General).
+      - name: Open or refresh the pull request
+        env:
+          GH_TOKEN: ${{ secrets.AGENT_SKILLS_TOKEN || github.token }}
+          BEFORE: ${{ steps.sync.outputs.before }}
+          AFTER: ${{ steps.sync.outputs.after }}
+        run: |
+          if [[ -z "$(git status --porcelain -- .claude)" ]]; then
+            echo "Skills already at $AFTER on $BASE."
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          gh auth setup-git
+          git switch --force-create "$BRANCH"
+          git add -- .claude
+          git commit --quiet --message "chore(skills): vendor mattpocock/skills $AFTER"
+          # An open pull request already holding this exact tree is left alone.
+          if git fetch --quiet origin "$BRANCH" 2>/dev/null && git diff --quiet FETCH_HEAD HEAD; then
+            echo "$BRANCH already proposes $AFTER."
+            exit 0
+          fi
+          git push --force origin "$BRANCH"
+
+          changes="https://github.com/mattpocock/skills/compare/${BEFORE:-v1.0.0}...$AFTER"
+          title="chore(skills): vendor mattpocock/skills $AFTER"
+          body=$(cat <<EOF
+          Vendors [mattpocock/skills]($changes) **${BEFORE:-none} → $AFTER** into \`.claude/skills/\`, by \`bun run skills:sync\`.
+
+          Skills are prompts an agent follows with this repository's permissions. Read the diff as you would a dependency's: anything that runs commands, reaches the network or changes what the agent may do needs a reason.
+
+          The skills read this repository's \`docs/agents/\` files: if a release changes what they expect there, run \`/setup-matt-pocock-skills\` on this branch.
+          EOF
+          )
+          if [[ -n "$(gh pr list --head "$BRANCH" --state open --json number --jq '.[].number')" ]]; then
+            gh pr edit "$BRANCH" --title "$title" --body "$body"
+          else
+            gh pr create --base "$BASE" --head "$BRANCH" --title "$title" --body "$body"
+          fi

@@ -1,3 +1,4 @@
+import { withoutTrailingSlashes } from '@template/contracts/common';
 import { WebLinks } from '@template/notifications-application';
 
 /** Builds absolute links to the localised pages of the web app (`/<locale>/...`). */
@@ -6,7 +7,7 @@ export class UrlWebLinks extends WebLinks {
 
   constructor(webAppUrl: string) {
     super();
-    this.base = webAppUrl.replace(/\/+$/, '');
+    this.base = withoutTrailingSlashes(webAppUrl);
   }
 
   home(locale: string): string {

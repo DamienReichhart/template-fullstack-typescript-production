@@ -8,6 +8,7 @@ import type marketing from '../../messages/en/marketing.json';
 import type seo from '../../messages/en/seo.json';
 import type system from '../../messages/en/system.json';
 import type validation from '../../messages/en/validation.json';
+import type videos from '../../messages/en/videos.json';
 
 /** English is the reference catalog: other locales must match its shape (parity test). */
 export interface Messages {
@@ -17,6 +18,7 @@ export interface Messages {
   dashboard: typeof dashboard;
   marketing: typeof marketing;
   system: typeof system;
+  videos: typeof videos;
   validation: typeof validation;
   errors: typeof errors;
   emails: typeof emails;

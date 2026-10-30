@@ -11,7 +11,11 @@ const json = (body: unknown, status = 200) =>
 const problem = (status: number, code: string) =>
   json({ type: 'about:blank', title: 'Error', status, code }, status);
 
-function setup(handler: Handler, cookies = 'tpl_csrf=csrf-1; tpl_session=1') {
+function setup(
+  handler: Handler,
+  cookies = 'tpl_csrf=csrf-1; tpl_session=1',
+  baseUrl = 'http://api.test/',
+) {
   const calls: { url: string; init: RequestInit }[] = [];
   const fetch = mock(async (url: string, init: RequestInit) => {
     calls.push({ url, init });
@@ -19,7 +23,7 @@ function setup(handler: Handler, cookies = 'tpl_csrf=csrf-1; tpl_session=1') {
   });
   const onSessionExpired = mock(() => undefined);
   const client = new HttpClient({
-    baseUrl: 'http://api.test/',
+    baseUrl,
     fetch: fetch as unknown as FetchLike,
     cookies: () => cookies,
     onSessionExpired,
@@ -40,6 +44,14 @@ describe('HttpClient', () => {
     expect(init.credentials).toBe('include');
     expect(init.body).toBe('{"name":"x"}');
     expect(new Headers(init.headers).get('x-csrf-token')).toBe('csrf-1');
+  });
+
+  it('joins paths to a base URL ending in any number of slashes', async () => {
+    const { client, calls } = setup(() => json({ ok: true }), undefined, 'http://api.test///');
+
+    await client.get('/api/v1/things');
+
+    expect(calls[0]?.url).toBe('http://api.test/api/v1/things');
   });
 
   it('validates responses with the given schema', async () => {

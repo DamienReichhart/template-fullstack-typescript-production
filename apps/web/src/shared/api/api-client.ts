@@ -1,4 +1,9 @@
-import { createHttpClient, identityEndpoints, systemEndpoints } from '@template/api-client';
+import {
+  createHttpClient,
+  identityEndpoints,
+  mediaEndpoints,
+  systemEndpoints,
+} from '@template/api-client';
 
 import { publicEnv } from '../config/public-env';
 
@@ -15,6 +20,7 @@ const http = createHttpClient({
 /** Every API call of the web app goes through these endpoint groups. */
 export const api = {
   identity: identityEndpoints(http),
+  media: mediaEndpoints(http),
   system: systemEndpoints(http),
   /** False when nobody can be signed in: no need to ask the api. */
   hasSessionHint: () => http.hasSessionHint(),
