@@ -25,6 +25,8 @@ Nx + Bun monorepo: a NestJS api, a BullMQ worker and scheduler, a Next.js web ap
 
 ## Agent skills
 
+Matt Pocock's skills are vendored in `.claude/skills/`, pinned in `.claude/skills.lock.json`. Don't edit them: `bun run skills:sync` (weekly, as a pull request) overwrites them. Adapt them through `docs/agents/`.
+
 ### Issue tracker
 
 GitHub Issues via `gh`; sub-issues and blockers go through `gh api`. See `docs/agents/issue-tracker.md`.

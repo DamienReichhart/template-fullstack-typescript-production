@@ -62,6 +62,7 @@ http://localhost:9001/rustfs/console/ (`S3_ACCESS_KEY_ID` / `S3_SECRET_ACCESS_KE
 | Boot a production image     | `bun tools/scripts/smoke-test-image.ts api <image>`           |
 | Boot the production stack   | `bun tools/scripts/smoke-test-stack.ts` (Linux host)          |
 | Repository checks           | `bun run check:structure`, `bun run check:server-logic`       |
+| Update the agent skills     | `bun run skills:sync` (weekly pull request otherwise)         |
 | Dependency graph            | `bunx nx graph`                                               |
 
 The pre-commit hook formats, checks the structure and runs the affected typechecks and tests;

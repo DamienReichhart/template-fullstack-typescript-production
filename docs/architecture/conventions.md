@@ -16,7 +16,8 @@ packages/
 └── contexts/<context>/<layer>/   business rules, one package per layer (see boundaries.md)
 docker/<env>/          dev and prod: images/<service>.<env>.dockerfile, config/<service>/ (its config files)
 docs/                  adr/ (system-wide decisions), architecture/, guides/, agents/
-tools/scripts/         repository checks and image smoke tests
+tools/scripts/         repository checks, image smoke tests, the agent skills sync
+.claude/skills/        agent skills vendored from mattpocock/skills (bun run skills:sync)
 ```
 
 ## Nest runnables (`apps/api`, `apps/worker`, `apps/scheduler`)
