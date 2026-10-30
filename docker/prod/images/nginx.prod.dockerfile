@@ -4,7 +4,7 @@
 # nginx on distroless: the binary, its musl libraries, mime.types and our config. No entrypoint
 # script, no envsubst: the config is static and routes on the Host header (see nginx.conf).
 
-ARG NGINX_VERSION=1.29.8
+ARG NGINX_VERSION=1.31.8
 ARG GO_VERSION=1.26.10
 
 FROM golang:${GO_VERSION}-alpine AS probe
