@@ -2,7 +2,7 @@
 # Development object storage (RustFS, S3 API), built by docker-compose.dev.yaml. Buckets, CORS
 # and lifecycle rules are not created here: the migrator provisions them from the app's config.
 
-ARG RUSTFS_VERSION=1.0.1
+ARG RUSTFS_VERSION=1.0.4
 
 FROM rustfs/rustfs:${RUSTFS_VERSION}
 # The web console at /rustfs/console/; no phone-home at boot; logs to stdout like every service.

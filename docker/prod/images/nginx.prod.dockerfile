@@ -5,7 +5,7 @@
 # script, no envsubst: the config is static and routes on the Host header (see nginx.conf).
 
 ARG NGINX_VERSION=1.31.8
-ARG GO_VERSION=1.26.10
+ARG GO_VERSION=1.27.3
 
 FROM golang:${GO_VERSION}-alpine AS probe
 WORKDIR /src
