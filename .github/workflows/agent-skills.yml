@@ -5,6 +5,11 @@ name: Agent skills
 # release out of its week of cooldown and opens, or refreshes, one pull request with it. A skill is
 # a prompt the agent follows with this repository's permissions: it lands reviewed, like any other
 # dependency.
+#
+# Work lands on dev; main only takes release pull requests from dev. So the sync starts from dev
+# and proposes to dev, whichever branch triggered it. GitHub only runs a schedule, and offers a
+# manual run, for a workflow that is on the default branch: this one starts once a release
+# carries it to main.
 on:
   schedule:
     - cron: '41 4 * * 1'
@@ -31,11 +36,12 @@ jobs:
       pull-requests: write
     env:
       BRANCH: chore/agent-skills
-      BASE: ${{ github.ref_name }}
+      BASE: dev
       TAG: ${{ inputs.tag }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
+          ref: ${{ env.BASE }}
           persist-credentials: false
       # The script needs Bun and git only: no dependency install.
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
