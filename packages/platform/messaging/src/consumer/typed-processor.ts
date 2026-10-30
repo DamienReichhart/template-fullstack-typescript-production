@@ -26,6 +26,12 @@ export function onJob<Definition extends JobDefinition>(
 export abstract class TypedProcessor extends WorkerHost {
   protected readonly logger = new Logger(this.constructor.name);
 
+  /**
+   * Jobs this processor runs at once, whatever `WORKER_CONCURRENCY` says. Set it for heavy
+   * jobs that must not run side by side in one process (a video transcode).
+   */
+  readonly concurrency?: number;
+
   /** Every job of the queue this processor consumes. */
   protected abstract handlers(): readonly JobHandler<JobDefinition>[];
 
