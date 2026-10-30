@@ -177,6 +177,10 @@ services:
       RESEND_API_KEY: ${RESEND_API_KEY}
       MAIL_FROM: ${MAIL_FROM:?}
       WEB_APP_URL: ${WEB_APP_URL:?}
+    # Transcodes download a video and write its H.264 file here, then empty it (ADR 0016): a
+    # volume, not tmpfs, since a long 4K video needs gigabytes.
+    volumes:
+      - worker-scratch:/scratch
     # In-flight jobs finish before the worker stops.
     stop_grace_period: 60s
     depends_on:
@@ -265,6 +269,7 @@ volumes:
   database-data:
   redis-data:
   s3-data:
+  worker-scratch:
 
 secrets:
   # Optional CA certificate (PEM) for TLS-intercepting proxies, from the shell: unset means none.

@@ -2,6 +2,10 @@
 # Build from the repository root: docker build -f docker/prod/images/worker.prod.dockerfile -t template-worker .
 
 ARG BUN_VERSION=1.4.4
+ARG FFMPEG_VERSION=7.1.1
+
+# ── ffmpeg: static binaries built with libx264 and zimg, for video transcoding ────
+FROM mwader/static-ffmpeg:${FFMPEG_VERSION} AS ffmpeg
 
 FROM oven/bun:${BUN_VERSION}-slim AS base
 WORKDIR /repo
@@ -45,6 +49,8 @@ RUN mkdir /native-libs \
  && for lib in $(find node_modules -name '*.node' -exec ldd {} \; 2>/dev/null | grep -oE '/[^ ]+' | sort -u); do \
       dir="/native-libs$(readlink -f "$(dirname "$lib")")"; mkdir -p "$dir" && cp -L "$lib" "$dir/"; \
     done
+# Where transcodes write (MEDIA_SCRATCH_DIR): mounted as a volume, owned by the app user.
+RUN mkdir /scratch
 
 # ── Runtime: distroless (no shell, no package manager), Bun as the entrypoint ─────
 # Files stay owned by root: the app user reads its code and can change none of it.
@@ -54,6 +60,9 @@ ENV NODE_ENV=production \
     LOG_LEVEL=info
 COPY --from=prune /native-libs/ /
 COPY --from=prune /repo /repo
+COPY --from=ffmpeg /ffmpeg /ffprobe /usr/local/bin/
+COPY --from=prune --chown=65532:65532 /scratch /scratch
+ENV MEDIA_SCRATCH_DIR=/scratch
 USER 65532:65532
 EXPOSE 4100
 HEALTHCHECK --interval=15s --timeout=3s --start-period=20s --retries=3 \

@@ -34,6 +34,12 @@ RUN cd packages/platform/database && bunx prisma generate
 
 # ── worker: the only stage that differs ──────────────────────────────────────────────
 FROM deps AS dev
+# ffmpeg with libx264 and zimg (Debian builds it with both), for video transcoding.
+USER root
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends ffmpeg \
+ && rm -rf /var/lib/apt/lists/*
+USER bun
 WORKDIR /repo/apps/worker
 EXPOSE 4100
 HEALTHCHECK --interval=10s --timeout=3s --start-period=30s --retries=5 \
