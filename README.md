@@ -5,8 +5,9 @@ in one Nx monorepo running on Bun. Business rules live in bounded contexts with 
 apps only compose them.
 
 The proof of concept: registration, sign-in, email verification and password reset (emails via
-Resend, in the user's language), avatars uploaded straight to S3-compatible object storage
-(RustFS locally), and a "test connection to the API" card.
+Resend, in the user's language), avatars and videos uploaded straight to S3-compatible object
+storage (RustFS locally), videos transcoded by the worker into one H.264 file every phone plays,
+and a "test connection to the API" card.
 
 ```mermaid
 flowchart LR
@@ -20,12 +21,13 @@ flowchart LR
   redis -->|consume| worker[worker]
   worker --> pg
   worker -->|email| resend[Resend]
-  worker -->|delete| s3
+  worker -->|transcode, delete| s3
 ```
 
 ## Quickstart
 
-Requires Bun 1.4.4, Node 24 and Docker.
+Requires Bun 1.4.4, Node 24, Docker, and ffmpeg (with libx264 and zimg, as Debian, Ubuntu and
+Homebrew build it) for the worker's video transcoding.
 
 ```sh
 bun install
@@ -74,7 +76,7 @@ apps/                  api · worker · scheduler · web · api-e2e · web-e2e
 packages/shared/       contracts (routes, schemas, error codes) · i18n (en, fr)
 packages/frontend/     ui (design system) · api-client
 packages/platform/     config · logger · database · redis · storage · queue · messaging · http · health · ddd · testing
-packages/contexts/     identity · notifications, one package per layer
+packages/contexts/     identity · media · notifications, one package per layer
 docker/                dev/ and prod/: one image per service (images/), its config (config/)
 docs/                  adr · architecture · guides · agents
 ```

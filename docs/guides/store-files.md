@@ -65,6 +65,11 @@ Generated files (exports, invoices, thumbnails) are written by the worker: injec
 blobs or streams of unknown length (multipart above 5 MiB). Give downloads a name with
 `presignDownload(key, { downloadAs: 'invoice-42.pdf' })`.
 
+A file the worker must process with a command-line tool (the media context transcodes videos
+with ffmpeg) goes through its scratch disk: download, process, upload, then remove the directory
+whatever happens ([ADR 0016](../adr/0016-the-worker-transcodes-on-scratch-disk.md)). Nothing
+stays on that disk past the job.
+
 ## Deleting files
 
 A replaced or removed file is deleted by a job, not in the request: record its key in the domain
