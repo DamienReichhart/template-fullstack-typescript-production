@@ -48,7 +48,7 @@
     }
   },
   "dependencies": {
-    "@nestjs/common": "12.1.2",
+    "@nestjs/common": "12.3.2",
     "@template/config": "workspace:*",
     "@template/database": "workspace:*",
     "@template/ddd": "workspace:*",
@@ -57,10 +57,10 @@
     "@template/messaging": "workspace:*",
     "@template/queue": "workspace:*",
     "@template/storage": "workspace:*",
-    "zod": "4.6.6"
+    "zod": "4.6.7"
   },
   "devDependencies": {
-    "@nestjs/testing": "12.1.2",
+    "@nestjs/testing": "12.3.2",
     "reflect-metadata": "0.2.2"
   }
 }

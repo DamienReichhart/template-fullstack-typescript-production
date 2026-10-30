@@ -25,14 +25,14 @@
     ]
   },
   "dependencies": {
-    "@nestjs/common": "12.1.2",
-    "@nestjs/cqrs": "12.1.0",
+    "@nestjs/common": "12.3.2",
+    "@nestjs/cqrs": "12.1.2",
     "@template/identity-application": "workspace:*",
     "@template/messaging": "workspace:*",
     "@template/queue": "workspace:*"
   },
   "devDependencies": {
-    "bullmq": "6.3.11",
+    "bullmq": "6.5.1",
     "reflect-metadata": "0.2.2"
   }
 }

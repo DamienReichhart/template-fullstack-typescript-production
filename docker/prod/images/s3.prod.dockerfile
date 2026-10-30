@@ -4,8 +4,8 @@
 # RustFS (S3 API) on distroless: its musl binary and loader, nothing else. The upstream image's
 # entrypoint script only checks the credentials and creates /data, which this image owns already.
 
-ARG RUSTFS_VERSION=1.0.1
-ARG GO_VERSION=1.26.10
+ARG RUSTFS_VERSION=1.0.4
+ARG GO_VERSION=1.27.3
 
 FROM golang:${GO_VERSION}-alpine AS probe
 WORKDIR /src

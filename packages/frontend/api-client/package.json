@@ -27,6 +27,6 @@
   },
   "dependencies": {
     "@template/contracts": "workspace:*",
-    "zod": "4.6.6"
+    "zod": "4.6.7"
   }
 }

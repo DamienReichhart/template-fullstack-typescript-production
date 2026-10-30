@@ -25,20 +25,20 @@
     ]
   },
   "dependencies": {
-    "@nestjs/common": "12.1.2",
-    "@nestjs/core": "12.1.2",
-    "@nestjs/cqrs": "12.1.0",
-    "@nestjs/swagger": "12.0.2",
+    "@nestjs/common": "12.3.2",
+    "@nestjs/core": "12.3.2",
+    "@nestjs/cqrs": "12.1.2",
+    "@nestjs/swagger": "12.0.5",
     "@template/config": "workspace:*",
     "@template/contracts": "workspace:*",
     "@template/http": "workspace:*",
     "@template/identity-application": "workspace:*",
     "@template/identity-domain": "workspace:*",
-    "express": "5.2.1",
-    "zod": "4.6.6"
+    "express": "5.3.0",
+    "zod": "4.6.7"
   },
   "devDependencies": {
-    "@nestjs/testing": "12.1.2",
+    "@nestjs/testing": "12.3.2",
     "@template/ddd": "workspace:*",
     "@template/testing": "workspace:*",
     "@types/express": "5.0.6",
