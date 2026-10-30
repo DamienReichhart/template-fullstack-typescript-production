@@ -22,6 +22,11 @@
     "empty": "This file is empty.",
     "tooLarge": "Choose a picture of at most 5 MB."
   },
+  "video": {
+    "contentType": "Choose an MP4 or MOV video.",
+    "empty": "This file is empty.",
+    "tooLarge": "Choose a video of at most 2 GB."
+  },
   "generic": {
     "invalid": "This value is invalid."
   }

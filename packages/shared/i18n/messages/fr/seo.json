@@ -32,6 +32,10 @@
     "dashboard": {
       "title": "Tableau de bord",
       "description": "Votre tableau de bord."
+    },
+    "videos": {
+      "title": "Vidéos",
+      "description": "Vos vidéos."
     }
   }
 }

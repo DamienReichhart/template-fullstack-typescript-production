@@ -17,8 +17,9 @@ export function AppHeader({ actions }: { actions?: ReactNode }) {
           <Link href={AppRoutes.dashboard} className="font-semibold">
             {t('appName')}
           </Link>
-          <nav aria-label={t('navigation.mainLabel')}>
+          <nav aria-label={t('navigation.mainLabel')} className="flex items-center gap-4">
             <NavLink href={AppRoutes.dashboard}>{t('navigation.dashboard')}</NavLink>
+            <NavLink href={AppRoutes.videos}>{t('navigation.videos')}</NavLink>
           </nav>
         </div>
         <div className="flex items-center gap-3">

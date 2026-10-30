@@ -7,12 +7,13 @@ export const AppRoutes = {
   resetPassword: '/reset-password',
   verifyEmail: '/verify-email',
   dashboard: '/dashboard',
+  videos: '/videos',
 } as const;
 
 export type AppRoute = (typeof AppRoutes)[keyof typeof AppRoutes];
 
 /** Require a session. */
-const PROTECTED_ROUTES: readonly string[] = [AppRoutes.dashboard];
+const PROTECTED_ROUTES: readonly string[] = [AppRoutes.dashboard, AppRoutes.videos];
 /** Pointless with a session (redirect to the dashboard). */
 const GUEST_ONLY_ROUTES: readonly string[] = [
   AppRoutes.login,

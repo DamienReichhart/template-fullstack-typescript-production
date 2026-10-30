@@ -32,6 +32,10 @@
     "dashboard": {
       "title": "Dashboard",
       "description": "Your dashboard."
+    },
+    "videos": {
+      "title": "Videos",
+      "description": "Your videos."
     }
   }
 }

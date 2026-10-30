@@ -1,0 +1,21 @@
+{
+  "title": "Videos",
+  "description": "Send an MP4 or MOV video of at most 2 GB and 10 minutes. It is converted to play on every phone, in full quality.",
+  "choose": "Send a video",
+  "uploading": "Sending your video…",
+  "uploaded": "Your video was sent. It will be ready in a few minutes.",
+  "empty": "You have not sent any video yet.",
+  "listLabel": "Your videos",
+  "sentOn": "Sent on {date}",
+  "player": "Video sent on {date}",
+  "status": {
+    "PROCESSING": "Converting…",
+    "READY": "Ready",
+    "FAILED": "Failed"
+  },
+  "failure": {
+    "unreadable": "This file does not contain a video we can read.",
+    "too-long": "This video is longer than 10 minutes.",
+    "processing-failed": "This video could not be converted. Please send it again."
+  }
+}
