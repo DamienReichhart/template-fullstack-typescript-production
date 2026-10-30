@@ -34,7 +34,7 @@
     "zustand": "5.0.16"
   },
   "devDependencies": {
-    "@happy-dom/global-registrator": "20.14.5",
+    "@happy-dom/global-registrator": "21.0.4",
     "@next/env": "16.4.3",
     "@next/eslint-plugin-next": "16.4.3",
     "@tailwindcss/postcss": "4.3.3",
