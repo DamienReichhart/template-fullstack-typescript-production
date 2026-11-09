@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "@hookform/resolvers": "6.0.2",
-    "@tanstack/react-query": "5.105.0",
+    "@tanstack/react-query": "5.105.1",
     "@template/api-client": "workspace:*",
     "@template/contracts": "workspace:*",
     "@template/i18n": "workspace:*",
