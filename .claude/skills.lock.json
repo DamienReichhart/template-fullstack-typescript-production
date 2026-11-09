@@ -1,7 +1,7 @@
 {
   "repository": "https://github.com/mattpocock/skills.git",
-  "tag": "v1.3.1",
-  "commit": "24fe0ef7737efae15c87225755e9f6f5965e4888",
+  "tag": "v1.3.2",
+  "commit": "d1478fcb140db0b93c0c8df17bcfd311844749d0",
   "skills": [
     "ask-matt",
     "code-review",
