@@ -24,7 +24,7 @@
     "@template/contracts": "workspace:*",
     "@template/i18n": "workspace:*",
     "@template/ui": "workspace:*",
-    "lucide-react": "1.65.0",
+    "lucide-react": "1.66.0",
     "next": "16.4.3",
     "next-intl": "4.14.9",
     "react": "19.3.1",

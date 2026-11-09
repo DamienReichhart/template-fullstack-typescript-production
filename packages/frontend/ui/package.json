@@ -42,7 +42,7 @@
   "dependencies": {
     "class-variance-authority": "0.7.1",
     "clsx": "2.1.1",
-    "lucide-react": "1.65.0",
+    "lucide-react": "1.66.0",
     "radix-ui": "1.8.1",
     "react-hook-form": "7.91.0",
     "sonner": "2.0.8",
