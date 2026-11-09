@@ -26,7 +26,7 @@
   },
   "dependencies": {
     "@bull-board/api": "9.10.5",
-    "@bull-board/express": "9.10.5",
+    "@bull-board/express": "9.11.0",
     "@nestjs/bullmq": "12.0.0",
     "@nestjs/common": "12.3.2",
     "@nestjs/core": "12.3.2",
