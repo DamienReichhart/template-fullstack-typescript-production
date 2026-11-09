@@ -41,7 +41,7 @@
     "@template/redis": "workspace:*",
     "react": "19.3.1",
     "react-dom": "19.3.1",
-    "resend": "6.35.0",
+    "resend": "6.37.0",
     "use-intl": "4.14.9",
     "zod": "4.6.7"
   },
