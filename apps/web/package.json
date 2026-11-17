@@ -25,7 +25,7 @@
     "@template/i18n": "workspace:*",
     "@template/ui": "workspace:*",
     "lucide-react": "1.65.0",
-    "next": "16.4.3",
+    "next": "16.4.5",
     "next-intl": "4.14.9",
     "react": "19.3.1",
     "react-dom": "19.3.1",
