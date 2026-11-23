@@ -49,15 +49,15 @@
     "@nx/playwright": "24.0.2",
     "@types/bun": "1.4.4",
     "@types/node": "24",
-    "eslint": "10.13.0",
+    "eslint": "10.15.0",
     "eslint-config-prettier": "10.1.8",
     "globals": "17.13.0",
     "husky": "9.1.7",
     "lint-staged": "17.6.0",
     "nx": "24.0.2",
-    "prettier": "3.9.10",
+    "prettier": "3.10.1",
     "typescript": "6.0.3",
-    "typescript-eslint": "8.72.1"
+    "typescript-eslint": "8.72.2"
   },
   "overrides": {
     "body-parser": "2.4.0",
